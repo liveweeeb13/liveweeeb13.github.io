@@ -1,287 +1,107 @@
+/* Styles globaux */
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-header h1 {
-    color: #0099ff; 
-    cursor: pointer; 
-}
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px) rotate(2deg); }
-    50% { transform: translateX(5px) rotate(-2deg); }
-    75% { transform: translateX(-5px) rotate(2deg); }
-    100% { transform: translateX(0); }
-}
-
-header h1:hover {
-    animation: shake 0.5s ease-in-out; 
-}
-
-.about-me {
-    display: flex;
-    align-items: center;
-}
-
-.about-me .image1 {
-    margin-right: 20px;
-}
-
-.about-me .text {
-    flex: 1;
-}
-
-.about-me .image1 img {
-    max-width: 150px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; 
-}
-
-.about-me .image1 img:hover {
-    transform: scale(1.1); 
-}
-
-section {
-    padding: 20px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.instagram-btn {
-    background-color: #C13584;
-}
-
-.discord-btn {
-    background-color: #7289DA;
-}
-
-.youtube-btn {
-    background-color: #FF0000;
-}
-
-.github-btn {
-    background-color: #333;
-}
-
-.instagram-btn, .discord-btn, .youtube-btn, .github-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 0 10px;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: transform 0.3s ease; 
-}
-
-.instagram-btn:hover, .discord-btn:hover, .youtube-btn:hover, .github-btn:hover {
-    background-color: #555;
-    transform: scale(1.1); 
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-footer a {
-    color: inherit; 
-    text-decoration: underline; 
-    transform: scale(1.1); 
-}
-
-footer a:hover {
-    color: #ffffff; 
-    text-decoration: none; 
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 header {
-    background: linear-gradient(to right, #c84e4e, #8f94fb);
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--header-bg);
+    color: var(--header-color);
 }
 
-header img {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-nav {
-    margin-top: 20px;
+/* Thèmes */
+:root {
+    --header-bg: #ffffff;
+    --header-color: #000000;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --button-bg: #f0f0f0;
+    --button-color: #000000;
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
+body.light-theme {
+    --header-bg: #ffffff;
+    --header-color: #000000;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --button-bg: #f0f0f0;
+    --button-color: #000000;
 }
 
-main {
-    padding: 20px;
+body.dark-theme {
+    --header-bg: #333333;
+    --header-color: #ffffff;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --button-bg: #444444;
+    --button-color: #ffffff;
 }
 
-.section {
-    text-align: center;
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
-.text-image {
-    display: inline-block;
+/* Fenêtre de paramètres */
+#settings-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.text-image .text,
-.text-image .image {
-    display: inline-block;
-    vertical-align: middle;
+#settings-window.hidden {
+    display: none;
 }
 
-.text-image .text {
-    padding-right: 20px;
-}
-
-.text-image img {
-    max-width: 150px;
-    height: auto;
+.settings-content {
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
-.text-image img:hover {
-    transform: scale(1.1); 
+button {
+    background-color: var(--button-bg);
+    color: var(--button-color);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+button:hover {
+    background-color: var(--button-color);
+    color: var(--button-bg);
 }
 
-.text-image .text,
-.text-image .image {
-    opacity: 0;
-    animation: fadeIn 1s ease forwards;
+.close-button {
+    color: #ccc;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.text-image .text {
-    animation-delay: 0.5s;
-}
-
-.text-image .image {
-    animation-delay: 1s;
-}
-
-.last-section {
-    margin-bottom: 50px; 
-}
-
-.vide {
-    padding: 50px 0; 
-}
-
-.section a {
-    color: #007bff; 
-    text-decoration: underline; 
-}
-
-.section a:hover {
-    color: #a8c5e6; 
-    text-decoration: none; 
-}
-
-.about-me a {
-    color: #007bff; 
-    text-decoration: underline; 
-}
-
-.about-me a:hover {
-    color: #a8c5e6; 
-    text-decoration: none; 
-}
-
-
-@media only screen and (max-width: 1200px) {
-    header h1 {
-        font-size: 28px; 
-    }
-
-    .about-me .image1 img {
-        max-width: 120px; 
-    }
-}
-
-@media only screen and (max-width: 992px) {
-    header h1 {
-        font-size: 24px; 
-    }
-
-    .about-me .image1 img {
-        max-width: 100px; 
-    }
-}
-
-@media only screen and (max-width: 768px) {
-    header h1 {
-        font-size: 20px; 
-    }
-
-    .about-me {
-        flex-direction: column; 
-    }
-
-    .about-me .image1 {
-        margin-right: 0; 
-        margin-bottom: 20px; 
-    }
-
-    .about-me .image1 img {
-        max-width: 100%; 
-    }
-
-    .social-links {
-        flex-direction: column; 
-    }
-
-    .social-links a {
-        margin-bottom: 10px; 
-    }
-
-    footer a {
-        display: block; 
-        margin-top: 10px; 
-    }
+.close-button:hover,
+.close-button:focus {
+    color: #9b2525;
+    text-decoration: none;
+    cursor: pointer;
 }

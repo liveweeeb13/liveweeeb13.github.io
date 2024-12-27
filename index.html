@@ -2,135 +2,28 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
-    <title>Portfolio de liveweeeb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Settings</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
-
-        <!-- MetaData Nat & R�f -->
-        <meta charset="utf-8">
-        <meta name="google-site-verification" content="NiMI_p--l9IJ7h2ePQBtFTiaRnt6ZnD_T-5VWSWUQa8" />    
-        <meta name="description" content="Liveweeeb est un jeune développeur passionné par les bot discord et par le web.">
-        <meta name="keywords" content="Liveweeeb">
-        <meta name="robots" content="index">
-        
-        <meta property="og:url" content>
-        <meta property="og:title" content="Liveweeeb">
-        <meta property="og:type" content="website">
-        <meta property="og:description" content="Liveweeeb est un jeune développeur passionné par les bots Discord et par le web.">
-        <meta property="og:image" content="areo1.webp">
-        
-        <!-- MetaData Twitter -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Liveweeeb">
-        <meta name="twuitter:description" content="Liveweeeb est un jeune développeur passionné par les bot discord et par le web.">
-        <meta name="twitter:image" content="https://liveweeeb13.github.io/aa.png">
-        
-        <!-- MetaData Other -->
-        <meta name="author" content="liveweeeb">
-        <meta name="generator" content="InovaPerf">
-        <meta name="theme-color" content="#0099ff">
-        <meta name="msapplication-TileColor" content="#25edf7">
-        <meta name="msapplication-TileColor" content="#0099ff">
-        
-        <meta name="msapplication-TileImage" content="https://liveweeeb13.github.io/aa.png">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-        <link rel="icon" type="image/png" href="https://liveweeeb13.github.io/aa.png">
-
-
-
-<body>
+<body class="light-theme">
     <header>
-    
-        <h1>Portfolio de liveweeeb</h1>
-
+        <h1>Mon Portfolio</h1>
+        <button id="open-settings">⚙️ Paramètres</button>
     </header>
 
-    <section>
-        <div class="about-me">
-            <div class="image1">
-                <img src="aa.png" alt="Image" draggable="false">
-            </div>
-            <div class="text">
-                <h2>À propos de moi</h2>
-                <p>Je suis un jeune développeur passionné par la création de bot discord. <a draggable="false" href="game.html">Mon jeu préféré</a></p>
-                <h3>Réseaux sociaux :</h3>
-            </div>
+    <main>
+        <p>Bienvenue sur mon portfolio !</p>
+    </main>
+
+    <div id="settings-window" class="hidden">
+        <div class="settings-content">
+            <h2>Paramètres</h2>
+            <button id="toggle-theme">Changer de thème</button>
+            <span class="close-button">×</span>
         </div>
-    </section>
-    <section>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/liveweeeb13?igsh=MXZ1czJuYXVjNjZkeA==" draggable="false" class="instagram-btn" target="_blank">Instagram</a>
-                    <a href="https://discord.gg/Qa8SXNydeQ" class="discord-btn" draggable="false" target="_blank">Discord</a>
-                    <a href="https://www.youtube.com/channel/UCpjYPPS6qE_iglw5VRbsfgQ" draggable="false" class="youtube-btn" target="_blank">YouTube</a>
-                    <a href="https://github.com/liveweeeb13" class="github-btn" draggable="false" target="_blank">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    
- 
+    </div>
 
-    <section class="section">
-        <div class="container">
-            <div class="text-image">
-                <div class="text">
-                    <h2>Expérience</h2>
-
-                    <h3>Areo bot</h3>
-                    <p>Areo : <a draggable="false" target="_blank" href="https://liveweeeb13.github.io/areo/">Areo</a> est un bot discord développé en <font color="#00FF00">javascript</font> par liveweeeb principalement</p>
-                </div>
-                <div class="image">
-                    <img src="areo.png" alt="Image" draggable="false">
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section">
-        <div class="container">
-            <div class="text-image">
-                <div class="text">
-                    <h3>Voici "MyLife"</h3>
-                    <p>MyLife est un bot multifonctions avec plus de 2 langues, il est développé en JavaScript, il a plus de 4 fonctionnalités.
-                        <br> Il a son propre site : <a draggable="false" href="http://51.75.25.2:2011/discord/bots/mylife">clique ici</a></p>
-                </div>
-                <div class="image">
-                    <img src="mylife.png" alt="Nouvelle expérience" draggable="false">
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="vide">
-        <div class="container">
-            <div class="vide-content">
-                <!-- Contenu vide ici -->
-            </div>
-        </div>
-    </section>
-
-
-
-
-
-    <style>
-        footer {
-            text-align: center;
-        }
-        footer a {
-            color: inherit;
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <footer>
-        <p>&copy; 2024 <a draggable="false" href="index.html">liveweeeb</a> Tous droits réservés. <br>  </p>
-    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
