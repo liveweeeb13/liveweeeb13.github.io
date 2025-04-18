@@ -1,3 +1,4 @@
+"
 .halloween {
     --primary-color: #ff6f00;
     --secondary-color: #8e24aa;
@@ -44,3 +45,4 @@
     background-color: var(--dark-color);
     color: #dcedc8;
 }
+"
