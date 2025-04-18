@@ -50,6 +50,11 @@
             <div class="logo">
                 <a href="/">l<span>i</span>v<span>e</span>w<span>e</span>e<span>e</span>b</a>
             </div>
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
             <nav class="main-nav">
                 <ul>
                     <li><a href="/">Accueil</a></li>
@@ -64,7 +69,7 @@
                     </li>
                 </ul>
             </nav>
-        </div>
+        </div>        
     </header>
 
     <!-- MAIN -->
@@ -106,25 +111,9 @@
     </footer>
 
     <!-- SCRIPT -->
-    <script>
-        const themeSwitch = document.getElementById('theme-checkbox');
-        const body = document.body;
-
-        if (localStorage.getItem('theme') === 'dark' ||
-            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            body.classList.add('dark-theme');
-            themeSwitch.checked = true;
-        }
-
-        themeSwitch.addEventListener('change', function () {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-    </script>
+    <script src="./assets/js/themes.js"></script>
+    <script src="./assets/css/OTHER.LIST"></script>
+    <script src="./assets/js/menu.js"></script>
+    
 </body>
 </html>

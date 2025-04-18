@@ -48,25 +48,30 @@
 
     <!-- HEADER -->
     <header class=" main-header">
-    <div class="container">
-        <div class="logo">
-            <a href="/">l<span>i</span>v<span>e</span>w<span>e</span>e<span>e</span>b</a>
+        <div class="container">
+            <div class="logo">
+                <a href="/">l<span>i</span>v<span>e</span>w<span>e</span>e<span>e</span>b</a>
+            </div>
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li>
+                        <label class="theme-switch" for="theme-checkbox">
+                            <input type="checkbox" id="theme-checkbox">
+                            <div class="slider round">
+                                <span class="sun" draggable="false">☀️</span>
+                                <span class="moon" draggable="false">🌙</span>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="/">Accueil</a></li>
-                <li>
-                    <label class="theme-switch" for="theme-checkbox">
-                        <input type="checkbox" id="theme-checkbox">
-                        <div class="slider round">
-                            <span class="sun" draggable="false">☀️</span>
-                            <span class="moon" draggable="false">🌙</span>
-                        </div>
-                    </label>
-                </li>
-            </ul>
-        </nav>
-    </div>
     </header>
 
     <!-- MAIN -->
@@ -128,6 +133,10 @@
     <!-- SCRIPT -->
     <script src="./assets/js/themes.js"></script>
     <script src="./assets/css/OTHER.LIST"></script>
+    <script src="./assets/js/menu.js"></script>
+    
+    </script>
+    
     </body>
 
 </html>
