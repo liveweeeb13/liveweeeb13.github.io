@@ -1,0 +1,123 @@
+/* Dark Theme Variables */
+.dark-theme {
+    --primary-color: #90caf9;
+    --secondary-color: #42a5f5;
+    --accent-color: #f48fb1;
+    --dark-color: #121212;
+    --light-color: #1e1e1e;
+    --success-color: #66bb6a;
+    --error-color: #ef5350;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    --transition: all 0.2s ease;
+    
+    background-color: var(--dark-color);
+    color: #e0e0e0;
+}
+
+.dark-theme body {
+    background-color: var(--dark-color);
+    color: #e0e0e0;
+}
+
+.dark-theme .main-header {
+    background-color: #1e1e1e;
+    box-shadow: var(--box-shadow);
+}
+
+.dark-theme .logo a,
+.dark-theme .main-nav a {
+    color: #e0e0e0;
+}
+
+.dark-theme .main-nav a:hover,
+.dark-theme .logo span {
+    color: var(--accent-color);
+}
+
+.dark-theme .main-nav a::after {
+    background-color: var(--accent-color);
+}
+
+.dark-theme .hero {
+    background: linear-gradient(135deg, rgba(144, 202, 249, 0.1) 0%, rgba(244, 143, 177, 0.1) 100%);
+}
+
+.dark-theme .hero h1,
+.dark-theme .hero p {
+    color: #e0e0e0;
+}
+
+.dark-theme .project-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.dark-theme .project-card h3,
+.dark-theme .project-card p {
+    color: #e0e0e0;
+}
+
+.dark-theme .content-section {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+.dark-theme .content-section h2 {
+    color: #e0e0e0;
+}
+
+.dark-theme .about a {
+    color: #90caf9;
+}
+
+.dark-theme .about a:hover {
+    color: #42a5f5;
+}
+
+.dark-theme .btn-primary {
+    background-color: var(--primary-color);
+    color: #121212;
+}
+
+.dark-theme .btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.dark-theme .btn-secondary {
+    background-color: #1e1e1e;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.dark-theme .btn-secondary:hover {
+    background-color: #2c2c2c;
+}
+
+.dark-theme .main-footer {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.dark-theme .footer-section a {
+    color: #e0e0e0;
+}
+
+.dark-theme .footer-section a:hover {
+    color: var(--accent-color);
+}
+
+.dark-theme #splash-screen {
+    background-color: var(--dark-color);
+}
+
+.dark-theme .splash-content {
+    color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+    .dark-theme .main-nav {
+        background-color: var(--light-color);
+    }
+}
