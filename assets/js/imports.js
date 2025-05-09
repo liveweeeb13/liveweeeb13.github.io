@@ -13,7 +13,7 @@ const headerHTML = `
         <nav class="main-nav">
             <ul>
                 <li><a href="/">Accueil</a></li>
-                <li><a href="/news">Nouveautés</a></li>
+                <li><a href="/news">Nouveautées</a></li>
                 <li>
                     <label class="theme-switch" for="theme-checkbox">
                         <input type="checkbox" id="theme-checkbox">
@@ -42,7 +42,7 @@ const footerHTML = `
                 <h3>Navigation</h3>
                 <ul>
                     <li><a href="/">Accueil</a></li>
-                    <li><a href="/news">Nouveautés</a></li>
+                    <li><a href="/news">Nouveautées</a></li>
                 </ul>
             </div>
             <div class="footer-section">
