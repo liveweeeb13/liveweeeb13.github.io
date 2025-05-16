@@ -62,24 +62,80 @@
                 <p>
                     Je suis un développeur fullstack. J'aime créer des applications et des
                     sites web intuitifs, modernes et performants.<br><br>
-                    Je travaille principalement avec <span style="color: #357433;">Node.js</span> et en <span
-                        style="color: #E34F26;">HTML</span>, <span style="color: #1572B6;">CSS</span>, <span
-                        style="color: #b8a516;">JavaScript</span>. Je debute aussi <span
-                        style="color: #F15B29;">SQLite</span> pour la gestion de bases de données. <br><br>
+                    Je travaille principalement avec
+                    <span style="color: #357433;">Node.js</span> et en
+                    <span style="color: #E34F26;">HTML</span>, <span style="color: #1572B6;">CSS</span>,
+                    <span style="color: #b8a516;">JavaScript</span>. Je débute aussi
+                    <span style="color: #F15B29;">SQLite</span> pour la gestion de bases de données. <br><br>
                 </p><br>
 
-                <h2>Compétences</h2>
-                <ul>
-                    <li><span style="color: #357433;">Node.js</span></li>
-                    <li><span style="color: #E34F26;">HTML</span>, <span style="color: #1572B6;">CSS</span></li>
-                    <li><span style="color: #b8a516;">JavaScript</span></li>
-                    <li><span style="color: #F15B29;">SQLite</span></li>
-                </ul>
+                <h2 style="text-align: center;">Compétences</h2>
+
+                <div class="center-wrapper">
+                    <div class="skills">
+                        <i class="bx bxl-html5" data-tooltip="HTML">
+                            <img src="../assets/img/html.png" width="40px" alt="HTML">
+                        </i>
+                        <i class="bx bxl-css3" data-tooltip="CSS">
+                            <img src="../assets/img/css.png" width="40px" alt="CSS">
+                        </i>
+                        <i class="bx bxl-javascript" data-tooltip="JavaScript">
+                            <img src="../assets/img/js.png" width="40px" alt="JavaScript">
+                        </i>
+                        <i class="bx bxl-nodejs" data-tooltip="Node.js">
+                            <img src="../assets/img/nodejs.png" width="40px" alt="Node.js">
+                        </i>
+                        <i class="bx bxl-sqlite" data-tooltip="SQLite">
+                            <img src="../assets/img/sqlite.png" width="40px" alt="SQLite">
+                        </i>
+                    </div>
+                </div>
                 <br>
             </div>
         </div>
     </main>
 
+    <script>
+const skillElements = document.querySelectorAll(".skills i");
+
+skillElements.forEach((skillElement) => {
+    let tooltip;
+
+    skillElement.addEventListener("mouseenter", () => {
+        const languageName = skillElement.getAttribute("data-tooltip");
+        tooltip = document.createElement("div");
+        tooltip.classList.add("tooltip");
+        tooltip.innerText = languageName;
+        document.body.appendChild(tooltip);
+        tooltip.style.left = "-9999px";
+        tooltip.style.top = "-9999px";
+
+        requestAnimationFrame(() => {
+            const rect = skillElement.getBoundingClientRect();
+            const tooltipRect = tooltip.getBoundingClientRect();
+
+            tooltip.style.left = `${rect.left + rect.width / 2 - tooltipRect.width / 2}px`;
+            tooltip.style.top = `${rect.top - tooltipRect.height - 10 + window.scrollY}px`;
+
+            tooltip.classList.add("show");
+        });
+    });
+
+    skillElement.addEventListener("mouseleave", () => {
+        if (tooltip) {
+            tooltip.classList.remove("show");
+            setTimeout(() => {
+                tooltip.remove();
+                tooltip = null;
+            }, 300);
+        }
+    });
+});
+
+    </script>
+
+
 
 </body>
+
 </html>

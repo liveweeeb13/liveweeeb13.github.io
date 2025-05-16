@@ -121,3 +121,8 @@
         background-color: var(--light-color);
     }
 }
+
+.dark-theme .skills {
+    border: 2px solid #cedced;
+
+}
