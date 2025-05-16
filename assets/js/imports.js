@@ -14,7 +14,9 @@ const headerHTML = `
             <ul>
                 <li><a href="/">Accueil</a></li>
                 <li><a href="/news">Nouveautées</a></li>
+                <li><a href="/about">À propos de moi</a></li>
                 <li>
+                <div class='center-wrapper'>
                     <label class="theme-switch" for="theme-checkbox">
                         <input type="checkbox" id="theme-checkbox">
                         <div class="slider round">
@@ -22,6 +24,7 @@ const headerHTML = `
                             <span class="moon" draggable="false">🌙</span>
                         </div>
                     </label>
+                    </div>
                 </li>
             </ul>
         </nav>
