@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liveweeeb - Accueil</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/img/avatar_circle.png">
+  <link rel="apple-touch-icon" href="../assets/img/avatar_circle.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/dark.css">
+  <link rel="stylesheet" href="../assets/css/font.css">
+
+  <!-- Meta Essentiels -->
+  <meta name="description" content="Site portfolio de liveweeeb.">
+  <meta name="keywords" content="portfolio, liveweeeb">
+  <meta name="author" content="liveweeeb">
+
+  <!-- Meta Thème -->
+  <meta name="theme-color" content="#E4F1F9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  <meta name="msapplication-TileColor" content="#3f37c9">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://liveweeeb13.github.io/">
+  <meta property="og:title" content="Portfolio de liveweeeb - Page d'Accueil">
+  <meta property="og:description" content="Site portfolio de liveweeeb.">
+  <meta property="og:image" content="https://liveweeeb13.github.io/assets/img/avatar.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portfolio  de liveweeeb - Page d'Accueil">
+  <meta name="twitter:description" content="Site portfolio de liveweeeb.">
+  <meta name="twitter:image" content="https://liveweeeb13.github.io/assets/img/avatar.png">
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Portfolio de liveweeeb - Page d'Accueil">
+</head>
+
+<body>
+  <!-- SCRIPT -->
+  <script src="../assets/css/OTHER.LIST"></script>
+  <script src="../assets/js/imports.js"></script>
+  <script src="../assets/js/splash.js"></script>
+
+  <!-- MAIN -->
+  <main class="container">
+    <br>
+    <section class="hero">
+      <h1>Voltix</h1>
+      <p>Voltix est un bot Discord utilisant des commandes slash, avec un système multilingue.</p>
+      <div class="cta-buttons">
+        <a target="_blank" onclick="openInviteLink()" class="btn btn-primary">Ajouter Voltix a discord</a>
+        <a target="_blank" href="https://discord.gg/NaES4eU8cp" class="btn btn-secondary">Serveur support</a>
+      </div>
+    </section>
+
+    <script>
+      function openInviteLink() {
+        var width = 500;
+        var height = 750;
+
+        var left = (window.innerWidth / 2) - (width / 2);
+        var top = (window.innerHeight / 2) - (height / 2)
+
+        window.open("https://discord.com/oauth2/authorize?client_id=1369994421365375016&scope=bot+applications.commands&response_type=code&permissions=397250391551", "_blank", `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars`);
+      }
+    </script>
+  </main>
+</body>
+
+</html>
