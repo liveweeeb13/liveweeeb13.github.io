@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elios Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #161b22 100%);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid #30363d;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            background: #161b22;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid #30363d;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            background: #0d1117;
+            border: 2px solid #30363d;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            color: #e6edf3;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+
+        .search-box input::placeholder {
+            color: #7d8590;
+        }
+
+        .json-viewer {
+            background: #161b22;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #30363d;
+            margin-bottom: 2rem;
+        }
+
+        .json-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .json-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .json-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 1rem;
+            background: #21262d;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #30363d;
+            transition: all 0.3s ease;
+        }
+
+        .json-header:hover {
+            border-color: #58a6ff;
+            background: #1c2128;
+        }
+
+        .json-key {
+            color: #ff7b72;
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-arrow {
+            color: #58a6ff;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-arrow.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .json-content {
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .json-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .function-item {
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .function-item:hover {
+            border-color: #58a6ff;
+            transform: translateX(5px);
+        }
+
+        .function-name {
+            color: #58a6ff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .function-syntax {
+            background: #0d1117;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            border-left: 4px solid #3fb950;
+            font-family: 'Consolas', monospace;
+        }
+
+        .function-syntax code {
+            color: #7ee787;
+            font-size: 1rem;
+        }
+
+        .function-description {
+            color: #e6edf3;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .function-example {
+            background: #1c2128;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+
+        .function-example pre {
+            color: #bc8cff;
+            font-family: 'Consolas', monospace;
+            white-space: pre-wrap;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #238636;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: #7d8590;
+            border-top: 1px solid #30363d;
+            margin-top: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: #161b22;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #58a6ff;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .control-group {
+            background: linear-gradient(135deg, #1a1f2e 0%, #161b22 100%);
+            border: 1px solid #ff7b72;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .control-group::before {
+            content: '🔄 CONTROL STRUCTURES';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #ff7b72;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .operators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .operator-card {
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .operator-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px);
+        }
+
+        .operator-symbol {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff7b72;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .operator-name {
+            color: #58a6ff;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .operator-example {
+            background: #1c2128;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .operators-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        .copy-btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #2ea043;
+        }
+
+        .quick-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #e6edf3;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: #58a6ff;
+            background: #1c2128;
+        }
+
+        .nav-btn.active {
+            background: #58a6ff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Elios Help</h1>
+            <p>Complete documentation for Elios programming language.</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search for a function (ex: add, log, if, var...)">
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalFunctions">0</div>
+                <div class="stat-label">Available Functions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="visibleFunctions">0</div>
+                <div class="stat-label">Visible Functions</div>
+            </div>
+        </div>
+
+        <div class="quick-nav" id="quickNav">
+            <!-- Navigation buttons will be added here -->
+        </div>
+
+        <div class="control-group">
+            <div class="json-section">
+                <div class="json-header" onclick="toggleSection(this)">
+                    <div class="json-key">
+                        <span class="emoji">⚡</span>
+                        Control Structures
+                    </div>
+                    <div class="toggle-arrow">▼</div>
+                </div>
+                <div class="json-content">
+                    <div class="function-item">
+                        <div class="function-name">
+                            <span class="emoji">🎮</span>
+                            If / ElseIf / Else / EndIf
+                        </div>
+                        <div class="function-syntax">
+                            <code>§if[condition] ... §elseif[condition] ... §else ... §endif</code>
+                        </div>
+                        <div class="function-description">
+                            Complete conditional structure for creating logic in your programs. 
+                            Executes different code blocks based on evaluated conditions.
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$age >= 18]
+    §log[You are an adult!]
+§elseif[$age >= 13]
+    §log[You are a teenager]
+§else
+    §log[You are a child]
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copy example</button>
+                        </div>
+                    </div>
+
+                    <div class="function-item">
+                        <div class="function-name">
+                            <span class="emoji">🔍</span>
+                            Comparison Operators
+                        </div>
+                        <div class="function-description">
+                            Use these operators in your conditions to compare values. They work with both numbers and text.
+                        </div>
+                        
+                        <div class="operators-grid">
+                            <div class="operator-card">
+                                <div class="operator-symbol">==</div>
+                                <div class="operator-name">Equal To</div>
+                                <div class="operator-example">§if[$x == 10]</div>
+                                <div class="function-description">Checks if two values are equal</div>
+                            </div>
+                            
+                            <div class="operator-card">
+                                <div class="operator-symbol">!=</div>
+                                <div class="operator-name">Not Equal To</div>
+                                <div class="operator-example">§if[$name != "Bob"]</div>
+                                <div class="function-description">Checks if two values are different</div>
+                            </div>
+                            
+                            <div class="operator-card">
+                                <div class="operator-symbol">&lt;</div>
+                                <div class="operator-name">Less Than</div>
+                                <div class="operator-example">§if[$age < 18]</div>
+                                <div class="function-description">Checks if left value is smaller</div>
+                            </div>
+                            
+                            <div class="operator-card">
+                                <div class="operator-symbol">&gt;</div>
+                                <div class="operator-name">Greater Than</div>
+                                <div class="operator-example">§if[$score > 80]</div>
+                                <div class="function-description">Checks if left value is larger</div>
+                            </div>
+                            
+                            <div class="operator-card">
+                                <div class="operator-symbol">&lt;=</div>
+                                <div class="operator-name">Less Than or Equal</div>
+                                <div class="operator-example">§if[$temperature <= 30]</div>
+                                <div class="function-description">Checks if left value is smaller or equal</div>
+                            </div>
+                            
+                            <div class="operator-card">
+                                <div class="operator-symbol">&gt;=</div>
+                                <div class="operator-name">Greater Than or Equal</div>
+                                <div class="operator-example">§if[$level >= 5]</div>
+                                <div class="function-description">Checks if left value is larger or equal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="json-viewer">
+            <div class="json-section" id="functionsSection">
+                <div class="json-header" onclick="toggleSection(this)">
+                    <div class="json-key">
+                        <span class="emoji">📚</span>
+                        All Functions
+                    </div>
+                    <div class="toggle-arrow">▼</div>
+                </div>
+                <div class="json-content" id="functionsList">
+                    <!-- Functions will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Elios Documentation</p>
+        </div>
+    </div>
+
+    <script>
+        // ... (le reste du JavaScript reste identique)
+        const eliosData = {
+            "metadata": {
+                "version": "1.0.0",
+                "total_functions": 13,
+                "categories": ["math", "text", "time", "output", "variable"]
+            },
+            "functions": [
+                {
+                    "name": "add",
+                    "syntax": "§add[a;b]",
+                    "description": "Adds two numbers and returns the result. Perfect for simple calculations.",
+                    "example": "§add[5;3]  # → 8\n§add[$x;$y]  # Using variables",
+                    "category": "math",
+                    "emoji": "➕"
+                },
+                {
+                    "name": "date",
+                    "syntax": "§date[format]",
+                    "description": "Returns the current date and time formatted as you want.",
+                    "example": "§date[YYYY-MM-DD]  # → 2024-01-15\n§date[HH:mm:ss]    # → 14:30:45\n§date[DD/MM/YYYY]  # → 15/01/2024",
+                    "category": "time",
+                    "emoji": "📅"
+                },
+                {
+                    "name": "div",
+                    "syntax": "§div[a;b]",
+                    "description": "Divides the first number by the second. Be careful not to divide by zero!",
+                    "example": "§div[10;2]  # → 5\n§div[7;3]   # → 2.333...",
+                    "category": "math",
+                    "emoji": "➗"
+                },
+                {
+                    "name": "log",
+                    "syntax": "§log[message]",
+                    "description": "Your best friend for debugging! Displays messages in the console.",
+                    "example": "§log[Hello world!]\n§log[The value is: $result]\n§log[Result: §add[5;3]]",
+                    "category": "output",
+                    "emoji": "💬"
+                },
+                {
+                    "name": "lower",
+                    "syntax": "§lower[text]",
+                    "description": "Converts your text to lowercase. Ideal for normalizing user inputs.",
+                    "example": "§lower[HELLO]  # → hello\n§lower[TeXt MiXeD]  # → text mixed",
+                    "category": "text",
+                    "emoji": "🔤"
+                },
+                {
+                    "name": "mul",
+                    "syntax": "§mul[a;b]",
+                    "description": "Multiplies two numbers together. Essential for all mathematical calculations.",
+                    "example": "§mul[4;3]  # → 12\n§mul[2.5;4] # → 10.0",
+                    "category": "math",
+                    "emoji": "✖️"
+                },
+                {
+                    "name": "random",
+                    "syntax": "§random[min;max]",
+                    "description": "Generates a random number in the specified range. Perfect for games!",
+                    "example": "§random[1;6]    # → 4 (like a dice)\n§random[1;100]  # → 42 (the universal answer)",
+                    "category": "math",
+                    "emoji": "🎲"
+                },
+                {
+                    "name": "round",
+                    "syntax": "§round[number]",
+                    "description": "Rounds a decimal number to the nearest integer. No more decimal numbers!",
+                    "example": "§round[3.2]  # → 3\n§round[3.7]  # → 4\n§round[2.5]  # → 3",
+                    "category": "math",
+                    "emoji": "🔢"
+                },
+                {
+                    "name": "sub",
+                    "syntax": "§sub[a;b]",
+                    "description": "Subtracts the second number from the first. The basis of arithmetic.",
+                    "example": "§sub[10;4]  # → 6\n§sub[5;8]   # → -3",
+                    "category": "math",
+                    "emoji": "➖"
+                },
+                {
+                    "name": "time",
+                    "syntax": "§time[]",
+                    "description": "Returns the current timestamp in milliseconds. Used to measure elapsed time.",
+                    "example": "§time[]  # → 1705339845123\n# Typical usage:\n§var[start;§time[]]\n# ... some code ...\n§var[duration;§sub[§time[];$start]]",
+                    "category": "time",
+                    "emoji": "⏰"
+                },
+                {
+                    "name": "trim",
+                    "syntax": "§trim[text]",
+                    "description": "Cleans your text by removing unnecessary spaces at the beginning and end.",
+                    "example": "§trim[  Hello  ]  # → Hello\n§trim[  Text with spaces  ]  # → Text with spaces",
+                    "category": "text",
+                    "emoji": "✂️"
+                },
+                {
+                    "name": "upper",
+                    "syntax": "§upper[text]",
+                    "description": "Converts your text to UPPERCASE. Ideal for titles or emphasis.",
+                    "example": "§upper[hello]  # → HELLO\n§upper[elios]  # → ELIOS",
+                    "category": "text",
+                    "emoji": "🔠"
+                },
+                {
+                    "name": "var",
+                    "syntax": "§var[name;value]",
+                    "description": "Creates a variable to store values. The cornerstone of any program!",
+                    "example": "§var[age;25]\n§var[name;Alice]\n§var[result;§add[5;3]]\n# Usage: $age, $name, $result",
+                    "category": "variable",
+                    "emoji": "💾"
+                }
+            ]
+        };
+
+        const categoryEmojis = {
+            "math": "🧮",
+            "text": "📝", 
+            "time": "⏱️",
+            "output": "📤",
+            "variable": "🗃️"
+        };
+
+        function displayFunctions(functions) {
+            const container = document.getElementById('functionsList');
+            container.innerHTML = '';
+
+            functions.forEach(func => {
+                const item = document.createElement('div');
+                item.className = 'function-item';
+                item.setAttribute('data-category', func.category);
+                item.setAttribute('data-name', func.name);
+                
+                item.innerHTML = `
+                    <div class="function-name">
+                        <span class="emoji">${func.emoji}</span>
+                        ${func.name}
+                        <span class="category-badge">${categoryEmojis[func.category]} ${func.category}</span>
+                    </div>
+                    <div class="function-syntax">
+                        <code>${func.syntax}</code>
+                    </div>
+                    <div class="function-description">
+                        ${func.description}
+                    </div>
+                    <div class="function-example">
+                        <pre>${func.example}</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copy example</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+
+            updateStats(functions.length);
+        }
+
+        function setupQuickNav() {
+            const navContainer = document.getElementById('quickNav');
+            const categories = [...new Set(eliosData.functions.map(f => f.category))];
+            
+            const allButton = document.createElement('button');
+            allButton.className = 'nav-btn active';
+            allButton.textContent = '🌟 All Functions';
+            allButton.onclick = () => filterByCategory('all');
+            navContainer.appendChild(allButton);
+
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'nav-btn';
+                button.innerHTML = `${categoryEmojis[category]} ${category}`;
+                button.onclick = () => filterByCategory(category);
+                navContainer.appendChild(button);
+            });
+        }
+
+        function filterByCategory(category) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            let filteredFunctions;
+            if (category === 'all') {
+                filteredFunctions = eliosData.functions;
+            } else {
+                filteredFunctions = eliosData.functions.filter(func => func.category === category);
+            }
+
+            displayFunctions(filteredFunctions);
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector('.nav-btn').classList.add('active'); 
+
+                if (searchTerm === '') {
+                    displayFunctions(eliosData.functions);
+                    return;
+                }
+
+                const filteredFunctions = eliosData.functions.filter(func => 
+                    func.name.toLowerCase().includes(searchTerm) ||
+                    func.description.toLowerCase().includes(searchTerm) ||
+                    func.syntax.toLowerCase().includes(searchTerm) ||
+                    func.category.toLowerCase().includes(searchTerm)
+                );
+
+                displayFunctions(filteredFunctions);
+            });
+        }
+
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('.toggle-arrow');
+            
+            content.classList.toggle('collapsed');
+            arrow.classList.toggle('collapsed');
+        }
+
+        function updateStats(visibleCount) {
+            document.getElementById('totalFunctions').textContent = eliosData.functions.length;
+            document.getElementById('visibleFunctions').textContent = visibleCount;
+        }
+
+        function copyCode(button) {
+            const code = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            eliosData.functions.sort((a, b) => a.name.localeCompare(b.name));
+            
+            displayFunctions(eliosData.functions);
+            setupQuickNav();
+            setupSearch();
+
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === '/') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
