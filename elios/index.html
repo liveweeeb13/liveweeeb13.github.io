@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -324,11 +325,11 @@
             .header h1 {
                 font-size: 2rem;
             }
-            
+
             .header p {
                 font-size: 1.1rem;
             }
-            
+
             .stats {
                 flex-direction: column;
                 align-items: center;
@@ -386,13 +387,40 @@
             background: #58a6ff;
             color: white;
         }
+
+        .button-download {
+            background-color: #007acc;
+            color: #fff;
+            padding: 12px 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <h1>🤖 Elios Help</h1>
             <p>Complete documentation for Elios programming language.</p>
+            <br>
+            <button class="button button-download"
+                onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases/download/1.2.0/Elios.windows.1.2.0.zip', '_blank')">
+                <span>Télécharger pour Windows</span>
+                <svg class="download-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M.5 9.9a.5.5 0 0 1 .5.5v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4a.5.5 0 0 1 1 0v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-4a.5.5 0 0 1 .5-.5zm7.5.5a.5.5 0 0 0 .5-.5V2.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 2.707V9.9a.5.5 0 0 0 .5.5z">
+                    </path>
+                </svg>
+            </button>
         </div>
 
         <div class="search-box">
@@ -405,7 +433,7 @@
                 <div class="stat-label">Available Functions</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">5</div>
+                <div class="stat-number">6</div>
                 <div class="stat-label">Categories</div>
             </div>
             <div class="stat-item">
@@ -437,7 +465,7 @@
                             <code>§if[condition] ... §elseif[condition] ... §else ... §endif</code>
                         </div>
                         <div class="function-description">
-                            Complete conditional structure for creating logic in your programs. 
+                            Complete conditional structure for creating logic in your programs.
                             Executes different code blocks based on evaluated conditions.
                         </div>
                         <div class="function-example">
@@ -458,9 +486,10 @@
                             Comparison Operators
                         </div>
                         <div class="function-description">
-                            Use these operators in your conditions to compare values. They work with both numbers and text.
+                            Use these operators in your conditions to compare values. They work with both numbers and
+                            text.
                         </div>
-                        
+
                         <div class="operators-grid">
                             <div class="operator-card">
                                 <div class="operator-symbol">==</div>
@@ -468,202 +497,211 @@
                                 <div class="operator-example">§if[$x == 10]</div>
                                 <div class="function-description">Checks if two values are equal</div>
                             </div>
-                            
+
                             <div class="operator-card">
                                 <div class="operator-symbol">!=</div>
                                 <div class="operator-name">Not Equal To</div>
                                 <div class="operator-example">§if[$name != "Bob"]</div>
                                 <div class="function-description">Checks if two values are different</div>
                             </div>
-                            
+
                             <div class="operator-card">
                                 <div class="operator-symbol">&lt;</div>
                                 <div class="operator-name">Less Than</div>
                                 <div class="operator-example">§if[$age < 18]</div>
-                                <div class="function-description">Checks if left value is smaller</div>
-                            </div>
-                            
-                            <div class="operator-card">
-                                <div class="operator-symbol">&gt;</div>
-                                <div class="operator-name">Greater Than</div>
-                                <div class="operator-example">§if[$score > 80]</div>
-                                <div class="function-description">Checks if left value is larger</div>
-                            </div>
-                            
-                            <div class="operator-card">
-                                <div class="operator-symbol">&lt;=</div>
-                                <div class="operator-name">Less Than or Equal</div>
-                                <div class="operator-example">§if[$temperature <= 30]</div>
-                                <div class="function-description">Checks if left value is smaller or equal</div>
-                            </div>
-                            
-                            <div class="operator-card">
-                                <div class="operator-symbol">&gt;=</div>
-                                <div class="operator-name">Greater Than or Equal</div>
-                                <div class="operator-example">§if[$level >= 5]</div>
-                                <div class="function-description">Checks if left value is larger or equal</div>
+                                        <div class="function-description">Checks if left value is smaller</div>
+                                </div>
+
+                                <div class="operator-card">
+                                    <div class="operator-symbol">&gt;</div>
+                                    <div class="operator-name">Greater Than</div>
+                                    <div class="operator-example">§if[$score > 80]</div>
+                                    <div class="function-description">Checks if left value is larger</div>
+                                </div>
+
+                                <div class="operator-card">
+                                    <div class="operator-symbol">&lt;=</div>
+                                    <div class="operator-name">Less Than or Equal</div>
+                                    <div class="operator-example">§if[$temperature <= 30]</div>
+                                            <div class="function-description">Checks if left value is smaller or equal
+                                            </div>
+                                    </div>
+
+                                    <div class="operator-card">
+                                        <div class="operator-symbol">&gt;=</div>
+                                        <div class="operator-name">Greater Than or Equal</div>
+                                        <div class="operator-example">§if[$level >= 5]</div>
+                                        <div class="function-description">Checks if left value is larger or equal</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="json-viewer">
-            <div class="json-section" id="functionsSection">
-                <div class="json-header" onclick="toggleSection(this)">
-                    <div class="json-key">
-                        <span class="emoji">📚</span>
-                        All Functions
+                <div class="json-viewer">
+                    <div class="json-section" id="functionsSection">
+                        <div class="json-header" onclick="toggleSection(this)">
+                            <div class="json-key">
+                                <span class="emoji">📚</span>
+                                All Functions
+                            </div>
+                            <div class="toggle-arrow">▼</div>
+                        </div>
+                        <div class="json-content" id="functionsList">
+                            <!-- Functions will be added here dynamically -->
+                        </div>
                     </div>
-                    <div class="toggle-arrow">▼</div>
                 </div>
-                <div class="json-content" id="functionsList">
-                    <!-- Functions will be added here dynamically -->
+
+                <div class="footer">
+                    <p>Elios Documentation</p>
                 </div>
             </div>
-        </div>
 
-        <div class="footer">
-            <p>Elios Documentation</p>
-        </div>
-    </div>
+            <script>
+                const eliosData = {
+                    "metadata": {
+                        "version": "1.1.1",
+                        "total_functions": 15,
+                        "categories": ["math", "text", "time", "output", "variable", "control"]
+                    },
+                    "functions": [
+                        {
+                            "name": "add",
+                            "syntax": "§add[a;b]",
+                            "description": "Adds two numbers and returns the result. Perfect for simple calculations.",
+                            "example": "§add[5;3]  # → 8\n§add[$x;$y]  # Using variables",
+                            "category": "math",
+                            "emoji": "➕"
+                        },
+                        {
+                            "name": "date",
+                            "syntax": "§date[format]",
+                            "description": "Returns the current date and time formatted as you want.",
+                            "example": "§date[YYYY-MM-DD]  # → 2024-01-15\n§date[HH:mm:ss]    # → 14:30:45\n§date[DD/MM/YYYY]  # → 15/01/2024",
+                            "category": "time",
+                            "emoji": "📅"
+                        },
+                        {
+                            "name": "div",
+                            "syntax": "§div[a;b]",
+                            "description": "Divides the first number by the second. Be careful not to divide by zero!",
+                            "example": "§div[10;2]  # → 5\n§div[7;3]   # → 2.333...",
+                            "category": "math",
+                            "emoji": "➗"
+                        },
+                        {
+                            "name": "log",
+                            "syntax": "§log[message]",
+                            "description": "Your best friend for debugging! Displays messages in the console.",
+                            "example": "§log[Hello world!]\n§log[The value is: $result]\n§log[Result: §add[5;3]]",
+                            "category": "output",
+                            "emoji": "💬"
+                        },
+                        {
+                            "name": "lower",
+                            "syntax": "§lower[text]",
+                            "description": "Converts your text to lowercase. Ideal for normalizing user inputs.",
+                            "example": "§lower[HELLO]  # → hello\n§lower[TeXt MiXeD]  # → text mixed",
+                            "category": "text",
+                            "emoji": "🔤"
+                        },
+                        {
+                            "name": "mul",
+                            "syntax": "§mul[a;b]",
+                            "description": "Multiplies two numbers together. Essential for all mathematical calculations.",
+                            "example": "§mul[4;3]  # → 12\n§mul[2.5;4] # → 10.0",
+                            "category": "math",
+                            "emoji": "✖️"
+                        },
+                        {
+                            "name": "random",
+                            "syntax": "§random[min;max]",
+                            "description": "Generates a random number in the specified range. Perfect for games!",
+                            "example": "§random[1;6]    # → 4 (like a dice)\n§random[1;100]  # → 42 (the universal answer)",
+                            "category": "math",
+                            "emoji": "🎲"
+                        },
+                        {
+                            "name": "round",
+                            "syntax": "§round[number]",
+                            "description": "Rounds a decimal number to the nearest integer. No more decimal numbers!",
+                            "example": "§round[3.2]  # → 3\n§round[3.7]  # → 4\n§round[2.5]  # → 3",
+                            "category": "math",
+                            "emoji": "🔢"
+                        },
+                        {
+                            "name": "sleep",
+                            "syntax": "§sleep[milliseconds]",
+                            "description": "Pauses program execution for the specified number of milliseconds.",
+                            "example": "§log[Waiting 2 seconds...]\n§sleep[2000]\n§log[Done waiting!]",
+                            "category": "control",
+                            "emoji": "💤"
+                        },
+                        {
+                            "name": "sub",
+                            "syntax": "§sub[a;b]",
+                            "description": "Subtracts the second number from the first. The basis of arithmetic.",
+                            "example": "§sub[10;4]  # → 6\n§sub[5;8]   # → -3",
+                            "category": "math",
+                            "emoji": "➖"
+                        },
+                        {
+                            "name": "time",
+                            "syntax": "§time[]",
+                            "description": "Returns the current timestamp in milliseconds. Used to measure elapsed time.",
+                            "example": "§time[]  # → 1705339845123\n# Typical usage:\n§var[start;§time[]]\n# ... some code ...\n§var[duration;§sub[§time[];$start]]",
+                            "category": "time",
+                            "emoji": "⏰"
+                        },
+                        {
+                            "name": "trim",
+                            "syntax": "§trim[text]",
+                            "description": "Cleans your text by removing unnecessary spaces at the beginning and end.",
+                            "example": "§trim[  Hello  ]  # → Hello\n§trim[  Text with spaces  ]  # → Text with spaces",
+                            "category": "text",
+                            "emoji": "✂️"
+                        },
+                        {
+                            "name": "upper",
+                            "syntax": "§upper[text]",
+                            "description": "Converts your text to UPPERCASE. Ideal for titles or emphasis.",
+                            "example": "§upper[hello]  # → HELLO\n§upper[elios]  # → ELIOS",
+                            "category": "text",
+                            "emoji": "🔠"
+                        },
+                        {
+                            "name": "var",
+                            "syntax": "§var[name;value]",
+                            "description": "Creates a variable to store values. The cornerstone of any program!",
+                            "example": "§var[age;25]\n§var[name;Alice]\n§var[result;§add[5;3]]\n# Usage: $age, $name, $result",
+                            "category": "variable",
+                            "emoji": "💾"
+                        }
+                    ]
+                };
 
-    <script>
-        // ... (le reste du JavaScript reste identique)
-        const eliosData = {
-            "metadata": {
-                "version": "1.0.0",
-                "total_functions": 13,
-                "categories": ["math", "text", "time", "output", "variable"]
-            },
-            "functions": [
-                {
-                    "name": "add",
-                    "syntax": "§add[a;b]",
-                    "description": "Adds two numbers and returns the result. Perfect for simple calculations.",
-                    "example": "§add[5;3]  # → 8\n§add[$x;$y]  # Using variables",
-                    "category": "math",
-                    "emoji": "➕"
-                },
-                {
-                    "name": "date",
-                    "syntax": "§date[format]",
-                    "description": "Returns the current date and time formatted as you want.",
-                    "example": "§date[YYYY-MM-DD]  # → 2024-01-15\n§date[HH:mm:ss]    # → 14:30:45\n§date[DD/MM/YYYY]  # → 15/01/2024",
-                    "category": "time",
-                    "emoji": "📅"
-                },
-                {
-                    "name": "div",
-                    "syntax": "§div[a;b]",
-                    "description": "Divides the first number by the second. Be careful not to divide by zero!",
-                    "example": "§div[10;2]  # → 5\n§div[7;3]   # → 2.333...",
-                    "category": "math",
-                    "emoji": "➗"
-                },
-                {
-                    "name": "log",
-                    "syntax": "§log[message]",
-                    "description": "Your best friend for debugging! Displays messages in the console.",
-                    "example": "§log[Hello world!]\n§log[The value is: $result]\n§log[Result: §add[5;3]]",
-                    "category": "output",
-                    "emoji": "💬"
-                },
-                {
-                    "name": "lower",
-                    "syntax": "§lower[text]",
-                    "description": "Converts your text to lowercase. Ideal for normalizing user inputs.",
-                    "example": "§lower[HELLO]  # → hello\n§lower[TeXt MiXeD]  # → text mixed",
-                    "category": "text",
-                    "emoji": "🔤"
-                },
-                {
-                    "name": "mul",
-                    "syntax": "§mul[a;b]",
-                    "description": "Multiplies two numbers together. Essential for all mathematical calculations.",
-                    "example": "§mul[4;3]  # → 12\n§mul[2.5;4] # → 10.0",
-                    "category": "math",
-                    "emoji": "✖️"
-                },
-                {
-                    "name": "random",
-                    "syntax": "§random[min;max]",
-                    "description": "Generates a random number in the specified range. Perfect for games!",
-                    "example": "§random[1;6]    # → 4 (like a dice)\n§random[1;100]  # → 42 (the universal answer)",
-                    "category": "math",
-                    "emoji": "🎲"
-                },
-                {
-                    "name": "round",
-                    "syntax": "§round[number]",
-                    "description": "Rounds a decimal number to the nearest integer. No more decimal numbers!",
-                    "example": "§round[3.2]  # → 3\n§round[3.7]  # → 4\n§round[2.5]  # → 3",
-                    "category": "math",
-                    "emoji": "🔢"
-                },
-                {
-                    "name": "sub",
-                    "syntax": "§sub[a;b]",
-                    "description": "Subtracts the second number from the first. The basis of arithmetic.",
-                    "example": "§sub[10;4]  # → 6\n§sub[5;8]   # → -3",
-                    "category": "math",
-                    "emoji": "➖"
-                },
-                {
-                    "name": "time",
-                    "syntax": "§time[]",
-                    "description": "Returns the current timestamp in milliseconds. Used to measure elapsed time.",
-                    "example": "§time[]  # → 1705339845123\n# Typical usage:\n§var[start;§time[]]\n# ... some code ...\n§var[duration;§sub[§time[];$start]]",
-                    "category": "time",
-                    "emoji": "⏰"
-                },
-                {
-                    "name": "trim",
-                    "syntax": "§trim[text]",
-                    "description": "Cleans your text by removing unnecessary spaces at the beginning and end.",
-                    "example": "§trim[  Hello  ]  # → Hello\n§trim[  Text with spaces  ]  # → Text with spaces",
-                    "category": "text",
-                    "emoji": "✂️"
-                },
-                {
-                    "name": "upper",
-                    "syntax": "§upper[text]",
-                    "description": "Converts your text to UPPERCASE. Ideal for titles or emphasis.",
-                    "example": "§upper[hello]  # → HELLO\n§upper[elios]  # → ELIOS",
-                    "category": "text",
-                    "emoji": "🔠"
-                },
-                {
-                    "name": "var",
-                    "syntax": "§var[name;value]",
-                    "description": "Creates a variable to store values. The cornerstone of any program!",
-                    "example": "§var[age;25]\n§var[name;Alice]\n§var[result;§add[5;3]]\n# Usage: $age, $name, $result",
-                    "category": "variable",
-                    "emoji": "💾"
-                }
-            ]
-        };
+                const categoryEmojis = {
+                    "math": "🧮",
+                    "text": "📝",
+                    "time": "⏱️",
+                    "output": "📤",
+                    "variable": "🗃️",
+                    "control": "🎮"
+                };
 
-        const categoryEmojis = {
-            "math": "🧮",
-            "text": "📝", 
-            "time": "⏱️",
-            "output": "📤",
-            "variable": "🗃️"
-        };
+                function displayFunctions(functions) {
+                    const container = document.getElementById('functionsList');
+                    container.innerHTML = '';
 
-        function displayFunctions(functions) {
-            const container = document.getElementById('functionsList');
-            container.innerHTML = '';
+                    functions.forEach(func => {
+                        const item = document.createElement('div');
+                        item.className = 'function-item';
+                        item.setAttribute('data-category', func.category);
+                        item.setAttribute('data-name', func.name);
 
-            functions.forEach(func => {
-                const item = document.createElement('div');
-                item.className = 'function-item';
-                item.setAttribute('data-category', func.category);
-                item.setAttribute('data-name', func.name);
-                
-                item.innerHTML = `
+                        item.innerHTML = `
                     <div class="function-name">
                         <span class="emoji">${func.emoji}</span>
                         ${func.name}
@@ -680,112 +718,113 @@
                         <button class="copy-btn" onclick="copyCode(this)">📋 Copy example</button>
                     </div>
                 `;
-                container.appendChild(item);
-            });
+                        container.appendChild(item);
+                    });
 
-            updateStats(functions.length);
-        }
+                    updateStats(functions.length);
+                }
 
-        function setupQuickNav() {
-            const navContainer = document.getElementById('quickNav');
-            const categories = [...new Set(eliosData.functions.map(f => f.category))];
-            
-            const allButton = document.createElement('button');
-            allButton.className = 'nav-btn active';
-            allButton.textContent = '🌟 All Functions';
-            allButton.onclick = () => filterByCategory('all');
-            navContainer.appendChild(allButton);
+                function setupQuickNav() {
+                    const navContainer = document.getElementById('quickNav');
+                    const categories = [...new Set(eliosData.functions.map(f => f.category))];
 
-            categories.forEach(category => {
-                const button = document.createElement('button');
-                button.className = 'nav-btn';
-                button.innerHTML = `${categoryEmojis[category]} ${category}`;
-                button.onclick = () => filterByCategory(category);
-                navContainer.appendChild(button);
-            });
-        }
+                    const allButton = document.createElement('button');
+                    allButton.className = 'nav-btn active';
+                    allButton.textContent = '🌟 All Functions';
+                    allButton.onclick = () => filterByCategory('all');
+                    navContainer.appendChild(allButton);
 
-        function filterByCategory(category) {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+                    categories.forEach(category => {
+                        const button = document.createElement('button');
+                        button.className = 'nav-btn';
+                        button.innerHTML = `${categoryEmojis[category]} ${category}`;
+                        button.onclick = () => filterByCategory(category);
+                        navContainer.appendChild(button);
+                    });
+                }
 
-            let filteredFunctions;
-            if (category === 'all') {
-                filteredFunctions = eliosData.functions;
-            } else {
-                filteredFunctions = eliosData.functions.filter(func => func.category === category);
-            }
+                function filterByCategory(category) {
+                    document.querySelectorAll('.nav-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    event.target.classList.add('active');
 
-            displayFunctions(filteredFunctions);
-        }
+                    let filteredFunctions;
+                    if (category === 'all') {
+                        filteredFunctions = eliosData.functions;
+                    } else {
+                        filteredFunctions = eliosData.functions.filter(func => func.category === category);
+                    }
 
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            
-            searchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase().trim();
-                
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                document.querySelector('.nav-btn').classList.add('active'); 
+                    displayFunctions(filteredFunctions);
+                }
 
-                if (searchTerm === '') {
+                function setupSearch() {
+                    const searchInput = document.getElementById('searchInput');
+
+                    searchInput.addEventListener('input', function (e) {
+                        const searchTerm = e.target.value.toLowerCase().trim();
+
+                        document.querySelectorAll('.nav-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        document.querySelector('.nav-btn').classList.add('active');
+
+                        if (searchTerm === '') {
+                            displayFunctions(eliosData.functions);
+                            return;
+                        }
+
+                        const filteredFunctions = eliosData.functions.filter(func =>
+                            func.name.toLowerCase().includes(searchTerm) ||
+                            func.description.toLowerCase().includes(searchTerm) ||
+                            func.syntax.toLowerCase().includes(searchTerm) ||
+                            func.category.toLowerCase().includes(searchTerm)
+                        );
+
+                        displayFunctions(filteredFunctions);
+                    });
+                }
+
+                function toggleSection(header) {
+                    const content = header.nextElementSibling;
+                    const arrow = header.querySelector('.toggle-arrow');
+
+                    content.classList.toggle('collapsed');
+                    arrow.classList.toggle('collapsed');
+                }
+
+                function updateStats(visibleCount) {
+                    document.getElementById('totalFunctions').textContent = eliosData.functions.length;
+                    document.getElementById('visibleFunctions').textContent = visibleCount;
+                }
+
+                function copyCode(button) {
+                    const code = button.previousElementSibling.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalText = button.textContent;
+                        button.textContent = '✅ Copied!';
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                        }, 2000);
+                    });
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    eliosData.functions.sort((a, b) => a.name.localeCompare(b.name));
+
                     displayFunctions(eliosData.functions);
-                    return;
-                }
+                    setupQuickNav();
+                    setupSearch();
 
-                const filteredFunctions = eliosData.functions.filter(func => 
-                    func.name.toLowerCase().includes(searchTerm) ||
-                    func.description.toLowerCase().includes(searchTerm) ||
-                    func.syntax.toLowerCase().includes(searchTerm) ||
-                    func.category.toLowerCase().includes(searchTerm)
-                );
-
-                displayFunctions(filteredFunctions);
-            });
-        }
-
-        function toggleSection(header) {
-            const content = header.nextElementSibling;
-            const arrow = header.querySelector('.toggle-arrow');
-            
-            content.classList.toggle('collapsed');
-            arrow.classList.toggle('collapsed');
-        }
-
-        function updateStats(visibleCount) {
-            document.getElementById('totalFunctions').textContent = eliosData.functions.length;
-            document.getElementById('visibleFunctions').textContent = visibleCount;
-        }
-
-        function copyCode(button) {
-            const code = button.previousElementSibling.textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = button.textContent;
-                button.textContent = '✅ Copied!';
-                setTimeout(() => {
-                    button.textContent = originalText;
-                }, 2000);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            eliosData.functions.sort((a, b) => a.name.localeCompare(b.name));
-            
-            displayFunctions(eliosData.functions);
-            setupQuickNav();
-            setupSearch();
-
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === '/') {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
-            });
-        });
-    </script>
+                    document.addEventListener('keydown', function (e) {
+                        if (e.ctrlKey && e.key === '/') {
+                            e.preventDefault();
+                            document.getElementById('searchInput').focus();
+                        }
+                    });
+                });
+            </script>
 </body>
+
 </html>
