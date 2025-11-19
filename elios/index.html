@@ -53,6 +53,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             z-index: 1000;
+            transition: transform 220ms cubic-bezier(.2,.8,.2,1);
         }
 
         .sidebar::-webkit-scrollbar {
@@ -132,6 +133,132 @@
             color: white;
             font-weight: 500;
         }
+
+        /* Sidebar toggle (mobile) */
+        .sidebar-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--accent);
+            font-size: 1.25rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive: collapse sidebar into off-canvas panel */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-110%);
+                box-shadow: 0 8px 24px rgba(2,6,23,0.6);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle { display: inline-block; }
+
+            /* Make the toggle fixed and always accessible on small screens */
+            .sidebar-toggle {
+                position: fixed;
+                left: 12px;
+                top: 12px;
+                z-index: 1101;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+            }
+
+            .main-content { margin-left: 0; padding: 1.5rem; }
+        }
+
+        /* Small tweak for very narrow screens */
+        @media (max-width: 480px) {
+            .sidebar { width: 260px; }
+            .sidebar-toggle { font-size: 1.1rem; }
+        }
+
+        /* Search */
+        .search-container {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(13,17,23,0.02), transparent);
+        }
+
+        #doc-search {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        #doc-search::placeholder { color: var(--text-secondary); }
+
+        .no-results { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+
+        /* Highlighted search result in main content */
+        .function-card.search-match {
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(88,166,255,0.06);
+            transform: translateY(-2px);
+        }
+
+        /* Collapsible TOC */
+        .toc .collapsible-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .toc .collapsible-button:hover {
+            color: var(--text-primary);
+        }
+
+        .toc .submenu {
+            list-style: none;
+            padding-left: 0.35rem;
+            margin: 0.25rem 0 0.75rem 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 220ms cubic-bezier(.2,.8,.2,1);
+            border-left: 2px solid transparent;
+        }
+
+        .toc .submenu li { margin: 0.15rem 0; }
+
+        .toc .submenu li a {
+            display: block;
+            padding: 0.4rem 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .toc .submenu li a:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .toc .collapsible-button.open { color: var(--text-primary); }
+        .toc .collapsible-button.open .arrow { transform: rotate(90deg); }
+
+        .toc .arrow { transition: transform 0.15s ease; color: var(--text-secondary); }
+
+        /* When open, allow enough height for content (large value for simplicity) */
+        .collapsible-button.open + .submenu { max-height: 640px; border-left-color: var(--border); }
 
         /* Main Content Styles */
         .main-content {
@@ -390,8 +517,13 @@
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-header">
+                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
                 <h1>Elios Docs</h1>
-                <div class="version">v1.3.0</div>
+                <div class="version">v1.4.0</div>
+            </div>
+            <div class="search-container">
+                <input id="doc-search" placeholder="Rechercher les fonctions..." aria-label="Rechercher la documentation" />
+                <div id="no-results" class="no-results">Aucun résultat</div>
             </div>
 
             <div class="nav-section">
@@ -405,15 +537,71 @@
 
             <div class="nav-section">
                 <h3>Functions</h3>
-                <ul class="nav-links">
-                    <li><a href="#output-functions" class="nav-link">Output</a></li>
-                    <li><a href="#input-functions" class="nav-link">Input</a></li>
-                    <li><a href="#variable-functions" class="nav-link">Variables</a></li>
-                    <li><a href="#math-functions" class="nav-link">Math</a></li>
-                    <li><a href="#text-functions" class="nav-link">Text</a></li>
-                    <li><a href="#time-functions" class="nav-link">Time</a></li>
-                    <li><a href="#system-functions" class="nav-link">System</a></li>
-                </ul>
+                <nav class="toc">
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Output <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#log" class="nav-link">log</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Input <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#input" class="nav-link">input</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Variables <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#var" class="nav-link">var</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Math <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#add" class="nav-link">add</a></li>
+                            <li><a href="#sub" class="nav-link">sub</a></li>
+                            <li><a href="#mul" class="nav-link">mul</a></li>
+                            <li><a href="#div" class="nav-link">div</a></li>
+                            <li><a href="#round" class="nav-link">round</a></li>
+                            <li><a href="#random" class="nav-link">random</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Text <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#upper" class="nav-link">upper</a></li>
+                            <li><a href="#lower" class="nav-link">lower</a></li>
+                            <li><a href="#trim" class="nav-link">trim</a></li>
+                            <li><a href="#len" class="nav-link">len</a></li>
+                            <li><a href="#contains" class="nav-link">contains</a></li>
+                            <li><a href="#equalsIgnoreCase" class="nav-link">equalsIgnoreCase</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Time & System <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#time" class="nav-link">time</a></li>
+                            <li><a href="#date" class="nav-link">date</a></li>
+                            <li><a href="#sleep" class="nav-link">sleep</a></li>
+                            <li><a href="#clear" class="nav-link">clear</a></li>
+                            <li><a href="#exit" class="nav-link">exit</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Control <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#conditionals" class="nav-link">if / elseif / else</a></li>
+                            <li><a href="#operators" class="nav-link">operators</a></li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
 
             <div class="nav-section">
@@ -431,20 +619,20 @@
             <section id="introduction" class="content-section">
                 <div class="intro-card">
                     <h2>Introduction to Elios</h2>
-                    <p>Elios is a simple, beginner-friendly programming language designed for learning and rapid prototyping. With a clean syntax and intuitive functions, you can start building programs in minutes.</p>
-                    
+                    <p>Elios is a small educational scripting language with a concise syntax built around single-letter commands prefixed by "§". It's designed for quick prototyping, learning programming concepts, and building simple interactive scripts.</p>
+
                     <div class="quick-actions">
-                        <a href="#installation" class="action-card">
-                            <div class="action-icon">🚀</div>
-                            <div>Get Started</div>
-                        </a>
                         <a href="#quick-start" class="action-card">
                             <div class="action-icon">⚡</div>
                             <div>Quick Start</div>
                         </a>
-                        <a href="#output-functions" class="action-card">
+                        <a href="#functions" class="action-card">
                             <div class="action-icon">📚</div>
                             <div>View Functions</div>
+                        </a>
+                        <a href="#whats-new" class="action-card">
+                            <div class="action-icon">✨</div>
+                            <div>What's New</div>
                         </a>
                     </div>
                 </div>
@@ -461,7 +649,7 @@
                         <div class="function-description">
                             Download the pre-built executable for Windows.
                         </div>
-                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases/download/1.3.0/Elios.windows.1.3.0.zip', '_blank')">
+                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases/download/1.4.0/Elios.windows.1.4.0.zip', '_blank')">
                             Download for Windows
                         </button>
                     </div>
@@ -480,21 +668,20 @@
             <!-- Quick Start -->
             <section id="quick-start" class="content-section">
                 <h2>Quick Start</h2>
-                <p>Here's a simple example to get you started:</p>
-                
+                <p>Create a file with `.elios` extension and run it with `npx elios &lt;file&gt;` or `node cli.js &lt;file&gt;` during development.</p>
+
                 <div class="function-example">
-                    <pre># Simple greeting program
+                    <pre># Greeting example
 §clear[]
 §log[Welcome to Elios!]
 
 §var[name; §input[What's your name?]]
-§var[age; §input[How old are you?]]
-
 §log[Hello $name!]
-§if[$age >= 18]
-    §log[You are an adult!]
-§else
-    §log[You are a minor!]
+
+# Check for a substring
+§var[hasPass; §contains[$name; "pass"]]
+§if[$hasPass == true]
+    §log[Your name contains "pass"]
 §endif</pre>
                     <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
                 </div>
@@ -506,21 +693,15 @@
                 <p>Functions for displaying information to the user.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="log" class="function-card">
                         <div class="function-header">
                             <div class="function-name">log</div>
                             <div class="function-category">output</div>
                         </div>
                         <div class="function-syntax">§log[message]</div>
-                        <div class="function-description">
-                            Displays a message in the console. Supports variables and nested functions.
-                        </div>
-                        <div class="function-example">
-                            <pre>§log[Hello World!]
-§log[The result is: §add[5;3]]
-§log[Welcome $name!]</pre>
-                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
-                        </div>
+                        <div class="function-description">Prints a message to the console. Supports variables and nested functions.</div>
+                        <div class="function-example"><pre>§log[Hello World!]
+§log[Result: §add[5;3]]</pre></div>
                     </div>
                 </div>
             </section>
@@ -531,7 +712,7 @@
                 <p>Functions for getting user input.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="input" class="function-card">
                         <div class="function-header">
                             <div class="function-name">input</div>
                             <div class="function-category">input</div>
@@ -555,7 +736,7 @@
                 <p>Functions for storing and managing data.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="var" class="function-card">
                         <div class="function-header">
                             <div class="function-name">var</div>
                             <div class="function-category">variable</div>
@@ -581,7 +762,7 @@
                 <p>Functions for mathematical operations.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="add" class="function-card">
                         <div class="function-header">
                             <div class="function-name">add</div>
                             <div class="function-category">math</div>
@@ -597,7 +778,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="sub" class="function-card">
                         <div class="function-header">
                             <div class="function-name">sub</div>
                             <div class="function-category">math</div>
@@ -612,7 +793,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="mul" class="function-card">
                         <div class="function-header">
                             <div class="function-name">mul</div>
                             <div class="function-category">math</div>
@@ -627,7 +808,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="div" class="function-card">
                         <div class="function-header">
                             <div class="function-name">div</div>
                             <div class="function-category">math</div>
@@ -642,7 +823,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="random" class="function-card">
                         <div class="function-header">
                             <div class="function-name">random</div>
                             <div class="function-category">math</div>
@@ -658,7 +839,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="round" class="function-card">
                         <div class="function-header">
                             <div class="function-name">round</div>
                             <div class="function-category">math</div>
@@ -682,7 +863,7 @@
                 <p>Functions for string manipulation and comparison.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="upper" class="function-card">
                         <div class="function-header">
                             <div class="function-name">upper</div>
                             <div class="function-category">text</div>
@@ -697,7 +878,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="lower" class="function-card">
                         <div class="function-header">
                             <div class="function-name">lower</div>
                             <div class="function-category">text</div>
@@ -712,22 +893,60 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="trim" class="function-card">
                         <div class="function-header">
                             <div class="function-name">trim</div>
                             <div class="function-category">text</div>
                         </div>
                         <div class="function-syntax">§trim[text]</div>
                         <div class="function-description">
-                            Removes whitespace from both ends of text.
+                                Removes all whitespace characters from the provided text, including internal spaces. For example, `§trim[  hello   world ]` returns `helloworld` (internal spaces are removed).
+                            </div>
+                            <div class="function-example">
+                                <pre>§trim[  hello   world ]  # → helloworld
+    §trim[  hello  ]          # → hello</pre>
+                                <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                            </div>
+                    </div>
+
+                    <div id="len" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">len</div>
+                            <div class="function-category">text</div>
+                        </div>
+                        <div class="function-syntax">§len[text]</div>
+                        <div class="function-description">
+                            Returns the length of a string. If the string uses semicolon-separated items (e.g. "a;b;c"), `len` returns the number of items.
                         </div>
                         <div class="function-example">
-                            <pre>§trim[  hello  ]  # → hello</pre>
+                            <pre>§len[hello]       # → 5
+§len["a;b;c"]     # → 3
+§len[""]          # → 0</pre>
                             <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="contains" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">contains</div>
+                            <div class="function-category">text</div>
+                        </div>
+                        <div class="function-syntax">§contains[haystack; needle]</div>
+                        <div class="function-description">
+                            Returns `true` if `haystack` contains the substring `needle`, otherwise `false`. Useful for conditional checks.
+                        </div>
+                        <div class="function-example">
+                            <pre>§contains[hello; ell]   # → true
+§contains[hello; xyz]   # → false
+// Use inside conditionals:
+§if[§contains[$input; "pass"] == true]
+    §log[Contains 'pass']
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="equalsIgnoreCase" class="function-card">
                         <div class="function-header">
                             <div class="function-name">equalsIgnoreCase</div>
                             <div class="function-category">text</div>
@@ -753,7 +972,7 @@
                 <p>Functions for working with dates and time.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="time" class="function-card">
                         <div class="function-header">
                             <div class="function-name">time</div>
                             <div class="function-category">time</div>
@@ -770,7 +989,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="date" class="function-card">
                         <div class="function-header">
                             <div class="function-name">date</div>
                             <div class="function-category">time</div>
@@ -787,7 +1006,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="sleep" class="function-card">
                         <div class="function-header">
                             <div class="function-name">sleep</div>
                             <div class="function-category">time</div>
@@ -812,7 +1031,7 @@
                 <p>Functions for system control and interaction.</p>
 
                 <div class="function-grid">
-                    <div class="function-card">
+                    <div id="clear" class="function-card">
                         <div class="function-header">
                             <div class="function-name">clear</div>
                             <div class="function-category">system</div>
@@ -828,7 +1047,7 @@
                         </div>
                     </div>
 
-                    <div class="function-card">
+                    <div id="exit" class="function-card">
                         <div class="function-header">
                             <div class="function-name">exit</div>
                             <div class="function-category">system</div>
@@ -847,6 +1066,103 @@
             </section>
 
             <!-- Conditionals -->
+            <!-- Errors -->
+            <section id="errors" class="content-section">
+                <h2>Errors &amp; Troubleshooting</h2>
+                <p>Common runtime and validation errors you may encounter when writing Elios scripts, with causes and suggested fixes.</p>
+
+                <div class="function-grid">
+                    <div class="function-card">
+                        <h3>Empty File</h3>
+                        <div class="function-description">If the interpreter is given an empty or whitespace-only file it will refuse to run and report an error. Ensure your `.elios` file contains at least one executable line.</div>
+                        <div class="function-example"><pre>// Problem: empty file
+# (no lines)
+
+// Fix: add a line
+§log[Hello]</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Unmatched Blocks (if / while)</h3>
+                        <div class="function-description">Every `§if` must have a matching `§endif` and every `§while` must have a matching `§endwhile`. The interpreter validates block nesting before executing and will abort on mismatches.</div>
+                        <div class="function-example"><pre>// Problem
+§if[$x == 1]
+    §log[One]
+// missing §endif
+
+// Fix
+§if[$x == 1]
+    §log[One]
+§endif</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Invalid `§var` Syntax</h3>
+                        <div class="function-description">`§var` requires a variable name and a value. Using nested functions but omitting the variable name (e.g. `§var[§len[hello]]`) will produce a clear syntax error. Provide a name first: `§var[name; §len[hello]]`.</div>
+                        <div class="function-example"><pre>// Problem
+§var[§len[hello]]
+
+// Fix
+§var[name; §len[hello]]
+§log[$name]</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Arithmetic Errors (non-numeric args)</h3>
+                        <div class="function-description">Functions like `§add`, `§sub`, `§mul` and `§div` validate their arguments. Passing non-numeric values will cause an error message and the operation will not proceed. Convert or validate inputs before arithmetic.</div>
+                        <div class="function-example"><pre>// Problem
+§log[§add[hello; 5]]   # error: non-numeric argument
+
+// Fix
+§var[a; §trim[ 5 ]]
+§log[§add[§trim[$a]; 5]]</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Division By Zero</h3>
+                        <div class="function-description">Dividing by zero is detected and reported as an error. Check for zero before calling `§div`.</div>
+                        <div class="function-example"><pre>// Problem
+§log[§div[10; 0]]   # error: division by zero
+
+// Fix
+§if[§div[10; $b] != 0]
+    §log[§div[10; $b]]
+§else
+    §log[Cannot divide by zero]
+§endif</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Function Not Found / Syntax Errors</h3>
+                        <div class="function-description">If you use a non-existing function name or malformed `§func[...]` syntax the interpreter will produce an error. Check spelling and bracket matching for nested calls (every `[` must have a matching `]`).</div>
+                        <div class="function-example"><pre>// Problem
+§bogus[1;2]        # function does not exist
+§log[§add[5; 3    # missing closing bracket
+
+// Fix
+§log[§add[5;3]]</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Input / EOF</h3>
+                        <div class="function-description">`§input` reads from stdin synchronously. If stdin is closed or EOF is reached an empty string may be returned — handle empty values in your script.</div>
+                        <div class="function-example"><pre>§var[name; §input[Enter name:]]
+§if[$name == ""]
+    §log[No input provided]
+§endif</pre></div>
+                    </div>
+
+                    <div class="function-card">
+                        <h3>Nested Function Errors</h3>
+                        <div class="function-description">When nesting `§` calls, the interpreter evaluates inner calls first. Malformed nesting or missing arguments can cause confusing output — simplify and test subexpressions if needed.</div>
+                        <div class="function-example"><pre>// Complex nesting (test parts separately)
+§log[§add[§len[hello]; 2]]
+
+// If errors appear, test inner call alone:
+§log[§len[hello]]</pre></div>
+                    </div>
+                </div>
+            </section>
             <section id="conditionals" class="content-section">
                 <h2>Conditional Structures</h2>
                 <p>Control the flow of your program with conditional logic.</p>
@@ -1008,6 +1324,129 @@
 
         window.addEventListener('scroll', updateActiveLink);
         window.addEventListener('load', updateActiveLink);
+
+        // Collapsible TOC behavior (toggling classes; CSS handles animation)
+        document.querySelectorAll('.collapsible-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const opened = btn.classList.toggle('open');
+                btn.setAttribute('aria-expanded', String(opened));
+            });
+        });
+
+        // Expand parent section for active link on load
+        function expandActiveParent() {
+            const active = document.querySelector('.nav-link.active');
+            if (!active) return;
+            const parentSub = active.closest('.submenu');
+            if (parentSub) {
+                const btn = parentSub.previousElementSibling;
+                if (btn && btn.classList.contains('collapsible-button')) {
+                    btn.classList.add('open');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            }
+        }
+
+        window.addEventListener('load', expandActiveParent);
+
+        // Sidebar toggle for small screens
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                // focus first search input when opening
+                if (sidebar.classList.contains('open')) {
+                    const s = document.getElementById('doc-search');
+                    if (s) s.focus();
+                }
+            });
+
+            // Close sidebar when clicking a nav link on small screens
+            document.querySelectorAll('.toc a, .nav-links a').forEach(a => {
+                a.addEventListener('click', () => {
+                    if (window.innerWidth <= 992) sidebar.classList.remove('open');
+                });
+            });
+
+            // Close on ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        }
+
+        // Search functionality: filter TOC and highlight cards
+        const searchInput = document.getElementById('doc-search');
+        const noResultsEl = document.getElementById('no-results');
+
+        function runSearch(query) {
+            const q = query.trim().toLowerCase();
+            const tocLinks = Array.from(document.querySelectorAll('.toc .submenu li'));
+            let any = false;
+
+            tocLinks.forEach(li => {
+                const a = li.querySelector('a');
+                const text = (a.textContent || '').toLowerCase();
+                const match = q === '' ? true : text.includes(q) || (a.getAttribute('href') || '').toLowerCase().includes(q);
+                li.style.display = match ? 'block' : 'none';
+                if (match) any = true;
+            });
+
+            // Expand categories that contain visible items
+            document.querySelectorAll('.collapsible').forEach(group => {
+                const btn = group.querySelector('.collapsible-button');
+                const submenu = group.querySelector('.submenu');
+                const hasVisible = submenu && submenu.querySelector('li[style*="display: block"]');
+                if (hasVisible) {
+                    btn.classList.add('open');
+                    btn.setAttribute('aria-expanded', 'true');
+                } else if (!q) {
+                    btn.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Highlight matching function cards
+            document.querySelectorAll('.function-card').forEach(card => {
+                const nameEl = card.querySelector('.function-name');
+                const name = (nameEl && nameEl.textContent || '').toLowerCase();
+                if (q !== '' && name.includes(q)) {
+                    card.classList.add('search-match');
+                    any = true;
+                } else {
+                    card.classList.remove('search-match');
+                }
+            });
+
+            noResultsEl.style.display = any ? 'none' : 'block';
+            return any;
+        }
+
+        searchInput.addEventListener('input', (e) => runSearch(e.target.value));
+
+        // Enter: jump to first match
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const first = document.querySelector('.toc .submenu li a:not([style*="display: none"])');
+                if (first) {
+                    first.click();
+                    const targetId = first.getAttribute('href');
+                    if (targetId) {
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
+        });
+
+        // Clear search when clicking outside (optional enhancement)
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container') && document.activeElement !== searchInput) {
+                // don't auto-clear; keep user input
+            }
+        });
     </script>
 </body>
 
