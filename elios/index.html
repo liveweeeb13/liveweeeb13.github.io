@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,11 +36,11 @@
 
         .container {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 280px 1fr;
             min-height: 100vh;
         }
 
-        /* Sidebar Styles */
+        /* Sidebar Styles - FIXED FULL LEFT */
         .sidebar {
             background: var(--bg-secondary);
             border-right: 1px solid var(--border);
@@ -47,11 +48,29 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 320px;
+            width: 280px;
             height: 100vh;
             overflow-y: auto;
             overflow-x: hidden;
             z-index: 1000;
+            transition: transform 220ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
         }
 
         .sidebar-header {
@@ -71,60 +90,9 @@
             font-size: 0.9rem;
         }
 
-        /* Search Styles */
-        .search-container {
-            padding: 0 1.5rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
-        }
-
-        .search-box::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .search-results {
-            margin-top: 0.5rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .search-result-item {
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .search-result-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .search-result-item .category {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-left: 0.5rem;
-        }
-
-        /* Navigation Styles */
         .nav-section {
             margin-bottom: 1.5rem;
+            padding: 0 1rem;
         }
 
         .nav-section h3 {
@@ -133,81 +101,206 @@
             color: var(--text-secondary);
             margin-bottom: 0.75rem;
             letter-spacing: 0.5px;
-            padding: 0 1.5rem;
+            padding: 0 0.5rem;
             font-weight: 600;
         }
 
-        .category-item {
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
             margin-bottom: 0.25rem;
         }
 
-        .category-header {
+        .nav-links a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-links a.active {
+            background: var(--accent);
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Sidebar toggle (mobile) */
+        .sidebar-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--accent);
+            font-size: 1.25rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive: collapse sidebar into off-canvas panel */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-110%);
+                box-shadow: 0 8px 24px rgba(2,6,23,0.6);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle { display: inline-block; }
+
+            /* Make the toggle fixed and always accessible on small screens */
+            .sidebar-toggle {
+                position: fixed;
+                left: 12px;
+                top: 12px;
+                z-index: 1101;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+            }
+
+            .main-content { margin-left: 0; padding: 1.5rem; }
+        }
+
+        /* Small tweak for very narrow screens */
+        @media (max-width: 480px) {
+            .sidebar { width: 260px; }
+            .sidebar-toggle { font-size: 1.1rem; }
+        }
+
+        /* Search */
+        .search-container {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(13,17,23,0.02), transparent);
+        }
+
+        #doc-search {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        #doc-search::placeholder { color: var(--text-secondary); }
+
+        .no-results { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+
+        /* Search Results */
+        .search-results {
+            margin-top: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+
+        .search-result-item:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+
+        .search-result-item .category {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+        }
+
+        /* Highlighted search result in main content */
+        .function-card.search-match {
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(88,166,255,0.06);
+            transform: translateY(-2px);
+            animation: highlight-pulse 2s ease-in-out;
+        }
+
+        @keyframes highlight-pulse {
+            0%, 100% { box-shadow: 0 6px 18px rgba(88,166,255,0.06); }
+            50% { box-shadow: 0 6px 25px rgba(88,166,255,0.15); }
+        }
+
+        /* Collapsible TOC */
+        .toc .collapsible-button {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-
-        .category-header:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .category-header .arrow {
-            transition: transform 0.2s ease;
+            width: 100%;
+            background: transparent;
+            border: none;
             color: var(--text-secondary);
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
         }
 
-        .category-header.expanded .arrow {
-            transform: rotate(90deg);
+        .toc .collapsible-button:hover {
+            color: var(--text-primary);
         }
 
-        .subcategory-list {
+        .toc .submenu {
             list-style: none;
+            padding-left: 0.35rem;
+            margin: 0.25rem 0 0.75rem 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .category-header.expanded + .subcategory-list {
-            max-height: 500px;
-        }
-
-        .subcategory-item {
-            margin-bottom: 0.125rem;
-        }
-
-        .subcategory-link {
-            display: block;
-            padding: 0.5rem 1.5rem 0.5rem 2.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
+            transition: max-height 220ms cubic-bezier(.2,.8,.2,1);
             border-left: 2px solid transparent;
         }
 
-        .subcategory-link:hover {
+        .toc .submenu li { margin: 0.15rem 0; }
+
+        .toc .submenu li a {
+            display: block;
+            padding: 0.4rem 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .toc .submenu li a:hover {
             background: var(--bg-tertiary);
             color: var(--text-primary);
-            border-left-color: var(--accent);
         }
 
-        .subcategory-link.active {
-            background: var(--accent);
-            color: white;
-            border-left-color: var(--accent);
-        }
+        .toc .collapsible-button.open { color: var(--text-primary); }
+        .toc .collapsible-button.open .arrow { transform: rotate(90deg); }
 
-        /* Main Content */
+        .toc .arrow { transition: transform 0.15s ease; color: var(--text-secondary); }
+
+        /* When open, allow enough height for content (large value for simplicity) */
+        .collapsible-button.open + .submenu { max-height: 640px; border-left-color: var(--border); }
+
+        /* Main Content Styles */
         .main-content {
-            margin-left: 320px;
+            margin-left: 280px;
             padding: 3rem 4rem;
             overflow-y: auto;
             max-width: none;
-            width: calc(100vw - 320px);
+            width: calc(100vw - 280px);
         }
 
         .content-section {
@@ -224,6 +317,25 @@
             padding-bottom: 0.75rem;
         }
 
+        .content-section > p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        .content-section h4 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
         .intro-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
@@ -238,7 +350,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Function Grid */
+        /* Function Grid - FIXED SPACING */
         .function-grid {
             display: grid;
             gap: 2rem;
@@ -253,25 +365,12 @@
             transition: all 0.2s ease;
             overflow: visible;
             min-width: 0;
-            position: relative;
         }
 
         .function-card:hover {
             border-color: var(--accent);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
-        }
-
-        .function-card.highlight {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(88, 166, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(88, 166, 255, 0); }
         }
 
         .function-header {
@@ -375,6 +474,10 @@
             transform: translateY(-1px);
         }
 
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -414,11 +517,27 @@
             word-break: break-word;
         }
 
-        /* No Results */
-        .no-results {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
+        /* Scrollbar styling for code blocks */
+        .function-example::-webkit-scrollbar,
+        .function-syntax::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .function-example::-webkit-scrollbar-track,
+        .function-syntax::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 4px;
+        }
+
+        .function-example::-webkit-scrollbar-thumb,
+        .function-syntax::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .function-example::-webkit-scrollbar-thumb:hover,
+        .function-syntax::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
         }
 
         /* Responsive */
@@ -445,22 +564,36 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-header">
+                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
                 <h1>Elios Docs</h1>
-                <div class="version">v1.5.1</div>
+                <div class="version">v1.5.2</div>
             </div>
-
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-box" placeholder="Search functions...">
-                <div id="searchResults" class="search-results"></div>
+                <input id="doc-search" placeholder="Search functions..." aria-label="Search documentation" />
+                <div id="search-results" class="search-results"></div>
+                <div id="no-results" class="no-results">No results found</div>
             </div>
 
-            <div class="nav-section" id="categoriesNav">
-                <!-- Navigation générée dynamiquement -->
+            <div class="nav-section">
+                <h3>Getting Started</h3>
+                <ul class="nav-links">
+                    <li><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li><a href="#installation" class="nav-link">Installation</a></li>
+                    <li><a href="#quick-start" class="nav-link">Quick Start</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3>Functions</h3>
+                <nav class="toc" id="functions-toc">
+                    <!-- Généré dynamiquement -->
+                </nav>
             </div>
         </nav>
 
@@ -473,576 +606,484 @@
                     <p>Elios is a small educational scripting language with a concise syntax built around single-letter commands prefixed by "§". It's designed for quick prototyping, learning programming concepts, and building simple interactive scripts.</p>
 
                     <div class="quick-actions">
-                        <a href="#functions" class="action-card">
-                            <div class="action-icon">📚</div>
-                            <div>View All Functions</div>
-                        </a>
-                        <a href="#basic-operations" class="action-card">
+                        <a href="#quick-start" class="action-card">
                             <div class="action-icon">⚡</div>
                             <div>Quick Start</div>
+                        </a>
+                        <a href="#functions-overview" class="action-card">
+                            <div class="action-icon">📚</div>
+                            <div>View Functions</div>
                         </a>
                     </div>
                 </div>
             </section>
 
-            <!-- Functions Section -->
-            <section id="functions" class="content-section">
-                <h2>All Functions</h2>
-                <p>Complete reference of all Elios functions. Use the search bar to find specific functions quickly.</p>
+            <!-- Installation -->
+            <section id="installation" class="content-section">
+                <h2>Installation</h2>
+                <p>Get Elios up and running with one of these methods:</p>
+
+                <div class="function-grid">
+                    <div class="function-card">
+                        <h4>Windows & Linux</h4>
+                        <div class="function-description">
+                            Download the pre-built executables for Windows and Linux.
+                        </div>
+                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases', '_blank')">
+                            Download Releases
+                        </button>
+                    </div>
+
+                    <div class="function-card">
+                        <h4>npm / npx</h4>
+                        <div class="function-description">
+                            Run directly with npx or install globally via npm.
+                        </div>
+                        <div class="function-syntax">npx elios</div>
+                        <div class="function-syntax">npm install -g elios</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Start -->
+            <section id="quick-start" class="content-section">
+                <h2>Quick Start</h2>
+                <p>Create a file with `.elios` extension and run it with `npx elios &lt;file&gt;` or `node cli.js &lt;file&gt;` during development.</p>
+
+                <div class="function-example">
+                    <pre># Greeting example
+§clear[]
+§log[Welcome to Elios!]
+
+§var[name; §input[What's your name?]]
+§log[Hello $name!]
+
+# Check for a substring
+§var[hasPass; §contains[$name; "pass"]]
+§if[$hasPass == true]
+    §log[Your name contains "pass"]
+§endif</pre>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                </div>
+            </section>
+
+            <!-- Functions Overview -->
+            <section id="functions-overview" class="content-section">
+                <h2>Functions Overview</h2>
+                <p>Complete reference of all Elios functions. Hover over function names to see parameter descriptions in English.</p>
                 
-                <div class="function-grid" id="functionsContainer">
-                    <!-- Functions générées dynamiquement -->
+                <div class="function-grid" id="functions-container">
+                    <!-- Généré dynamiquement -->
                 </div>
             </section>
         </main>
     </div>
 
     <script>
-        // Structure des catégories et sous-catégories
-        const categoriesStructure = {
-            "basic-operations": {
-                name: "Basic Operations",
-                subcategories: {
-                    "output": "Output Functions",
-                    "input": "Input Functions",
-                    "variables": "Variables"
-                }
+        // Données des fonctions organisées par catégories
+        const functionsData = {
+            "Basic Operations": {
+                "Output": [
+                    {
+                        "name": "log",
+                        "syntax": "§log[message]",
+                        "description": "Prints a message to the console. Supports variables and nested functions.",
+                        "example": "§log[Hello World!]\n§log[Result: §add[5;3]]",
+                        "params": "message: The text to display (string)"
+                    }
+                ],
+                "Input": [
+                    {
+                        "name": "input",
+                        "syntax": "§input[prompt]",
+                        "description": "Gets input from the user with an optional prompt message.",
+                        "example": "§var[name; §input[Enter your name:]]\n§var[age; §input[How old are you?]]",
+                        "params": "prompt: The message displayed to the user (string)"
+                    }
+                ],
+                "Variables": [
+                    {
+                        "name": "var",
+                        "syntax": "§var[name; value]",
+                        "description": "Creates or updates a variable. Use $name to access the value.",
+                        "example": "§var[score; 100]\n§var[name; Alice]\n§var[result; §add[5;3]]\n§log[Hello $name!]",
+                        "params": "name: Variable name (string), value: Value to store (any)"
+                    }
+                ]
             },
-            "data-processing": {
-                name: "Data Processing",
-                subcategories: {
-                    "math": "Math Operations",
-                    "text": "Text Manipulation",
-                    "validation": "Validation"
-                }
+            "Data Processing": {
+                "Math": [
+                    {
+                        "name": "add",
+                        "syntax": "§add[a; b]",
+                        "description": "Adds two numbers together.",
+                        "example": "§add[5; 3]  # → 8\n§add[$x; $y]",
+                        "params": "a: First number (number), b: Second number (number)"
+                    },
+                    {
+                        "name": "sub",
+                        "syntax": "§sub[a; b]",
+                        "description": "Subtracts the second number from the first.",
+                        "example": "§sub[10; 4]  # → 6",
+                        "params": "a: First number (number), b: Second number (number)"
+                    },
+                    {
+                        "name": "mul",
+                        "syntax": "§mul[a; b]",
+                        "description": "Multiplies two numbers.",
+                        "example": "§mul[4; 3]  # → 12",
+                        "params": "a: First number (number), b: Second number (number)"
+                    },
+                    {
+                        "name": "div",
+                        "syntax": "§div[a; b]",
+                        "description": "Divides the first number by the second.",
+                        "example": "§div[10; 2]  # → 5",
+                        "params": "a: First number (number), b: Second number (number)"
+                    },
+                    {
+                        "name": "random",
+                        "syntax": "§random[min; max]",
+                        "description": "Generates a random number between min and max (inclusive).",
+                        "example": "§random[1; 6]    # → 4 (dice roll)\n§random[1; 100]  # → 42",
+                        "params": "min: Minimum value (number), max: Maximum value (number)"
+                    },
+                    {
+                        "name": "round",
+                        "syntax": "§round[number]",
+                        "description": "Rounds a decimal number to the nearest integer.",
+                        "example": "§round[3.2]  # → 3\n§round[3.7]  # → 4",
+                        "params": "number: The number to round (number)"
+                    }
+                ],
+                "Text": [
+                    {
+                        "name": "upper",
+                        "syntax": "§upper[text]",
+                        "description": "Converts text to uppercase.",
+                        "example": "§upper[hello]  # → HELLO",
+                        "params": "text: The text to convert (string)"
+                    },
+                    {
+                        "name": "lower",
+                        "syntax": "§lower[text]",
+                        "description": "Converts text to lowercase.",
+                        "example": "§lower[HELLO]  # → hello",
+                        "params": "text: The text to convert (string)"
+                    },
+                    {
+                        "name": "trim",
+                        "syntax": "§trim[text]",
+                        "description": "Removes all whitespace characters from the provided text, including internal spaces.",
+                        "example": "§trim[  hello   world ]  # → helloworld\n§trim[  hello  ]          # → hello",
+                        "params": "text: The text to trim (string)"
+                    },
+                    {
+                        "name": "len",
+                        "syntax": "§len[text]",
+                        "description": "Returns the length of a string. If the string uses semicolon-separated items, returns the number of items.",
+                        "example": "§len[hello]       # → 5\n§len[\"a;b;c\"]     # → 3\n§len[\"\"]          # → 0",
+                        "params": "text: The text to measure (string)"
+                    },
+                    {
+                        "name": "contains",
+                        "syntax": "§contains[haystack; needle]",
+                        "description": "Returns `true` if `haystack` contains the substring `needle`, otherwise `false`.",
+                        "example": "§contains[hello; ell]   # → true\n§contains[hello; xyz]   # → false\n§if[§contains[$input; \"pass\"] == true]\n    §log[Contains 'pass']\n§endif",
+                        "params": "haystack: The string to search in (string), needle: The substring to find (string)"
+                    },
+                    {
+                        "name": "equalsIgnoreCase",
+                        "syntax": "§equalsIgnoreCase[text1; text2]",
+                        "description": "Compares two strings ignoring case differences.",
+                        "example": "§if[§equalsIgnoreCase[$answer; Paris]]\n    §log[Correct!]\n§endif\n# Accepts: Paris, PARIS, paris, PaRiS",
+                        "params": "text1: First string (string), text2: Second string (string)"
+                    }
+                ],
+                "Validation": [
+                    {
+                        "name": "isNaN",
+                        "syntax": "§isNaN[value]",
+                        "description": "Returns `true` if the value is NOT a valid number, `false` otherwise.",
+                        "example": "§isNaN[hello]     # → true\n§isNaN[42]        # → false\n§isNaN[3.14]      # → false",
+                        "params": "value: The value to check (any)"
+                    },
+                    {
+                        "name": "isEven",
+                        "syntax": "§isEven[number]",
+                        "description": "Returns `true` if the number is even, `false` otherwise.",
+                        "example": "§isEven[4]          # → true\n§isEven[7]          # → false\n§isEven[0]          # → true",
+                        "params": "number: The number to check (number)"
+                    },
+                    {
+                        "name": "isOdd",
+                        "syntax": "§isOdd[number]",
+                        "description": "Returns `true` if the number is odd, `false` otherwise.",
+                        "example": "§isOdd[3]        # → true\n§isOdd[8]        # → false\n§isOdd[-5]       # → true",
+                        "params": "number: The number to check (number)"
+                    }
+                ]
             },
-            "control-flow": {
-                name: "Control Flow",
-                subcategories: {
-                    "control": "Conditionals & Loops",
-                    "comparison": "Comparison Operators",
-                    "loop": "Loop Control"
-                }
+            "Control Flow": {
+                "Conditionals": [
+                    {
+                        "name": "if",
+                        "syntax": "§if[condition]\n  ... code ...\n§endif",
+                        "description": "Executes code block if condition is true. Supports §elseif and §else.",
+                        "example": "§if[$age >= 18]\n    §log[You are an adult!]\n§elseif[$age >= 13]\n    §log[You are a teenager!]\n§else\n    §log[You are a child!]\n§endif",
+                        "params": "condition: Boolean expression to evaluate"
+                    },
+                    {
+                        "name": "while",
+                        "syntax": "§while[condition]\n  ... code ...\n§endwhile",
+                        "description": "Repeats code block while condition is true.",
+                        "example": "§var[i; 1]\n§while[$i <= 5]\n    §log[Count: $i]\n    §var[i; $i + 1]\n§endwhile",
+                        "params": "condition: Boolean expression to evaluate"
+                    }
+                ],
+                "Loop Control": [
+                    {
+                        "name": "break",
+                        "syntax": "§break[]",
+                        "description": "Immediately exits the current while loop.",
+                        "example": "§var[i; 1]\n§while[$i <= 10]\n    §if[$i == 5]\n        §log[Breaking at 5!]\n        §break[]\n    §endif\n    §log[Iteration: $i]\n    §var[i; $i + 1]\n§endwhile",
+                        "params": "No parameters"
+                    },
+                    {
+                        "name": "continue",
+                        "syntax": "§continue[]",
+                        "description": "Skips to the next iteration of the current while loop.",
+                        "example": "§var[i; 0]\n§while[$i < 10]\n    §var[i; $i + 1]\n    §if[§isEven[$i] == true]\n        §continue[]  # Skip even numbers\n    §endif\n    §log[Odd number: $i]\n§endwhile",
+                        "params": "No parameters"
+                    }
+                ],
+                "Comparison": [
+                    {
+                        "name": "==",
+                        "syntax": "a == b",
+                        "description": "Equal to - returns true if values are equal",
+                        "example": "§if[$x == 10]\n    §log[x is 10]\n§endif",
+                        "params": "a: First value, b: Second value"
+                    },
+                    {
+                        "name": "!=",
+                        "syntax": "a != b",
+                        "description": "Not equal to - returns true if values are different",
+                        "example": "§if[$name != \"Bob\"]\n    §log[Name is not Bob]\n§endif",
+                        "params": "a: First value, b: Second value"
+                    },
+                    {
+                        "name": "<",
+                        "syntax": "a < b",
+                        "description": "Less than - returns true if a is less than b",
+                        "example": "§if[$age < 18]\n    §log[Underage]\n§endif",
+                        "params": "a: First value, b: Second value"
+                    },
+                    {
+                        "name": ">",
+                        "syntax": "a > b",
+                        "description": "Greater than - returns true if a is greater than b",
+                        "example": "§if[$score > 80]\n    §log[Great score!]\n§endif",
+                        "params": "a: First value, b: Second value"
+                    },
+                    {
+                        "name": "<=",
+                        "syntax": "a <= b",
+                        "description": "Less than or equal to",
+                        "example": "§if[$temperature <= 30]\n    §log[Temperature is OK]\n§endif",
+                        "params": "a: First value, b: Second value"
+                    },
+                    {
+                        "name": ">=",
+                        "syntax": "a >= b",
+                        "description": "Greater than or equal to",
+                        "example": "§if[$level >= 5]\n    §log[Advanced level reached]\n§endif",
+                        "params": "a: First value, b: Second value"
+                    }
+                ]
             },
-            "file-system": {
-                name: "File System",
-                subcategories: {
-                    "file": "File Operations",
-                    "json": "JSON Handling"
-                }
+            "File System": {
+                "File Operations": [
+                    {
+                        "name": "isFileExist",
+                        "syntax": "§isFileExist[path]",
+                        "description": "Returns `true` if the file or directory exists, `false` otherwise.",
+                        "example": "§if[§isFileExist[config.txt] == true]\n    §log[Config file exists]\n§else\n    §log[Config file not found]\n§endif",
+                        "params": "path: File or directory path (string)"
+                    },
+                    {
+                        "name": "createFile",
+                        "syntax": "§createFile[path]",
+                        "description": "Creates an empty file at the specified path. Creates directories if needed.",
+                        "example": "§createFile[data/output.txt]\n§log[File created successfully]",
+                        "params": "path: File path to create (string)"
+                    },
+                    {
+                        "name": "getPath",
+                        "syntax": "§getPath[relativePath]",
+                        "description": "Returns the absolute path for a relative path. Without arguments, returns current directory.",
+                        "example": "§var[currentDir; §getPath[]]\n§var[fullPath; §getPath[data/file.txt]]\n§log[Working in: $currentDir]",
+                        "params": "relativePath: Optional relative path (string)"
+                    },
+                    {
+                        "name": "readFile",
+                        "syntax": "§readFile[path]",
+                        "description": "Reads and returns the entire content of a file as a string.",
+                        "example": "§var[content; §readFile[data.txt]]\n§log[File content: $content]",
+                        "params": "path: File path to read (string)"
+                    },
+                    {
+                        "name": "replace",
+                        "syntax": "§replace[text; search; replace]",
+                        "description": "Replaces all occurrences of `search` with `replace` in the given text.",
+                        "example": "§var[text; Hello World]\n§var[newText; §replace[$text; World; Elios]]\n§log[$newText]  # → Hello Elios",
+                        "params": "text: The text to modify (string), search: Text to find (string), replace: Replacement text (string)"
+                    },
+                    {
+                        "name": "writeFile",
+                        "syntax": "§writeFile[path; content]",
+                        "description": "Writes content to a file, creating it if it doesn't exist.",
+                        "example": "§writeFile[log.txt; Application started]\n§writeFile[data.txt; Line 1;Line 2;Line 3]",
+                        "params": "path: File path (string), content: Content to write (string)"
+                    }
+                ],
+                "JSON Handling": [
+                    {
+                        "name": "jsonRead",
+                        "syntax": "§jsonRead[path]",
+                        "description": "Reads and parses a JSON file, returning the content as a JSON string.",
+                        "example": "§var[config; §jsonRead[config.json]]\n§log[Config: $config]",
+                        "params": "path: JSON file path (string)"
+                    },
+                    {
+                        "name": "jsonWrite",
+                        "syntax": "§jsonWrite[path; jsonString]",
+                        "description": "Writes a JSON string to a file with proper formatting.",
+                        "example": "§jsonWrite[settings.json; {\"theme\": \"dark\", \"language\": \"fr\"}]\n§log[Settings saved]",
+                        "params": "path: File path (string), jsonString: JSON data (string)"
+                    },
+                    {
+                        "name": "jsonGet",
+                        "syntax": "§jsonGet[jsonString; key]",
+                        "description": "Extracts a value from a JSON string. Supports nested keys (e.g., \"user.profile.name\").",
+                        "example": "§var[config; {\"user\": {\"name\": \"John\", \"age\": 25}}]\n§var[userName; §jsonGet[$config; user.name]]\n§log[User: $userName]  # → John",
+                        "params": "jsonString: JSON data (string), key: Property path (string)"
+                    },
+                    {
+                        "name": "jsonSet",
+                        "syntax": "§jsonSet[jsonString; key; value]",
+                        "description": "Sets a value in a JSON string and returns the updated JSON. Supports nested keys.",
+                        "example": "§var[config; {\"theme\": \"dark\"}]\n§var[newConfig; §jsonSet[$config; theme; light]]\n§log[Updated: $newConfig]  # → {\"theme\": \"light\"}",
+                        "params": "jsonString: JSON data (string), key: Property path (string), value: New value (any)"
+                    }
+                ]
             },
-            "system": {
-                name: "System & Time",
-                subcategories: {
-                    "time": "Time Functions",
-                    "system": "System Functions"
-                }
+            "System & Time": {
+                "Time Functions": [
+                    {
+                        "name": "time",
+                        "syntax": "§time[]",
+                        "description": "Returns current timestamp in milliseconds.",
+                        "example": "§var[start; §time[]]\n# ... code runs ...\n§var[duration; §sub[§time[]; $start]]",
+                        "params": "No parameters"
+                    },
+                    {
+                        "name": "date",
+                        "syntax": "§date[format]",
+                        "description": "Returns formatted date string. Formats: YYYY, MM, DD, HH, mm, ss",
+                        "example": "§date[YYYY-MM-DD]  # → 2024-01-15\n§date[HH:mm:ss]    # → 14:30:45\n§date[DD/MM/YYYY]  # → 15/01/2024",
+                        "params": "format: Date format string (string)"
+                    },
+                    {
+                        "name": "sleep",
+                        "syntax": "§sleep[milliseconds]",
+                        "description": "Pauses execution for specified milliseconds.",
+                        "example": "§log[Waiting...]\n§sleep[2000]\n§log[Done!]",
+                        "params": "milliseconds: Duration to sleep (number)"
+                    }
+                ],
+                "System Functions": [
+                    {
+                        "name": "clear",
+                        "syntax": "§clear[]",
+                        "description": "Clears the console screen.",
+                        "example": "§clear[]\n§log[Welcome to my program!]",
+                        "params": "No parameters"
+                    },
+                    {
+                        "name": "exit",
+                        "syntax": "§exit[code]",
+                        "description": "Exits the program with optional exit code (0 = success).",
+                        "example": "§exit[0]  # Success\n§exit[1]  # Error",
+                        "params": "code: Exit code (number)"
+                    }
+                ]
             }
         };
 
-        // Données des fonctions
-        const functionsData = {
-            "output": [
-                {
-                    "name": "log",
-                    "syntax": "§log[message]",
-                    "description": "Prints a message to the console. Supports variables and nested functions.",
-                    "example": "§log[Hello World!]\n§log[Result: §add[5;3]]",
-                    "params": "message: The text to display (string)"
-                }
-            ],
-            "input": [
-                {
-                    "name": "input",
-                    "syntax": "§input[prompt]",
-                    "description": "Gets input from the user with an optional prompt message.",
-                    "example": "§var[name; §input[Enter your name:]]\n§var[age; §input[How old are you?]]",
-                    "params": "prompt: The message displayed to the user (string)"
-                }
-            ],
-            "variables": [
-                {
-                    "name": "var",
-                    "syntax": "§var[name; value]",
-                    "description": "Creates or updates a variable. Use $name to access the value.",
-                    "example": "§var[score; 100]\n§var[name; Alice]\n§var[result; §add[5;3]]\n§log[Hello $name!]",
-                    "params": "name: Variable name (string), value: Value to store (any)"
-                }
-            ],
-            "math": [
-                {
-                    "name": "add",
-                    "syntax": "§add[a; b]",
-                    "description": "Adds two numbers together.",
-                    "example": "§add[5; 3]  # → 8\n§add[$x; $y]",
-                    "params": "a: First number (number), b: Second number (number)"
-                },
-                {
-                    "name": "sub",
-                    "syntax": "§sub[a; b]",
-                    "description": "Subtracts the second number from the first.",
-                    "example": "§sub[10; 4]  # → 6",
-                    "params": "a: First number (number), b: Second number (number)"
-                },
-                {
-                    "name": "mul",
-                    "syntax": "§mul[a; b]",
-                    "description": "Multiplies two numbers.",
-                    "example": "§mul[4; 3]  # → 12",
-                    "params": "a: First number (number), b: Second number (number)"
-                },
-                {
-                    "name": "div",
-                    "syntax": "§div[a; b]",
-                    "description": "Divides the first number by the second.",
-                    "example": "§div[10; 2]  # → 5",
-                    "params": "a: First number (number), b: Second number (number)"
-                },
-                {
-                    "name": "random",
-                    "syntax": "§random[min; max]",
-                    "description": "Generates a random number between min and max (inclusive).",
-                    "example": "§random[1; 6]    # → 4 (dice roll)\n§random[1; 100]  # → 42",
-                    "params": "min: Minimum value (number), max: Maximum value (number)"
-                },
-                {
-                    "name": "round",
-                    "syntax": "§round[number]",
-                    "description": "Rounds a decimal number to the nearest integer.",
-                    "example": "§round[3.2]  # → 3\n§round[3.7]  # → 4",
-                    "params": "number: The number to round (number)"
-                }
-            ],
-            "text": [
-                {
-                    "name": "upper",
-                    "syntax": "§upper[text]",
-                    "description": "Converts text to uppercase.",
-                    "example": "§upper[hello]  # → HELLO",
-                    "params": "text: The text to convert (string)"
-                },
-                {
-                    "name": "lower",
-                    "syntax": "§lower[text]",
-                    "description": "Converts text to lowercase.",
-                    "example": "§lower[HELLO]  # → hello",
-                    "params": "text: The text to convert (string)"
-                },
-                {
-                    "name": "trim",
-                    "syntax": "§trim[text]",
-                    "description": "Removes all whitespace characters from the provided text, including internal spaces.",
-                    "example": "§trim[  hello   world ]  # → helloworld\n§trim[  hello  ]          # → hello",
-                    "params": "text: The text to trim (string)"
-                },
-                {
-                    "name": "len",
-                    "syntax": "§len[text]",
-                    "description": "Returns the length of a string. If the string uses semicolon-separated items, returns the number of items.",
-                    "example": "§len[hello]       # → 5\n§len[\"a;b;c\"]     # → 3\n§len[\"\"]          # → 0",
-                    "params": "text: The text to measure (string)"
-                },
-                {
-                    "name": "contains",
-                    "syntax": "§contains[haystack; needle]",
-                    "description": "Returns `true` if `haystack` contains the substring `needle`, otherwise `false`.",
-                    "example": "§contains[hello; ell]   # → true\n§contains[hello; xyz]   # → false\n§if[§contains[$input; \"pass\"] == true]\n    §log[Contains 'pass']\n§endif",
-                    "params": "haystack: The string to search in (string), needle: The substring to find (string)"
-                },
-                {
-                    "name": "equalsIgnoreCase",
-                    "syntax": "§equalsIgnoreCase[text1; text2]",
-                    "description": "Compares two strings ignoring case differences.",
-                    "example": "§if[§equalsIgnoreCase[$answer; Paris]]\n    §log[Correct!]\n§endif\n# Accepts: Paris, PARIS, paris, PaRiS",
-                    "params": "text1: First string (string), text2: Second string (string)"
-                }
-            ],
-            "validation": [
-                {
-                    "name": "isNaN",
-                    "syntax": "§isNaN[value]",
-                    "description": "Returns `true` if the value is NOT a valid number, `false` otherwise.",
-                    "example": "§isNaN[hello]     # → true\n§isNaN[42]        # → false\n§isNaN[3.14]      # → false",
-                    "params": "value: The value to check (any)"
-                },
-                {
-                    "name": "isEven",
-                    "syntax": "§isEven[number]",
-                    "description": "Returns `true` if the number is even, `false` otherwise.",
-                    "example": "§isEven[4]          # → true\n§isEven[7]          # → false\n§isEven[0]          # → true",
-                    "params": "number: The number to check (number)"
-                },
-                {
-                    "name": "isOdd",
-                    "syntax": "§isOdd[number]",
-                    "description": "Returns `true` if the number is odd, `false` otherwise.",
-                    "example": "§isOdd[3]        # → true\n§isOdd[8]        # → false\n§isOdd[-5]       # → true",
-                    "params": "number: The number to check (number)"
-                }
-            ],
-            "control": [
-                {
-                    "name": "if",
-                    "syntax": "§if[condition]\n  ... code ...\n§endif",
-                    "description": "Executes code block if condition is true. Supports §elseif and §else.",
-                    "example": "§if[$age >= 18]\n    §log[You are an adult!]\n§elseif[$age >= 13]\n    §log[You are a teenager!]\n§else\n    §log[You are a child!]\n§endif",
-                    "params": "condition: Boolean expression to evaluate"
-                },
-                {
-                    "name": "while",
-                    "syntax": "§while[condition]\n  ... code ...\n§endwhile",
-                    "description": "Repeats code block while condition is true.",
-                    "example": "§var[i; 1]\n§while[$i <= 5]\n    §log[Count: $i]\n    §var[i; $i + 1]\n§endwhile",
-                    "params": "condition: Boolean expression to evaluate"
-                }
-            ],
-            "comparison": [
-                {
-                    "name": "==",
-                    "syntax": "a == b",
-                    "description": "Equal to - returns true if values are equal",
-                    "example": "§if[$x == 10]\n    §log[x is 10]\n§endif",
-                    "params": "a: First value, b: Second value"
-                },
-                {
-                    "name": "!=",
-                    "syntax": "a != b",
-                    "description": "Not equal to - returns true if values are different",
-                    "example": "§if[$name != \"Bob\"]\n    §log[Name is not Bob]\n§endif",
-                    "params": "a: First value, b: Second value"
-                },
-                {
-                    "name": "<",
-                    "syntax": "a < b",
-                    "description": "Less than - returns true if a is less than b",
-                    "example": "§if[$age < 18]\n    §log[Underage]\n§endif",
-                    "params": "a: First value, b: Second value"
-                },
-                {
-                    "name": ">",
-                    "syntax": "a > b",
-                    "description": "Greater than - returns true if a is greater than b",
-                    "example": "§if[$score > 80]\n    §log[Great score!]\n§endif",
-                    "params": "a: First value, b: Second value"
-                },
-                {
-                    "name": "<=",
-                    "syntax": "a <= b",
-                    "description": "Less than or equal to",
-                    "example": "§if[$temperature <= 30]\n    §log[Temperature is OK]\n§endif",
-                    "params": "a: First value, b: Second value"
-                },
-                {
-                    "name": ">=",
-                    "syntax": "a >= b",
-                    "description": "Greater than or equal to",
-                    "example": "§if[$level >= 5]\n    §log[Advanced level reached]\n§endif",
-                    "params": "a: First value, b: Second value"
-                }
-            ],
-            "loop": [
-                {
-                    "name": "break",
-                    "syntax": "§break[]",
-                    "description": "Immediately exits the current while loop.",
-                    "example": "§var[i; 1]\n§while[$i <= 10]\n    §if[$i == 5]\n        §log[Breaking at 5!]\n        §break[]\n    §endif\n    §log[Iteration: $i]\n    §var[i; $i + 1]\n§endwhile",
-                    "params": "No parameters"
-                },
-                {
-                    "name": "continue",
-                    "syntax": "§continue[]",
-                    "description": "Skips to the next iteration of the current while loop.",
-                    "example": "§var[i; 0]\n§while[$i < 10]\n    §var[i; $i + 1]\n    §if[§isEven[$i] == true]\n        §continue[]  # Skip even numbers\n    §endif\n    §log[Odd number: $i]\n§endwhile",
-                    "params": "No parameters"
-                }
-            ],
-            "file": [
-                {
-                    "name": "isFileExist",
-                    "syntax": "§isFileExist[path]",
-                    "description": "Returns `true` if the file or directory exists, `false` otherwise.",
-                    "example": "§if[§isFileExist[config.txt] == true]\n    §log[Config file exists]\n§else\n    §log[Config file not found]\n§endif",
-                    "params": "path: File or directory path (string)"
-                },
-                {
-                    "name": "createFile",
-                    "syntax": "§createFile[path]",
-                    "description": "Creates an empty file at the specified path. Creates directories if needed.",
-                    "example": "§createFile[data/output.txt]\n§log[File created successfully]",
-                    "params": "path: File path to create (string)"
-                },
-                {
-                    "name": "getPath",
-                    "syntax": "§getPath[relativePath]",
-                    "description": "Returns the absolute path for a relative path. Without arguments, returns current directory.",
-                    "example": "§var[currentDir; §getPath[]]\n§var[fullPath; §getPath[data/file.txt]]\n§log[Working in: $currentDir]",
-                    "params": "relativePath: Optional relative path (string)"
-                },
-                {
-                    "name": "readFile",
-                    "syntax": "§readFile[path]",
-                    "description": "Reads and returns the entire content of a file as a string.",
-                    "example": "§var[content; §readFile[data.txt]]\n§log[File content: $content]",
-                    "params": "path: File path to read (string)"
-                },
-                {
-                    "name": "replace",
-                    "syntax": "§replace[text; search; replace]",
-                    "description": "Replaces all occurrences of `search` with `replace` in the given text.",
-                    "example": "§var[text; Hello World]\n§var[newText; §replace[$text; World; Elios]]\n§log[$newText]  # → Hello Elios",
-                    "params": "text: The text to modify (string), search: Text to find (string), replace: Replacement text (string)"
-                },
-                {
-                    "name": "writeFile",
-                    "syntax": "§writeFile[path; content]",
-                    "description": "Writes content to a file, creating it if it doesn't exist.",
-                    "example": "§writeFile[log.txt; Application started]\n§writeFile[data.txt; Line 1;Line 2;Line 3]",
-                    "params": "path: File path (string), content: Content to write (string)"
-                }
-            ],
-            "json": [
-                {
-                    "name": "jsonRead",
-                    "syntax": "§jsonRead[path]",
-                    "description": "Reads and parses a JSON file, returning the content as a JSON string.",
-                    "example": "§var[config; §jsonRead[config.json]]\n§log[Config: $config]",
-                    "params": "path: JSON file path (string)"
-                },
-                {
-                    "name": "jsonWrite",
-                    "syntax": "§jsonWrite[path; jsonString]",
-                    "description": "Writes a JSON string to a file with proper formatting.",
-                    "example": "§jsonWrite[settings.json; {\"theme\": \"dark\", \"language\": \"fr\"}]\n§log[Settings saved]",
-                    "params": "path: File path (string), jsonString: JSON data (string)"
-                },
-                {
-                    "name": "jsonGet",
-                    "syntax": "§jsonGet[jsonString; key]",
-                    "description": "Extracts a value from a JSON string. Supports nested keys (e.g., \"user.profile.name\").",
-                    "example": "§var[config; {\"user\": {\"name\": \"John\", \"age\": 25}}]\n§var[userName; §jsonGet[$config; user.name]]\n§log[User: $userName]  # → John",
-                    "params": "jsonString: JSON data (string), key: Property path (string)"
-                },
-                {
-                    "name": "jsonSet",
-                    "syntax": "§jsonSet[jsonString; key; value]",
-                    "description": "Sets a value in a JSON string and returns the updated JSON. Supports nested keys.",
-                    "example": "§var[config; {\"theme\": \"dark\"}]\n§var[newConfig; §jsonSet[$config; theme; light]]\n§log[Updated: $newConfig]  # → {\"theme\": \"light\"}",
-                    "params": "jsonString: JSON data (string), key: Property path (string), value: New value (any)"
-                }
-            ],
-            "time": [
-                {
-                    "name": "time",
-                    "syntax": "§time[]",
-                    "description": "Returns current timestamp in milliseconds.",
-                    "example": "§var[start; §time[]]\n# ... code runs ...\n§var[duration; §sub[§time[]; $start]]",
-                    "params": "No parameters"
-                },
-                {
-                    "name": "date",
-                    "syntax": "§date[format]",
-                    "description": "Returns formatted date string. Formats: YYYY, MM, DD, HH, mm, ss",
-                    "example": "§date[YYYY-MM-DD]  # → 2024-01-15\n§date[HH:mm:ss]    # → 14:30:45\n§date[DD/MM/YYYY]  # → 15/01/2024",
-                    "params": "format: Date format string (string)"
-                },
-                {
-                    "name": "sleep",
-                    "syntax": "§sleep[milliseconds]",
-                    "description": "Pauses execution for specified milliseconds.",
-                    "example": "§log[Waiting...]\n§sleep[2000]\n§log[Done!]",
-                    "params": "milliseconds: Duration to sleep (number)"
-                }
-            ],
-            "system": [
-                {
-                    "name": "clear",
-                    "syntax": "§clear[]",
-                    "description": "Clears the console screen.",
-                    "example": "§clear[]\n§log[Welcome to my program!]",
-                    "params": "No parameters"
-                },
-                {
-                    "name": "exit",
-                    "syntax": "§exit[code]",
-                    "description": "Exits the program with optional exit code (0 = success).",
-                    "example": "§exit[0]  # Success\n§exit[1]  # Error",
-                    "params": "code: Exit code (number)"
-                }
-            ]
-        };
+        // Génération de la table des matières
+        function generateTOC() {
+            const tocContainer = document.getElementById('functions-toc');
+            let tocHTML = '';
 
-        // Génération de la navigation par catégories
-        function generateCategoriesNavigation() {
-            const navContainer = document.getElementById('categoriesNav');
-            let navHTML = '';
-
-            for (const [categoryId, category] of Object.entries(categoriesStructure)) {
-                navHTML += `
-                    <div class="category-item">
-                        <div class="category-header" data-category="${categoryId}">
-                            <span>${category.name}</span>
+            for (const [category, subcategories] of Object.entries(functionsData)) {
+                tocHTML += `
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">
+                            ${category}
                             <span class="arrow">▸</span>
-                        </div>
-                        <ul class="subcategory-list">
+                        </button>
+                        <ul class="submenu">
                 `;
 
-                for (const [subId, subName] of Object.entries(category.subcategories)) {
-                    navHTML += `
-                        <li class="subcategory-item">
-                            <a href="#${subId}" class="subcategory-link" data-subcategory="${subId}">
-                                ${subName}
-                            </a>
-                        </li>
-                    `;
+                for (const [subcategory, functions] of Object.entries(subcategories)) {
+                    tocHTML += `<li><a href="#${subcategory.toLowerCase().replace(/\s+/g, '-')}" class="nav-link">${subcategory}</a></li>`;
                 }
 
-                navHTML += `
+                tocHTML += `
                         </ul>
                     </div>
                 `;
             }
 
-            navContainer.innerHTML = navHTML;
-
-            // Gestion des clics sur les catégories
-            document.querySelectorAll('.category-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    header.classList.toggle('expanded');
-                });
-            });
-
-            // Ouvrir la première catégorie par défaut
-            document.querySelector('.category-header').classList.add('expanded');
+            tocContainer.innerHTML = tocHTML;
         }
 
         // Génération des fonctions
         function generateFunctions() {
-            const container = document.getElementById('functionsContainer');
+            const container = document.getElementById('functions-container');
             let functionsHTML = '';
 
-            for (const [subcategoryId, functions] of Object.entries(functionsData)) {
-                functionsHTML += `<h3 style="grid-column: 1 / -1; margin-top: 2rem; color: var(--accent);" id="${subcategoryId}">${getSubcategoryName(subcategoryId)}</h3>`;
-                
-                functions.forEach(func => {
+            for (const [category, subcategories] of Object.entries(functionsData)) {
+                for (const [subcategory, functions] of Object.entries(subcategories)) {
+                    const subcategoryId = subcategory.toLowerCase().replace(/\s+/g, '-');
+                    
                     functionsHTML += `
-                        <div class="function-card" data-function="${func.name.toLowerCase()}" data-category="${subcategoryId}">
-                            <div class="function-header">
-                                <div class="function-name" data-params="${func.params}">${func.name}</div>
-                                <div class="function-category">${subcategoryId}</div>
-                            </div>
-                            <div class="function-syntax">${func.syntax}</div>
-                            <div class="function-description">${func.description}</div>
-                            <div class="function-example">
-                                <pre>${func.example}</pre>
-                                <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
-                            </div>
-                        </div>
+                        <h3 id="${subcategoryId}" style="grid-column: 1 / -1; margin-top: 3rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                            ${subcategory}
+                        </h3>
                     `;
-                });
+                    
+                    functions.forEach(func => {
+                        functionsHTML += `
+                            <div class="function-card" data-function="${func.name.toLowerCase()}" data-category="${subcategoryId}">
+                                <div class="function-header">
+                                    <div class="function-name" data-params="${func.params}">${func.name}</div>
+                                    <div class="function-category">${subcategory}</div>
+                                </div>
+                                <div class="function-syntax">${func.syntax}</div>
+                                <div class="function-description">${func.description}</div>
+                                <div class="function-example">
+                                    <pre>${func.example}</pre>
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
             }
 
             container.innerHTML = functionsHTML;
-        }
-
-        // Obtenir le nom d'une sous-catégorie
-        function getSubcategoryName(subId) {
-            for (const category of Object.values(categoriesStructure)) {
-                if (category.subcategories[subId]) {
-                    return category.subcategories[subId];
-                }
-            }
-            return subId;
-        }
-
-        // Recherche de fonctions
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            const searchResults = document.getElementById('searchResults');
-
-            searchInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                searchResults.innerHTML = '';
-
-                if (query.length < 2) {
-                    return;
-                }
-
-                const results = [];
-                
-                // Rechercher dans toutes les fonctions
-                for (const [category, functions] of Object.entries(functionsData)) {
-                    for (const func of functions) {
-                        if (func.name.toLowerCase().includes(query) || 
-                            func.description.toLowerCase().includes(query) ||
-                            func.syntax.toLowerCase().includes(query)) {
-                            results.push({
-                                name: func.name,
-                                category: category,
-                                syntax: func.syntax
-                            });
-                        }
-                    }
-                }
-
-                // Afficher les résultats
-                if (results.length > 0) {
-                    results.slice(0, 8).forEach(result => {
-                        const item = document.createElement('div');
-                        item.className = 'search-result-item';
-                        item.innerHTML = `
-                            <strong>${result.name}</strong>
-                            <span class="category">${getSubcategoryName(result.category)}</span>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                ${result.syntax}
-                            </div>
-                        `;
-                        item.addEventListener('click', () => {
-                            highlightAndScrollToFunction(result.name);
-                            searchInput.value = '';
-                            searchResults.innerHTML = '';
-                        });
-                        searchResults.appendChild(item);
-                    });
-                } else {
-                    const noResults = document.createElement('div');
-                    noResults.className = 'search-result-item';
-                    noResults.textContent = 'No functions found';
-                    noResults.style.color = 'var(--text-secondary)';
-                    searchResults.appendChild(noResults);
-                }
-            });
-
-            // Fermer les résultats quand on clique ailleurs
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                    searchResults.innerHTML = '';
-                }
-            });
-        }
-
-        // Mettre en évidence et faire défiler vers une fonction
-        function highlightAndScrollToFunction(functionName) {
-            const functionCard = document.querySelector(`[data-function="${functionName.toLowerCase()}"]`);
-            if (functionCard) {
-                // Retirer les surbrillances précédentes
-                document.querySelectorAll('.function-card.highlight').forEach(card => {
-                    card.classList.remove('highlight');
-                });
-
-                // Ajouter la surbrillance
-                functionCard.classList.add('highlight');
-
-                // Faire défiler vers la fonction
-                functionCard.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' 
-                });
-
-                // Retirer la surbrillance après 3 secondes
-                setTimeout(() => {
-                    functionCard.classList.remove('highlight');
-                }, 3000);
-            }
         }
 
         // Fonction de copie
@@ -1057,8 +1098,125 @@
             });
         }
 
+        // Recherche de fonctions
+        function setupSearch() {
+            const searchInput = document.getElementById('doc-search');
+            const searchResults = document.getElementById('search-results');
+            const noResults = document.getElementById('no-results');
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                searchResults.innerHTML = '';
+                noResults.style.display = 'none';
+
+                if (query.length < 2) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+
+                const results = [];
+                
+                // Rechercher dans toutes les fonctions
+                for (const [category, subcategories] of Object.entries(functionsData)) {
+                    for (const [subcategory, functions] of Object.entries(subcategories)) {
+                        for (const func of functions) {
+                            if (func.name.toLowerCase().includes(query) || 
+                                func.description.toLowerCase().includes(query) ||
+                                func.syntax.toLowerCase().includes(query)) {
+                                results.push({
+                                    name: func.name,
+                                    category: category,
+                                    subcategory: subcategory,
+                                    syntax: func.syntax
+                                });
+                            }
+                        }
+                    }
+                }
+
+                // Afficher les résultats
+                if (results.length > 0) {
+                    searchResults.style.display = 'block';
+                    results.slice(0, 8).forEach(result => {
+                        const item = document.createElement('div');
+                        item.className = 'search-result-item';
+                        item.innerHTML = `
+                            <strong>${result.name}</strong>
+                            <span class="category">${result.subcategory}</span>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                ${result.syntax}
+                            </div>
+                        `;
+                        item.addEventListener('click', () => {
+                            highlightAndScrollToFunction(result.name);
+                            searchInput.value = '';
+                            searchResults.style.display = 'none';
+                        });
+                        searchResults.appendChild(item);
+                    });
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+
+            // Fermer les résultats quand on clique ailleurs
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            // Navigation avec Entrée
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const firstResult = searchResults.querySelector('.search-result-item');
+                    if (firstResult) {
+                        firstResult.click();
+                    }
+                }
+            });
+        }
+
+        // Mettre en évidence et faire défiler vers une fonction
+        function highlightAndScrollToFunction(functionName) {
+            const functionCard = document.querySelector(`[data-function="${functionName.toLowerCase()}"]`);
+            if (functionCard) {
+                // Retirer les surbrillances précédentes
+                document.querySelectorAll('.function-card.search-match').forEach(card => {
+                    card.classList.remove('search-match');
+                });
+
+                // Ajouter la surbrillance
+                functionCard.classList.add('search-match');
+
+                // Faire défiler vers la fonction
+                functionCard.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+
+                // Retirer la surbrillance après 3 secondes
+                setTimeout(() => {
+                    functionCard.classList.remove('search-match');
+                }, 3000);
+            }
+        }
+
         // Navigation smooth scroll
-        function setupNavigation() {
+        document.addEventListener('DOMContentLoaded', () => {
+            generateTOC();
+            generateFunctions();
+            setupSearch();
+
+            // Collapsible TOC behavior
+            document.querySelectorAll('.collapsible-button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const opened = btn.classList.toggle('open');
+                    btn.setAttribute('aria-expanded', String(opened));
+                });
+            });
+
+            // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -1069,8 +1227,8 @@
                             block: 'start'
                         });
                         
-                        // Mettre à jour l'état actif
-                        document.querySelectorAll('.subcategory-link').forEach(link => {
+                        // Update active state
+                        document.querySelectorAll('.nav-link').forEach(link => {
                             link.classList.remove('active');
                         });
                         this.classList.add('active');
@@ -1078,15 +1236,16 @@
                 });
             });
 
-            // Mettre à jour la navigation active au défilement
+            // Update active nav link based on scroll position
             const sections = document.querySelectorAll('.content-section, h3[id]');
-            const navLinks = document.querySelectorAll('.subcategory-link');
+            const navLinks = document.querySelectorAll('.nav-link');
 
             function updateActiveLink() {
                 let current = '';
                 
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
                     if (window.pageYOffset >= (sectionTop - 150)) {
                         current = section.getAttribute('id');
                     }
@@ -1098,9 +1257,13 @@
                         link.classList.add('active');
                         
                         // Ouvrir la catégorie parente
-                        const categoryHeader = link.closest('.category-item').querySelector('.category-header');
-                        if (!categoryHeader.classList.contains('expanded')) {
-                            categoryHeader.classList.add('expanded');
+                        const parentCollapsible = link.closest('.collapsible');
+                        if (parentCollapsible) {
+                            const btn = parentCollapsible.querySelector('.collapsible-button');
+                            if (btn && !btn.classList.contains('open')) {
+                                btn.classList.add('open');
+                                btn.setAttribute('aria-expanded', 'true');
+                            }
                         }
                     }
                 });
@@ -1108,14 +1271,34 @@
 
             window.addEventListener('scroll', updateActiveLink);
             window.addEventListener('load', updateActiveLink);
-        }
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', () => {
-            generateCategoriesNavigation();
-            generateFunctions();
-            setupSearch();
-            setupNavigation();
+            // Sidebar toggle for small screens
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    // focus first search input when opening
+                    if (sidebar.classList.contains('open')) {
+                        const s = document.getElementById('doc-search');
+                        if (s) s.focus();
+                    }
+                });
+
+                // Close sidebar when clicking a nav link on small screens
+                document.querySelectorAll('.toc a, .nav-links a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        if (window.innerWidth <= 992) sidebar.classList.remove('open');
+                    });
+                });
+
+                // Close on ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                    }
+                });
+            }
         });
     </script>
 </body>
