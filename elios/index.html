@@ -519,7 +519,7 @@
             <div class="sidebar-header">
                 <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
                 <h1>Elios Docs</h1>
-                <div class="version">v1.4.0</div>
+                <div class="version">v1.5.1</div>
             </div>
             <div class="search-container">
                 <input id="doc-search" placeholder="Rechercher les fonctions..." aria-label="Rechercher la documentation" />
@@ -580,6 +580,41 @@
                             <li><a href="#len" class="nav-link">len</a></li>
                             <li><a href="#contains" class="nav-link">contains</a></li>
                             <li><a href="#equalsIgnoreCase" class="nav-link">equalsIgnoreCase</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Validation <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#isNumeric" class="nav-link">isNumeric</a></li>
+                            <li><a href="#isText" class="nav-link">isText</a></li>
+                            <li><a href="#isPair" class="nav-link">isPair</a></li>
+                            <li><a href="#isUnpair" class="nav-link">isUnpair</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">Loop Control <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#break" class="nav-link">break</a></li>
+                            <li><a href="#continue" class="nav-link">continue</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="collapsible">
+                        <button class="collapsible-button" aria-expanded="false">File System <span class="arrow">▸</span></button>
+                        <ul class="submenu">
+                            <li><a href="#isFileExist" class="nav-link">isFileExist</a></li>
+                            <li><a href="#createFile" class="nav-link">createFile</a></li>
+                            <li><a href="#getPath" class="nav-link">getPath</a></li>
+                            <li><a href="#readFile" class="nav-link">readFile</a></li>
+                            <li><a href="#getContentFile" class="nav-link">getContentFile</a></li>
+                            <li><a href="#replace" class="nav-link">replace</a></li>
+                            <li><a href="#writeFile" class="nav-link">writeFile</a></li>
+                            <li><a href="#jsonRead" class="nav-link">jsonRead</a></li>
+                            <li><a href="#jsonWrite" class="nav-link">jsonWrite</a></li>
+                            <li><a href="#jsonGet" class="nav-link">jsonGet</a></li>
+                            <li><a href="#jsonSet" class="nav-link">jsonSet</a></li>
                         </ul>
                     </div>
 
@@ -649,8 +684,11 @@
                         <div class="function-description">
                             Download the pre-built executable for Windows.
                         </div>
-                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases/download/1.4.0/Elios.windows.1.4.0.zip', '_blank')">
+                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases/download/1.5.1/Elios.windows.1.5.1.zip', '_blank')">
                             Download for Windows
+                        </button>
+                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases/download/1.5.1/Elios.linux.1.5.1.zip', '_blank')">
+                            Download for Linux (.deb)
                         </button>
                     </div>
 
@@ -685,6 +723,22 @@
 §endif</pre>
                     <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
                 </div>
+            </section>
+
+            <!-- Anchor for legacy quick-links -->
+            <a id="functions"></a>
+
+            <!-- What's New (quick link target) -->
+            <section id="whats-new" class="content-section">
+                <h2>What's New in v1.5.1</h2>
+                <p>Major update with file system operations, JSON handling, loop control, and validation functions:</p>
+                <ul>
+                    <li><strong>File System:</strong> Read/write files, check existence, create directories</li>
+                    <li><strong>JSON Support:</strong> Full JSON parsing and manipulation</li>
+                    <li><strong>Loop Control:</strong> break and continue for while loops</li>
+                    <li><strong>Validation:</strong> isNumeric, isText, isPair/isUnpair functions</li>
+                    <li><strong>Enhanced Documentation:</strong> Complete function reference</li>
+                </ul>
             </section>
 
             <!-- Output Functions -->
@@ -900,13 +954,13 @@
                         </div>
                         <div class="function-syntax">§trim[text]</div>
                         <div class="function-description">
-                                Removes all whitespace characters from the provided text, including internal spaces. For example, `§trim[  hello   world ]` returns `helloworld` (internal spaces are removed).
-                            </div>
-                            <div class="function-example">
-                                <pre>§trim[  hello   world ]  # → helloworld
-    §trim[  hello  ]          # → hello</pre>
-                                <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
-                            </div>
+                            Removes all whitespace characters from the provided text, including internal spaces.
+                        </div>
+                        <div class="function-example">
+                            <pre>§trim[  hello   world ]  # → helloworld
+§trim[  hello  ]          # → hello</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
                     </div>
 
                     <div id="len" class="function-card">
@@ -916,7 +970,7 @@
                         </div>
                         <div class="function-syntax">§len[text]</div>
                         <div class="function-description">
-                            Returns the length of a string. If the string uses semicolon-separated items (e.g. "a;b;c"), `len` returns the number of items.
+                            Returns the length of a string. If the string uses semicolon-separated items, returns the number of items.
                         </div>
                         <div class="function-example">
                             <pre>§len[hello]       # → 5
@@ -933,12 +987,11 @@
                         </div>
                         <div class="function-syntax">§contains[haystack; needle]</div>
                         <div class="function-description">
-                            Returns `true` if `haystack` contains the substring `needle`, otherwise `false`. Useful for conditional checks.
+                            Returns `true` if `haystack` contains the substring `needle`, otherwise `false`.
                         </div>
                         <div class="function-example">
                             <pre>§contains[hello; ell]   # → true
 §contains[hello; xyz]   # → false
-// Use inside conditionals:
 §if[§contains[$input; "pass"] == true]
     §log[Contains 'pass']
 §endif</pre>
@@ -960,6 +1013,344 @@
     §log[Correct!]
 §endif
 # Accepts: Paris, PARIS, paris, PaRiS</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Validation Functions -->
+            <section id="validation-functions" class="content-section">
+                <h2>Validation Functions</h2>
+                <p>Functions for data type checking and validation.</p>
+
+                <div class="function-grid">
+                    <div id="isNumeric" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">isNumeric</div>
+                            <div class="function-category">validation</div>
+                        </div>
+                        <div class="function-syntax">§isNumeric[value]</div>
+                        <div class="function-description">
+                            Returns `true` if the value is a valid number, `false` otherwise.
+                        </div>
+                        <div class="function-example">
+                            <pre>§isNumeric[42]        # → true
+§isNumeric[3.14]      # → true
+§isNumeric[hello]     # → false
+§isNumeric[25d]       # → false
+
+§if[§isNumeric[$input] == true]
+    §log[Valid number!]
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="isText" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">isText</div>
+                            <div class="function-category">validation</div>
+                        </div>
+                        <div class="function-syntax">§isText[value]</div>
+                        <div class="function-description">
+                            Returns `true` if the value is non-numeric text, `false` otherwise.
+                        </div>
+                        <div class="function-example">
+                            <pre>§isText[hello]       # → true
+§isText[25d]        # → true
+§isText[42]         # → false
+§isText[3.14]       # → false
+
+§if[§isText[$input] == true]
+    §log[Text input detected]
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="isPair" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">isPair</div>
+                            <div class="function-category">validation</div>
+                        </div>
+                        <div class="function-syntax">§isPair[number]</div>
+                        <div class="function-description">
+                            Returns `true` if the number is even, `false` otherwise.
+                        </div>
+                        <div class="function-example">
+                            <pre>§isPair[4]          # → true
+§isPair[7]          # → false
+§isPair[0]          # → true
+§isPair[-2]         # → true
+
+§if[§isPair[$number] == true]
+    §log[Number is even]
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="isUnpair" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">isUnpair</div>
+                            <div class="function-category">validation</div>
+                        </div>
+                        <div class="function-syntax">§isUnpair[number]</div>
+                        <div class="function-description">
+                            Returns `true` if the number is odd, `false` otherwise.
+                        </div>
+                        <div class="function-example">
+                            <pre>§isUnpair[3]        # → true
+§isUnpair[8]        # → false
+§isUnpair[-5]       # → true
+
+§if[§isUnpair[$number] == true]
+    §log[Number is odd]
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loop Control Functions -->
+            <section id="loop-control-functions" class="content-section">
+                <h2>Loop Control Functions</h2>
+                <p>Functions for controlling loop execution flow.</p>
+
+                <div class="function-grid">
+                    <div id="break" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">break</div>
+                            <div class="function-category">loop</div>
+                        </div>
+                        <div class="function-syntax">§break[]</div>
+                        <div class="function-description">
+                            Immediately exits the current while loop.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[i; 1]
+§while[$i <= 10]
+    §if[$i == 5]
+        §log[Breaking at 5!]
+        §break[]
+    §endif
+    §log[Iteration: $i]
+    §var[i; $i + 1]
+§endwhile</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="continue" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">continue</div>
+                            <div class="function-category">loop</div>
+                        </div>
+                        <div class="function-syntax">§continue[]</div>
+                        <div class="function-description">
+                            Skips to the next iteration of the current while loop.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[i; 0]
+§while[$i < 10]
+    §var[i; $i + 1]
+    §if[§isPair[$i] == true]
+        §continue[]  # Skip even numbers
+    §endif
+    §log[Odd number: $i]
+§endwhile</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- File System Functions -->
+            <section id="file-system-functions" class="content-section">
+                <h2>File System Functions</h2>
+                <p>Functions for file and directory operations.</p>
+
+                <div class="function-grid">
+                    <div id="isFileExist" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">isFileExist</div>
+                            <div class="function-category">file</div>
+                        </div>
+                        <div class="function-syntax">§isFileExist[path]</div>
+                        <div class="function-description">
+                            Returns `true` if the file or directory exists, `false` otherwise.
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[§isFileExist[config.txt] == true]
+    §log[Config file exists]
+§else
+    §log[Config file not found]
+§endif</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="createFile" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">createFile</div>
+                            <div class="function-category">file</div>
+                        </div>
+                        <div class="function-syntax">§createFile[path]</div>
+                        <div class="function-description">
+                            Creates an empty file at the specified path. Creates directories if needed.
+                        </div>
+                        <div class="function-example">
+                            <pre>§createFile[data/output.txt]
+§log[File created successfully]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="getPath" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">getPath</div>
+                            <div class="function-category">file</div>
+                        </div>
+                        <div class="function-syntax">§getPath[relativePath]</div>
+                        <div class="function-description">
+                            Returns the absolute path for a relative path. Without arguments, returns current directory.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[currentDir; §getPath[]]
+§var[fullPath; §getPath[data/file.txt]]
+§log[Working in: $currentDir]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="readFile" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">readFile</div>
+                            <div class="function-category">file</div>
+                        </div>
+                        <div class="function-syntax">§readFile[path]</div>
+                        <div class="function-description">
+                            Reads and returns the entire content of a file as a string.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[content; §readFile[data.txt]]
+§log[File content: $content]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="getContentFile" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">getContentFile</div>
+                            <div class="function-category">file</div>
+                        </div>
+                        <div class="function-syntax">§getContentFile[path]</div>
+                        <div class="function-description">
+                            Alias for `readFile` - reads file content.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[config; §getContentFile[config.json]]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="replace" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">replace</div>
+                            <div class="function-category">text</div>
+                        </div>
+                        <div class="function-syntax">§replace[text; search; replace]</div>
+                        <div class="function-description">
+                            Replaces all occurrences of `search` with `replace` in the given text.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[text; Hello World]
+§var[newText; §replace[$text; World; Elios]]
+§log[$newText]  # → Hello Elios</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="writeFile" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">writeFile</div>
+                            <div class="function-category">file</div>
+                        </div>
+                        <div class="function-syntax">§writeFile[path; content]</div>
+                        <div class="function-description">
+                            Writes content to a file, creating it if it doesn't exist.
+                        </div>
+                        <div class="function-example">
+                            <pre>§writeFile[log.txt; Application started]
+§writeFile[data.txt; Line 1;Line 2;Line 3]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="jsonRead" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">jsonRead</div>
+                            <div class="function-category">json</div>
+                        </div>
+                        <div class="function-syntax">§jsonRead[path]</div>
+                        <div class="function-description">
+                            Reads and parses a JSON file, returning the content as a JSON string.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[config; §jsonRead[config.json]]
+§log[Config: $config]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="jsonWrite" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">jsonWrite</div>
+                            <div class="function-category">json</div>
+                        </div>
+                        <div class="function-syntax">§jsonWrite[path; jsonString]</div>
+                        <div class="function-description">
+                            Writes a JSON string to a file with proper formatting.
+                        </div>
+                        <div class="function-example">
+                            <pre>§jsonWrite[settings.json; {"theme": "dark", "language": "fr"}]
+§log[Settings saved]</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="jsonGet" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">jsonGet</div>
+                            <div class="function-category">json</div>
+                        </div>
+                        <div class="function-syntax">§jsonGet[jsonString; key]</div>
+                        <div class="function-description">
+                            Extracts a value from a JSON string. Supports nested keys (e.g., "user.profile.name").
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[config; {"user": {"name": "John", "age": 25}}]
+§var[userName; §jsonGet[$config; user.name]]
+§log[User: $userName]  # → John</pre>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                        </div>
+                    </div>
+
+                    <div id="jsonSet" class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">jsonSet</div>
+                            <div class="function-category">json</div>
+                        </div>
+                        <div class="function-syntax">§jsonSet[jsonString; key; value]</div>
+                        <div class="function-description">
+                            Sets a value in a JSON string and returns the updated JSON. Supports nested keys.
+                        </div>
+                        <div class="function-example">
+                            <pre>§var[config; {"theme": "dark"}]
+§var[newConfig; §jsonSet[$config; theme; light]]
+§log[Updated: $newConfig]  # → {"theme": "light"}</pre>
                             <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
                         </div>
                     </div>
@@ -1066,6 +1457,123 @@
             </section>
 
             <!-- Conditionals -->
+            <section id="conditionals" class="content-section">
+                <h2>Conditional Structures</h2>
+                <p>Control the flow of your program with conditional logic.</p>
+
+                <div class="function-card">
+                    <h3>If / ElseIf / Else</h3>
+                    <div class="function-description">
+                        Execute different code blocks based on conditions.
+                    </div>
+                    <div class="function-example">
+                        <pre>§if[$age >= 18]
+    §log[You are an adult!]
+§elseif[$age >= 13]
+    §log[You are a teenager!]
+§else
+    §log[You are a child!]
+§endif</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                    </div>
+                </div>
+
+                <div class="function-card">
+                    <h3>While Loops</h3>
+                    <div class="function-description">
+                        Execute a block of code repeatedly while a condition is true.
+                    </div>
+                    <div class="function-example">
+                        <pre>§var[i; 1]
+§while[$i <= 5]
+    §log[Count: $i]
+    §var[i; $i + 1]
+§endwhile</pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Operators -->
+            <section id="operators" class="content-section">
+                <h2>Comparison Operators</h2>
+                <p>Use these operators in your conditions to compare values.</p>
+
+                <div class="function-grid">
+                    <div class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">==</div>
+                        </div>
+                        <div class="function-description">
+                            Equal to
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$x == 10]</pre>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">!=</div>
+                        </div>
+                        <div class="function-description">
+                            Not equal to
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$name != "Bob"]</pre>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">&lt;</div>
+                        </div>
+                        <div class="function-description">
+                            Less than
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$age < 18]</pre>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">&gt;</div>
+                        </div>
+                        <div class="function-description">
+                            Greater than
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$score > 80]</pre>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">&lt;=</div>
+                        </div>
+                        <div class="function-description">
+                            Less than or equal to
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$temperature <= 30]</pre>
+                        </div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-header">
+                            <div class="function-name">&gt;=</div>
+                        </div>
+                        <div class="function-description">
+                            Greater than or equal to
+                        </div>
+                        <div class="function-example">
+                            <pre>§if[$level >= 5]</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Errors -->
             <section id="errors" class="content-section">
                 <h2>Errors &amp; Troubleshooting</h2>
@@ -1160,107 +1668,6 @@
 
 // If errors appear, test inner call alone:
 §log[§len[hello]]</pre></div>
-                    </div>
-                </div>
-            </section>
-            <section id="conditionals" class="content-section">
-                <h2>Conditional Structures</h2>
-                <p>Control the flow of your program with conditional logic.</p>
-
-                <div class="function-card">
-                    <h3>If / ElseIf / Else</h3>
-                    <div class="function-description">
-                        Execute different code blocks based on conditions.
-                    </div>
-                    <div class="function-example">
-                        <pre>§if[$age >= 18]
-    §log[You are an adult!]
-§elseif[$age >= 13]
-    §log[You are a teenager!]
-§else
-    §log[You are a child!]
-§endif</pre>
-                        <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Operators -->
-            <section id="operators" class="content-section">
-                <h2>Comparison Operators</h2>
-                <p>Use these operators in your conditions to compare values.</p>
-
-                <div class="function-grid">
-                    <div class="function-card">
-                        <div class="function-header">
-                            <div class="function-name">==</div>
-                        </div>
-                        <div class="function-description">
-                            Equal to
-                        </div>
-                        <div class="function-example">
-                            <pre>§if[$x == 10]</pre>
-                        </div>
-                    </div>
-
-                    <div class="function-card">
-                        <div class="function-header">
-                            <div class="function-name">!=</div>
-                        </div>
-                        <div class="function-description">
-                            Not equal to
-                        </div>
-                        <div class="function-example">
-                            <pre>§if[$name != "Bob"]</pre>
-                        </div>
-                    </div>
-
-                    <div class="function-card">
-                        <div class="function-header">
-                            <div class="function-name">&lt;</div>
-                        </div>
-                        <div class="function-description">
-                            Less than
-                        </div>
-                        <div class="function-example">
-                            <pre>§if[$age < 18]</pre>
-                        </div>
-                    </div>
-
-                    <div class="function-card">
-                        <div class="function-header">
-                            <div class="function-name">&gt;</div>
-                        </div>
-                        <div class="function-description">
-                            Greater than
-                        </div>
-                        <div class="function-example">
-                            <pre>§if[$score > 80]</pre>
-                        </div>
-                    </div>
-
-                    <div class="function-card">
-                        <div class="function-header">
-                            <div class="function-name">&lt;=</div>
-                        </div>
-                        <div class="function-description">
-                            Less than or equal to
-                        </div>
-                        <div class="function-example">
-                            <pre>§if[$temperature <= 30]</pre>
-                        </div>
-                    </div>
-
-                    <div class="function-card">
-                        <div class="function-header">
-                            <div class="function-name">&gt;=</div>
-                        </div>
-                        <div class="function-description">
-                            Greater than or equal to
-                        </div>
-                        <div class="function-example">
-                            <pre>§if[$level >= 5]</pre>
-                        </div>
                     </div>
                 </div>
             </section>
