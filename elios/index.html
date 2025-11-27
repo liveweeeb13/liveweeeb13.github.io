@@ -1,1305 +1,750 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elios Documentation</title>
-    <style>
-        :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --border: #30363d;
-            --text-primary: #e6edf3;
-            --text-secondary: #7d8590;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
-            --success: #3fb950;
-            --warning: #d29922;
-            --danger: #f85149;
-        }
+    <title>Elios Language - Documentation</title>
+    <style class="dg">
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+:root{
+  --bg:#0b0f10;
+  --panel:#0f1415;
+  --muted:#94a3a1;
+  --text:#d6f7e3;
+  --accent:#57f287;
+  --accent-2:#2aa874;
+  --accent-dim:#1b5b3f;
+  --card:#0d1112;
+  --border:rgba(255,255,255,0.04);
+  --glass:rgba(255,255,255,0.03);
+  --code-bg:#091012;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: Inter, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg, #071011 0%, #081217 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:28px;
+}
+
+.container{
+  max-width:1200px;margin:0 auto;background:linear-gradient(180deg,var(--panel),#071111);
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 12px 40px rgba(2,6,8,0.7);
+}
+
+header{
+  padding:34px 32px;background:linear-gradient(90deg, rgba(7,17,14,0.6), rgba(10,24,18,0.6));
+  border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:16px
+}
+header h1{font-size:1.8rem;color:var(--text);font-weight:600}
+
+.search-container{padding:18px 24px;background:linear-gradient(180deg, rgba(2,6,8,0.02), transparent);border-bottom:1px solid var(--border)}
+.search-box{display:flex;gap:10px}
+.search-box input{flex:1;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--card);color:var(--text)}
+.search-box input::placeholder{color:var(--muted)}
+.search-box button{background:linear-gradient(180deg,var(--accent),var(--accent-2));border:none;color:#05110b;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.search-box button:hover{filter:brightness(.96)}
+
+.content{display:flex;min-height:520px}
+.sidebar{width:260px;background:linear-gradient(180deg, rgba(2,6,8,0.03), transparent);border-right:1px solid var(--border);padding:16px;}
+.sidebar ul{list-style:none}
+.sidebar li{margin-bottom:6px}
+.sidebar a{display:block;padding:12px 14px;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:0.95rem}
+.sidebar a:hover{background:linear-gradient(90deg, rgba(87,242,135,0.06), rgba(43,168,116,0.03));color:var(--text)}
+.sidebar a.active{background:linear-gradient(90deg, rgba(87,242,135,0.12), rgba(43,168,116,0.05));color:var(--accent);box-shadow:inset 0 0 0 1px rgba(87,242,135,0.02)}
+
+.main{flex:1;padding:28px;overflow-y:auto;max-height:720px}
+.section{display:none}
+.section.active{display:block}
+
+h2{color:var(--text);font-size:1.4rem;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:8px}
+h3{color:var(--accent);margin-top:16px;margin-bottom:8px}
+
+.function{background:linear-gradient(180deg,var(--card), rgba(2,6,8,0.02));padding:14px;border-radius:10px;border-left:3px solid rgba(87,242,135,0.18);margin:12px 0;color:var(--muted)}
+.function-name{font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;color:var(--accent);font-weight:700;font-variant-ligatures: contextual;}
+.function-desc{margin-top:6px;color:var(--muted)}
+
+code{background:rgba(255,255,255,0.02);padding:3px 6px;border-radius:6px;font-family:'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;color:var(--accent);font-variant-ligatures: contextual;}
+
+pre{background:var(--code-bg);color:#cfeee0;padding:14px;border-radius:10px;overflow:auto;border:1px solid rgba(255,255,255,0.03);box-shadow:inset 0 -6px 30px rgba(17,30,20,0.2);font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace}
+
+.example{background:linear-gradient(180deg, rgba(12,20,15,0.4), rgba(5,9,8,0.2));padding:12px;border-radius:8px;border-left:3px solid rgba(87,242,135,0.09);margin:12px 0}
+.example-code{background:var(--code-bg);padding:10px;border-radius:6px;color:#d6f7e3}
+
+footer{padding:18px;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.9rem}
+
+@media (max-width:900px){.sidebar{display:none}.content{flex-direction:column}.main{max-height:none;padding:18px}}
+
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(87,242,135,0.09);color:var(--accent);font-weight:700;font-size:0.8rem}
+
+button:focus,input:focus{outline:none;box-shadow:0 0 0 3px rgba(87,242,135,0.06);border-color:rgba(87,242,135,0.14)}
+
+li::marker{content:none}
+
+.code-wrapper{position:relative}
+.code-toggle{display:none;position:absolute;right:12px;top:10px;width:36px;height:36px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;align-items:center;justify-content:center}
+.code-toggle .bar{display:block;width:18px;height:2px;background:var(--muted);margin:3px 0;transition:transform .25s ease,opacity .18s ease}
+
+@media (max-width:900px){
+  .code-toggle{display:flex}
+  pre{transition:max-height .28s ease, padding .2s ease;max-height:800px}
+  pre.collapsed{max-height:0;padding-top:8px;padding-bottom:0;overflow:hidden}
+  .code-toggle.open .bar:nth-child(1){transform:rotate(90deg) translateX(3px)}
+  .code-toggle.open .bar:nth-child(2){opacity:0}
+  .code-toggle.open .bar:nth-child(3){transform:rotate(90deg) translateX(-3px)}
+  .code-wrapper pre{padding-top:36px}
+}
+
+.nav-toggle{display:none;position:relative;width:40px;height:40px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;align-items:center;justify-content:center;cursor:pointer;margin-left:auto;z-index:1300}
+.nav-toggle{flex-direction:column;transition:transform .28s cubic-bezier(.2,.9,.2,1)}
+.nav-toggle .bar{display:block;width:18px;height:2px;background:var(--muted);margin:3px 0;border-radius:2px;transition:transform .25s ease,opacity .18s ease;opacity:1}
+
+@media (max-width:900px){
+  .nav-toggle{display:flex}
+  .sidebar{display:block;position:fixed;left:0;top:0;bottom:0;width:260px;z-index:1200;transform:translateX(-100%);transition:transform .28s ease;background:var(--panel);box-shadow: 8px 0 30px rgba(0,0,0,0.6);backdrop-filter:none}
+  .sidebar.open{transform:translateX(0)}
+  .overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1100}
+  .nav-toggle.open{transform:rotate(90deg)}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  .sidebar-header{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center}
+  .sidebar-header h2{font-size:1.2rem;color:var(--accent);margin:0;border:none;padding:0}
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styles - FIXED FULL LEFT */
-        .sidebar {
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            padding: 1.5rem 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-            z-index: 1000;
-            transition: transform 220ms cubic-bezier(.2,.8,.2,1);
-        }
-
-        .sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .sidebar::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
-        }
-
-        .sidebar-header {
-            padding: 0 1.5rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-
-        .sidebar-header h1 {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar-header .version {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .nav-section {
-            margin-bottom: 1.5rem;
-            padding: 0 1rem;
-        }
-
-        .nav-section h3 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.5px;
-            padding: 0 0.5rem;
-            font-weight: 600;
-        }
-
-        .nav-links {
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-bottom: 0.25rem;
-        }
-
-        .nav-links a {
-            display: block;
-            padding: 0.5rem 0.75rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .nav-links a:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .nav-links a.active {
-            background: var(--accent);
-            color: white;
-            font-weight: 500;
-        }
-
-        /* Sidebar toggle (mobile) */
-        .sidebar-toggle {
-            display: none;
-            background: transparent;
-            border: 1px solid transparent;
-            color: var(--accent);
-            font-size: 1.25rem;
-            padding: 0.35rem 0.6rem;
-            border-radius: 6px;
-            margin-right: 0.5rem;
-            cursor: pointer;
-        }
-
-        /* Responsive: collapse sidebar into off-canvas panel */
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(-110%);
-                box-shadow: 0 8px 24px rgba(2,6,23,0.6);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .sidebar-toggle { display: inline-block; }
-
-            /* Make the toggle fixed and always accessible on small screens */
-            .sidebar-toggle {
-                position: fixed;
-                left: 12px;
-                top: 12px;
-                z-index: 1101;
-                background: var(--bg-secondary);
-                border: 1px solid var(--border);
-            }
-
-            .main-content { margin-left: 0; padding: 1.5rem; }
-        }
-
-        /* Small tweak for very narrow screens */
-        @media (max-width: 480px) {
-            .sidebar { width: 260px; }
-            .sidebar-toggle { font-size: 1.1rem; }
-        }
-
-        /* Search */
-        .search-container {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border);
-            background: linear-gradient(180deg, rgba(13,17,23,0.02), transparent);
-        }
-
-        #doc-search {
-            width: 100%;
-            padding: 0.6rem 0.9rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        #doc-search::placeholder { color: var(--text-secondary); }
-
-        .no-results { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem; display: none; }
-
-        /* Search Results */
-        .search-results {
-            margin-top: 0.5rem;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .search-result-item {
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-            border: 1px solid transparent;
-        }
-
-        .search-result-item:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--accent);
-        }
-
-        .search-result-item .category {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-left: 0.5rem;
-        }
-
-        /* Highlighted search result in main content */
-        .function-card.search-match {
-            border-color: var(--accent);
-            box-shadow: 0 6px 18px rgba(88,166,255,0.06);
-            transform: translateY(-2px);
-            animation: highlight-pulse 2s ease-in-out;
-        }
-
-        @keyframes highlight-pulse {
-            0%, 100% { box-shadow: 0 6px 18px rgba(88,166,255,0.06); }
-            50% { box-shadow: 0 6px 25px rgba(88,166,255,0.15); }
-        }
-
-        /* Collapsible TOC */
-        .toc .collapsible-button {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 0.5rem 0.75rem;
-            cursor: pointer;
-            font-size: 0.95rem;
-            text-align: left;
-        }
-
-        .toc .collapsible-button:hover {
-            color: var(--text-primary);
-        }
-
-        .toc .submenu {
-            list-style: none;
-            padding-left: 0.35rem;
-            margin: 0.25rem 0 0.75rem 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 220ms cubic-bezier(.2,.8,.2,1);
-            border-left: 2px solid transparent;
-        }
-
-        .toc .submenu li { margin: 0.15rem 0; }
-
-        .toc .submenu li a {
-            display: block;
-            padding: 0.4rem 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            text-decoration: none;
-            border-radius: 6px;
-        }
-
-        .toc .submenu li a:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .toc .collapsible-button.open { color: var(--text-primary); }
-        .toc .collapsible-button.open .arrow { transform: rotate(90deg); }
-
-        .toc .arrow { transition: transform 0.15s ease; color: var(--text-secondary); }
-
-        /* When open, allow enough height for content (large value for simplicity) */
-        .collapsible-button.open + .submenu { max-height: 640px; border-left-color: var(--border); }
-
-        /* Main Content Styles */
-        .main-content {
-            margin-left: 280px;
-            padding: 3rem 4rem;
-            overflow-y: auto;
-            max-width: none;
-            width: calc(100vw - 280px);
-        }
-
-        .content-section {
-            margin-bottom: 4rem;
-            scroll-margin-top: 2rem;
-            max-width: 1400px;
-        }
-
-        .content-section h2 {
-            font-size: 2.25rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.75rem;
-        }
-
-        .content-section > p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            color: var(--accent);
-        }
-
-        .content-section h4 {
-            font-size: 1.2rem;
-            margin: 1.5rem 0 1rem;
-            color: var(--text-primary);
-        }
-
-        .intro-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            max-width: 1400px;
-        }
-
-        .intro-card h2 {
-            border: none;
-            margin-bottom: 1rem;
-        }
-
-        /* Function Grid - FIXED SPACING */
-        .function-grid {
-            display: grid;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .function-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
-            transition: all 0.2s ease;
-            overflow: visible;
-            min-width: 0;
-        }
-
-        .function-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
-        }
-
-        .function-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1.25rem;
-        }
-
-        .function-name {
-            color: var(--accent);
-            font-size: 1.4rem;
-            font-weight: 600;
-            font-family: 'Consolas', 'Monaco', monospace;
-            cursor: help;
-            position: relative;
-        }
-
-        .function-name:hover::after {
-            content: attr(data-params);
-            position: absolute;
-            bottom: 100%;
-            left: 0;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            z-index: 1000;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            min-width: 200px;
-        }
-
-        .function-category {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            padding: 0.35rem 0.85rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .function-syntax {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.25rem;
-            margin: 1.25rem 0;
-            font-family: 'Consolas', 'Monaco', monospace;
-            color: var(--success);
-            font-size: 1rem;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .function-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.25rem;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        .function-example {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.25rem;
-            margin-top: 1.25rem;
-            overflow-x: auto;
-        }
-
-        .function-example pre {
-            color: var(--text-secondary);
-            font-family: 'Consolas', 'Monaco', monospace;
-            white-space: pre;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            overflow-x: auto;
-            margin: 0;
-        }
-
-        .copy-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 0.75rem;
-            transition: all 0.2s ease;
-            font-weight: 500;
-        }
-
-        .copy-btn:hover {
-            background: #2ea043;
-            transform: translateY(-1px);
-        }
-
-        .copy-btn:active {
-            transform: translateY(0);
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.25rem;
-            margin: 2rem 0;
-        }
-
-        .action-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-        }
-
-        .action-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
-        }
-
-        .action-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        code {
-            background: var(--bg-tertiary);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            color: var(--accent);
-            font-size: 0.9em;
-            word-break: break-word;
-        }
-
-        /* Scrollbar styling for code blocks */
-        .function-example::-webkit-scrollbar,
-        .function-syntax::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .function-example::-webkit-scrollbar-track,
-        .function-syntax::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-            border-radius: 4px;
-        }
-
-        .function-example::-webkit-scrollbar-thumb,
-        .function-syntax::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
-        }
-
-        .function-example::-webkit-scrollbar-thumb:hover,
-        .function-syntax::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 1.5rem;
-                max-width: 100%;
-            }
-
-            .function-card {
-                padding: 1.5rem;
-            }
-        }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">☰</button>
-                <h1>Elios Docs</h1>
-                <div class="version">v1.5.2</div>
-            </div>
-            <div class="search-container">
-                <input id="doc-search" placeholder="Search functions..." aria-label="Search documentation" />
-                <div id="search-results" class="search-results"></div>
-                <div id="no-results" class="no-results">No results found</div>
-            </div>
+        <header>
+            <h1>🚀 Elios Language</h1>
+            <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" title="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </header>
 
-            <div class="nav-section">
-                <h3>Getting Started</h3>
-                <ul class="nav-links">
-                    <li><a href="#introduction" class="nav-link">Introduction</a></li>
-                    <li><a href="#installation" class="nav-link">Installation</a></li>
-                    <li><a href="#quick-start" class="nav-link">Quick Start</a></li>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search documentation...">
+                <button onclick="search()">Search</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>🚀 Elios</h2>
+                </div>
+                <ul>
+                    <li><a href="#" onclick="showSection('intro', event)" class="nav-link active">Introduction</a></li>
+                    <li><a href="#" onclick="showSection('quickstart', event)" class="nav-link">Quick Start</a></li>
+                    <li><a href="#" onclick="showSection('syntax', event)" class="nav-link">Syntax Basics</a></li>
+                    <li><a href="#" onclick="showSection('io', event)" class="nav-link">I/O Functions</a></li>
+                    <li><a href="#" onclick="showSection('variables', event)" class="nav-link">Variables</a></li>
+                    <li><a href="#" onclick="showSection('math', event)" class="nav-link">Math Functions</a></li>
+                    <li><a href="#" onclick="showSection('text', event)" class="nav-link">Text Functions</a></li>
+                    <li><a href="#" onclick="showSection('control', event)" class="nav-link">Control Flow</a></li>
+                    <li><a href="#" onclick="showSection('types', event)" class="nav-link">Type Checking</a></li>
+                    <li><a href="#" onclick="showSection('files', event)" class="nav-link">File Operations</a></li>
+                    <li><a href="#" onclick="showSection('json', event)" class="nav-link">JSON Functions</a></li>
+                    <li><a href="#" onclick="showSection('multifile', event)" class="nav-link">Multi-File</a></li>
+                    <li><a href="#" onclick="showSection('plugins', event)" class="nav-link">Plugins</a></li>
                 </ul>
             </div>
 
-            <div class="nav-section">
-                <h3>Functions</h3>
-                <nav class="toc" id="functions-toc">
-                    <!-- Généré dynamiquement -->
-                </nav>
-            </div>
-        </nav>
+            <div class="main">
+                <!-- Introduction -->
+                <div id="intro" class="section active">
+                    <h2>Welcome to Elios Language</h2>
+                    <p>Elios is a lightweight, Node.js-based scripting language designed for simplicity and power. It uses an intuitive syntax with the <code>§func[args]</code> format.</p>
+                    
+                    
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Introduction -->
-            <section id="introduction" class="content-section">
-                <div class="intro-card">
-                    <h2>Introduction to Elios</h2>
-                    <p>Elios is a small educational scripting language with a concise syntax built around single-letter commands prefixed by "§". It's designed for quick prototyping, learning programming concepts, and building simple interactive scripts.</p>
+                    <h3>Version</h3>
+                    <p><strong>v1.6.1</strong> - Production Ready</p>
+                </div>
 
-                    <div class="quick-actions">
-                        <a href="#quick-start" class="action-card">
-                            <div class="action-icon">⚡</div>
-                            <div>Quick Start</div>
-                        </a>
-                        <a href="#functions-overview" class="action-card">
-                            <div class="action-icon">📚</div>
-                            <div>View Functions</div>
-                        </a>
+                <!-- Quick Start -->
+                <div id="quickstart" class="section">
+                    <h2>Quick Start</h2>
+                    
+                    <h3>Run a Program</h3>
+                    <pre>node cli.js program.elios</pre>
+
+                    <h3>Debug Mode</h3>
+                    <pre>node cli.js program.elios --debug</pre>
+
+                    <h3>Hello World</h3>
+                    <div class="example">
+                        <div class="example-code">§log[Hello, World!]</div>
+                    </div>
+
+                    <h3>With Variables</h3>
+                    <div class="example">
+                        <div class="example-code">§var[name;Alice]
+§log[Hello $name]</div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Installation -->
-            <section id="installation" class="content-section">
-                <h2>Installation</h2>
-                <p>Get Elios up and running with one of these methods:</p>
+                <!-- Syntax Basics -->
+                <div id="syntax" class="section">
+                    <h2>Syntax Basics</h2>
+                    <p>Elios uses a consistent syntax for all operations:</p>
+                    <pre>§function[argument1;argument2;argument3]</pre>
 
-                <div class="function-grid">
-                    <div class="function-card">
-                        <h4>Windows & Linux</h4>
-                        <div class="function-description">
-                            Download the pre-built executables for Windows and Linux.
-                        </div>
-                        <button class="copy-btn" onclick="window.open('https://github.com/liveweeeb13/elios-lang/releases', '_blank')">
-                            Download Releases
-                        </button>
-                    </div>
+                    <h3>Key Points</h3>
+                    <ul>
+                        <li>All functions start with <code>§</code> (section sign)</li>
+                        <li>Arguments are enclosed in <code>[...]</code></li>
+                        <li>Multiple arguments separated by <code>;</code> (semicolon)</li>
+                        <li>Variables referenced with <code>$VAR_NAME</code></li>
+                        <li>Comments start with <code>#</code></li>
+                    </ul>
 
-                    <div class="function-card">
-                        <h4>npm / npx</h4>
-                        <div class="function-description">
-                            Run directly with npx or install globally via npm.
-                        </div>
-                        <div class="function-syntax">npx elios</div>
-                        <div class="function-syntax">npm install -g elios</div>
+                    <h3>Examples</h3>
+                    <div class="example">
+                        <div class="example-code"># Comment
+§var[x;42]
+§log[$x]</div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Quick Start -->
-            <section id="quick-start" class="content-section">
-                <h2>Quick Start</h2>
-                <p>Create a file with `.elios` extension and run it with `npx elios &lt;file&gt;` or `node cli.js &lt;file&gt;` during development.</p>
+                <!-- I/O Functions -->
+                <div id="io" class="section">
+                    <h2>Input/Output Functions</h2>
 
-                <div class="function-example">
-                    <pre># Greeting example
-§clear[]
-§log[Welcome to Elios!]
+                    <div class="function">
+                        <div class="function-name">§log[text]</div>
+                        <div class="function-desc">Print text to console</div>
+                        <pre>§log[Hello World]</pre>
+                    </div>
 
-§var[name; §input[What's your name?]]
-§log[Hello $name!]
+                    <div class="function">
+                        <div class="function-name">§input[prompt]</div>
+                        <div class="function-desc">Read from user input</div>
+                        <pre>§var[name;§input[What is your name?]]
+§log[$name]</pre>
+                    </div>
 
-# Check for a substring
-§var[hasPass; §contains[$name; "pass"]]
-§if[$hasPass == true]
-    §log[Your name contains "pass"]
+                    <div class="function">
+                        <div class="function-name">§clear[]</div>
+                        <div class="function-desc">Clear console screen</div>
+                        <pre>§clear[]</pre>
+                    </div>
+                </div>
+
+                <!-- Variables -->
+                <div id="variables" class="section">
+                    <h2>Variables</h2>
+
+                    <h3>Define Variables</h3>
+                    <div class="function">
+                        <div class="function-name">§var[name;value]</div>
+                        <div class="function-desc">Define or update a variable</div>
+                        <pre>§var[age;25]
+§var[name;Alice]
+§var[pi;3.14159]</pre>
+                    </div>
+
+                    <h3>Use Variables</h3>
+                    <p>Reference variables with <code>$VARIABLE_NAME</code>:</p>
+                    <pre>§var[greeting;Hello]
+§log[$greeting World]</pre>
+
+                    <h3>Variable Scope</h3>
+                    <p>All variables are global and available across the entire program, including files loaded with <code>§require</code>.</p>
+                </div>
+
+                <!-- Math Functions -->
+                <div id="math" class="section">
+                    <h2>Math Functions</h2>
+
+                    <div class="function">
+                        <div class="function-name">§add[a;b]</div>
+                        <div class="function-desc">Addition</div>
+                        <pre>§log[§add[5;3]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§sub[a;b]</div>
+                        <div class="function-desc">Subtraction</div>
+                        <pre>§log[§sub[10;4]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§mul[a;b]</div>
+                        <div class="function-desc">Multiplication</div>
+                        <pre>§log[§mul[6;7]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§div[a;b]</div>
+                        <div class="function-desc">Division</div>
+                        <pre>§log[§div[20;4]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§mod[a;b]</div>
+                        <div class="function-desc">Modulo (remainder)</div>
+                        <pre>§log[§mod[17;5]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§pow[base;exponent]</div>
+                        <div class="function-desc">Power</div>
+                        <pre>§log[§pow[2;8]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§sqrt[n]</div>
+                        <div class="function-desc">Square root</div>
+                        <pre>§log[§sqrt[16]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§floor[n]</div>
+                        <div class="function-desc">Round down</div>
+                        <pre>§log[§floor[3.7]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§ceil[n]</div>
+                        <div class="function-desc">Round up</div>
+                        <pre>§log[§ceil[3.2]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§round[n]</div>
+                        <div class="function-desc">Round to nearest</div>
+                        <pre>§log[§round[3.5]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§abs[n]</div>
+                        <div class="function-desc">Absolute value</div>
+                        <pre>§log[§abs[-5]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§min[a;b;...]</div>
+                        <div class="function-desc">Minimum value</div>
+                        <pre>§log[§min[5;2;8;1]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§max[a;b;...]</div>
+                        <div class="function-desc">Maximum value</div>
+                        <pre>§log[§max[5;2;8;1]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§random[min;max]</div>
+                        <div class="function-desc">Random integer</div>
+                        <pre>§log[§random[1;10]]</pre>
+                    </div>
+                </div>
+
+                <!-- Text Functions -->
+                <div id="text" class="section">
+                    <h2>Text Functions</h2>
+
+                    <div class="function">
+                        <div class="function-name">§len[text]</div>
+                        <div class="function-desc">String length</div>
+                        <pre>§log[§len[hello]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§upper[text]</div>
+                        <div class="function-desc">Uppercase</div>
+                        <pre>§log[§upper[hello]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§lower[text]</div>
+                        <div class="function-desc">Lowercase</div>
+                        <pre>§log[§lower[HELLO]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§trim[text]</div>
+                        <div class="function-desc">Remove whitespace</div>
+                        <pre>§log[§trim[  hello  ]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§contains[text;search]</div>
+                        <div class="function-desc">Check substring</div>
+                        <pre>§log[§contains[hello;ell]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§replace[text;search;replace]</div>
+                        <div class="function-desc">Replace text</div>
+                        <pre>§log[§replace[hello;ll;xx]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§indexOf[text;search]</div>
+                        <div class="function-desc">Find position</div>
+                        <pre>§log[§indexOf[hello;ll]]</pre>
+                    </div>
+                </div>
+
+                <!-- Control Flow -->
+                <div id="control" class="section">
+                    <h2>Control Flow</h2>
+
+                    <h3>Conditionals</h3>
+                    <pre>§if[condition]
+    § ...code...
 §endif</pre>
-                    <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
-                </div>
-            </section>
 
-            <!-- Functions Overview -->
-            <section id="functions-overview" class="content-section">
-                <h2>Functions Overview</h2>
-                <p>Complete reference of all Elios functions. Hover over function names to see parameter descriptions in English.</p>
-                
-                <div class="function-grid" id="functions-container">
-                    <!-- Généré dynamiquement -->
+                    <div class="example">
+                        <div class="example-code">§var[age;25]
+§if[$age >= 18]
+    §log[You are an adult]
+§endif</div>
+                    </div>
+
+                    <h3>Loops</h3>
+                    <pre>§while[condition]
+    § ...code...
+§endwhile</pre>
+
+                    <div class="example">
+                        <div class="example-code">§var[count;0]
+§while[$count < 5]
+    §log[$count]
+    §var[count;§add[$count;1]]
+§endwhile</div>
+                    </div>
+
+
+
+                    <h3>For Loops</h3>
+<pre>§for[variable;start;end]
+    § ...code...
+§endfor</pre>
+
+<div class="example">
+    <div class="example-code">§for[i;0;5]
+    §log[Iteration $i]
+§endfor</div>
+</div>
+
+
+</div>
+
+                    <h3>Break and Continue</h3>
+                    <div class="function">
+                        <div class="function-name">§break[]</div>
+                        <div class="function-desc">Exit loop</div>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§continue[]</div>
+                        <div class="function-desc">Skip iteration</div>
+                    </div>
                 </div>
-            </section>
-        </main>
+
+
+
+                <!-- Type Checking -->
+                <div id="types" class="section">
+                    <h2>Type Checking</h2>
+
+                    <div class="function">
+                        <div class="function-name">§isNumeric[value]</div>
+                        <div class="function-desc">Check if numeric</div>
+                        <pre>§log[§isNumeric[42]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isText[value]</div>
+                        <div class="function-desc">Check if text</div>
+                        <pre>§log[§isText[hello]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isBool[value]</div>
+                        <div class="function-desc">Check if boolean</div>
+                        <pre>§log[§isBool[true]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isInt[value]</div>
+                        <div class="function-desc">Check if integer</div>
+                        <pre>§log[§isInt[42]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isFloat[value]</div>
+                        <div class="function-desc">Check if float</div>
+                        <pre>§log[§isFloat[3.14]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isJson[value]</div>
+                        <div class="function-desc">Check if JSON</div>
+                        <pre>§log[§isJson[{"a":"b"}]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§typeOf[value]</div>
+                        <div class="function-desc">Get type</div>
+                        <pre>§log[§typeOf[42]]</pre>
+                    </div>
+                </div>
+
+                <!-- File Operations -->
+                <div id="files" class="section">
+                    <h2>File Operations</h2>
+
+                    <div class="function">
+                        <div class="function-name">§readFile[path]</div>
+                        <div class="function-desc">Read file</div>
+                        <pre>§var[content;§readFile[file.txt]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§writeFile[path;content]</div>
+                        <div class="function-desc">Write file</div>
+                        <pre>§writeFile[output.txt;Hello]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isFileExist[path]</div>
+                        <div class="function-desc">Check file exists</div>
+                        <pre>§log[§isFileExist[file.txt]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§createFile[path]</div>
+                        <div class="function-desc">Create file</div>
+                        <pre>§createFile[new.txt]</pre>
+                    </div>
+                </div>
+
+                <!-- JSON Functions -->
+                <div id="json" class="section">
+                    <h2>JSON Functions</h2>
+
+                    <div class="function">
+                        <div class="function-name">§jsonRead[path]</div>
+                        <div class="function-desc">Read JSON file</div>
+                        <pre>§var[data;§jsonRead[config.json]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§jsonWrite[path;json]</div>
+                        <div class="function-desc">Write JSON file</div>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§jsonGet[json;path]</div>
+                        <div class="function-desc">Get JSON value</div>
+                        <pre>§var[name;§jsonGet[$data;name]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§jsonSet[json;path;value]</div>
+                        <div class="function-desc">Set JSON value</div>
+                    </div>
+                </div>
+
+                <!-- Multi-File -->
+                <div id="multifile" class="section">
+                    <h2>Multi-File Support</h2>
+
+                    <div class="function">
+                        <div class="function-name">§require[path]</div>
+                        <div class="function-desc">Include .elios file</div>
+                        <pre>§require[config.elios]
+§require[lib/helpers.elios]</pre>
+                    </div>
+
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Load files before execution</li>
+                        <li>Share variables across files</li>
+                        <li>Support nested requires</li>
+                        <li>Detect circular dependencies</li>
+                    </ul>
+
+                    <h3>Example</h3>
+                    <div class="example">
+                        <strong>config.elios:</strong>
+                        <div class="example-code">§var[APP_NAME;MyApp]
+§var[VERSION;1.0.0]</div>
+                        <strong>main.elios:</strong>
+                        <div class="example-code">§require[config.elios]
+§log[Running $APP_NAME v$VERSION]</div>
+                    </div>
+                </div>
+
+                <!-- Plugins -->
+                <div id="plugins" class="section">
+                    <h2>Plugin System</h2>
+
+                    <h3>Built-in Plugins</h3>
+                    <p>Plugins are loaded from <code>./addons</code> directory.</p>
+                    <ul>
+                        <li><strong>example-plugin</strong> - Example functions
+                            <a href="addons/example-plugin-elios-addon.js" download class="badge" style="margin-left:8px;cursor:pointer">⬇ Download</a>
+                        </li>
+
+                        <li><strong>Complete documentation on plugin development</strong>
+                            <a href="addons/README.md" download class="badge" style="margin-left:8px;cursor:pointer">⬇ Download</a>
+                        </li>
+                        
+                    </ul>
+
+                    <h3>Create a Plugin</h3>
+                    <p>File: <code>./addons/my-plugin-elios-addon.js</code></p>
+                    <pre>module.exports = {
+    name: 'my-plugin',
+    version: '1.0.0',
+    functions: {
+        myFunc(args) {
+            return args.toUpperCase();
+        }
+    }
+};</pre>
+
+                    <p>Usage:</p>
+                    <pre>§log[§myFunc[hello]]</pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Elios Language v1.6.1 | <a href="https://github.com/liveweeeb13/elios" target="_blank">GitHub</a> | <a href="https://discord.gg/ukJegYrXWR" target="_blank">Discord</a></p>
+        </footer>
     </div>
 
     <script>
-        // Données des fonctions organisées par catégories
-        const functionsData = {
-            "Basic Operations": {
-                "Output": [
-                    {
-                        "name": "log",
-                        "syntax": "§log[message]",
-                        "description": "Prints a message to the console. Supports variables and nested functions.",
-                        "example": "§log[Hello World!]\n§log[Result: §add[5;3]]",
-                        "params": "message: The text to display (string)"
-                    }
-                ],
-                "Input": [
-                    {
-                        "name": "input",
-                        "syntax": "§input[prompt]",
-                        "description": "Gets input from the user with an optional prompt message.",
-                        "example": "§var[name; §input[Enter your name:]]\n§var[age; §input[How old are you?]]",
-                        "params": "prompt: The message displayed to the user (string)"
-                    }
-                ],
-                "Variables": [
-                    {
-                        "name": "var",
-                        "syntax": "§var[name; value]",
-                        "description": "Creates or updates a variable. Use $name to access the value.",
-                        "example": "§var[score; 100]\n§var[name; Alice]\n§var[result; §add[5;3]]\n§log[Hello $name!]",
-                        "params": "name: Variable name (string), value: Value to store (any)"
-                    }
-                ]
-            },
-            "Data Processing": {
-                "Math": [
-                    {
-                        "name": "add",
-                        "syntax": "§add[a; b]",
-                        "description": "Adds two numbers together.",
-                        "example": "§add[5; 3]  # → 8\n§add[$x; $y]",
-                        "params": "a: First number (number), b: Second number (number)"
-                    },
-                    {
-                        "name": "sub",
-                        "syntax": "§sub[a; b]",
-                        "description": "Subtracts the second number from the first.",
-                        "example": "§sub[10; 4]  # → 6",
-                        "params": "a: First number (number), b: Second number (number)"
-                    },
-                    {
-                        "name": "mul",
-                        "syntax": "§mul[a; b]",
-                        "description": "Multiplies two numbers.",
-                        "example": "§mul[4; 3]  # → 12",
-                        "params": "a: First number (number), b: Second number (number)"
-                    },
-                    {
-                        "name": "div",
-                        "syntax": "§div[a; b]",
-                        "description": "Divides the first number by the second.",
-                        "example": "§div[10; 2]  # → 5",
-                        "params": "a: First number (number), b: Second number (number)"
-                    },
-                    {
-                        "name": "random",
-                        "syntax": "§random[min; max]",
-                        "description": "Generates a random number between min and max (inclusive).",
-                        "example": "§random[1; 6]    # → 4 (dice roll)\n§random[1; 100]  # → 42",
-                        "params": "min: Minimum value (number), max: Maximum value (number)"
-                    },
-                    {
-                        "name": "round",
-                        "syntax": "§round[number]",
-                        "description": "Rounds a decimal number to the nearest integer.",
-                        "example": "§round[3.2]  # → 3\n§round[3.7]  # → 4",
-                        "params": "number: The number to round (number)"
-                    }
-                ],
-                "Text": [
-                    {
-                        "name": "upper",
-                        "syntax": "§upper[text]",
-                        "description": "Converts text to uppercase.",
-                        "example": "§upper[hello]  # → HELLO",
-                        "params": "text: The text to convert (string)"
-                    },
-                    {
-                        "name": "lower",
-                        "syntax": "§lower[text]",
-                        "description": "Converts text to lowercase.",
-                        "example": "§lower[HELLO]  # → hello",
-                        "params": "text: The text to convert (string)"
-                    },
-                    {
-                        "name": "trim",
-                        "syntax": "§trim[text]",
-                        "description": "Removes all whitespace characters from the provided text, including internal spaces.",
-                        "example": "§trim[  hello   world ]  # → helloworld\n§trim[  hello  ]          # → hello",
-                        "params": "text: The text to trim (string)"
-                    },
-                    {
-                        "name": "len",
-                        "syntax": "§len[text]",
-                        "description": "Returns the length of a string. If the string uses semicolon-separated items, returns the number of items.",
-                        "example": "§len[hello]       # → 5\n§len[\"a;b;c\"]     # → 3\n§len[\"\"]          # → 0",
-                        "params": "text: The text to measure (string)"
-                    },
-                    {
-                        "name": "contains",
-                        "syntax": "§contains[haystack; needle]",
-                        "description": "Returns `true` if `haystack` contains the substring `needle`, otherwise `false`.",
-                        "example": "§contains[hello; ell]   # → true\n§contains[hello; xyz]   # → false\n§if[§contains[$input; \"pass\"] == true]\n    §log[Contains 'pass']\n§endif",
-                        "params": "haystack: The string to search in (string), needle: The substring to find (string)"
-                    },
-                    {
-                        "name": "equalsIgnoreCase",
-                        "syntax": "§equalsIgnoreCase[text1; text2]",
-                        "description": "Compares two strings ignoring case differences.",
-                        "example": "§if[§equalsIgnoreCase[$answer; Paris]]\n    §log[Correct!]\n§endif\n# Accepts: Paris, PARIS, paris, PaRiS",
-                        "params": "text1: First string (string), text2: Second string (string)"
-                    }
-                ],
-                "Validation": [
-                    {
-                        "name": "isNaN",
-                        "syntax": "§isNaN[value]",
-                        "description": "Returns `true` if the value is NOT a valid number, `false` otherwise.",
-                        "example": "§isNaN[hello]     # → true\n§isNaN[42]        # → false\n§isNaN[3.14]      # → false",
-                        "params": "value: The value to check (any)"
-                    },
-                    {
-                        "name": "isEven",
-                        "syntax": "§isEven[number]",
-                        "description": "Returns `true` if the number is even, `false` otherwise.",
-                        "example": "§isEven[4]          # → true\n§isEven[7]          # → false\n§isEven[0]          # → true",
-                        "params": "number: The number to check (number)"
-                    },
-                    {
-                        "name": "isOdd",
-                        "syntax": "§isOdd[number]",
-                        "description": "Returns `true` if the number is odd, `false` otherwise.",
-                        "example": "§isOdd[3]        # → true\n§isOdd[8]        # → false\n§isOdd[-5]       # → true",
-                        "params": "number: The number to check (number)"
-                    }
-                ]
-            },
-            "Control Flow": {
-                "Conditionals": [
-                    {
-                        "name": "if",
-                        "syntax": "§if[condition]\n  ... code ...\n§endif",
-                        "description": "Executes code block if condition is true. Supports §elseif and §else.",
-                        "example": "§if[$age >= 18]\n    §log[You are an adult!]\n§elseif[$age >= 13]\n    §log[You are a teenager!]\n§else\n    §log[You are a child!]\n§endif",
-                        "params": "condition: Boolean expression to evaluate"
-                    },
-                    {
-                        "name": "while",
-                        "syntax": "§while[condition]\n  ... code ...\n§endwhile",
-                        "description": "Repeats code block while condition is true.",
-                        "example": "§var[i; 1]\n§while[$i <= 5]\n    §log[Count: $i]\n    §var[i; $i + 1]\n§endwhile",
-                        "params": "condition: Boolean expression to evaluate"
-                    }
-                ],
-                "Loop Control": [
-                    {
-                        "name": "break",
-                        "syntax": "§break[]",
-                        "description": "Immediately exits the current while loop.",
-                        "example": "§var[i; 1]\n§while[$i <= 10]\n    §if[$i == 5]\n        §log[Breaking at 5!]\n        §break[]\n    §endif\n    §log[Iteration: $i]\n    §var[i; $i + 1]\n§endwhile",
-                        "params": "No parameters"
-                    },
-                    {
-                        "name": "continue",
-                        "syntax": "§continue[]",
-                        "description": "Skips to the next iteration of the current while loop.",
-                        "example": "§var[i; 0]\n§while[$i < 10]\n    §var[i; $i + 1]\n    §if[§isEven[$i] == true]\n        §continue[]  # Skip even numbers\n    §endif\n    §log[Odd number: $i]\n§endwhile",
-                        "params": "No parameters"
-                    }
-                ],
-                "Comparison": [
-                    {
-                        "name": "==",
-                        "syntax": "a == b",
-                        "description": "Equal to - returns true if values are equal",
-                        "example": "§if[$x == 10]\n    §log[x is 10]\n§endif",
-                        "params": "a: First value, b: Second value"
-                    },
-                    {
-                        "name": "!=",
-                        "syntax": "a != b",
-                        "description": "Not equal to - returns true if values are different",
-                        "example": "§if[$name != \"Bob\"]\n    §log[Name is not Bob]\n§endif",
-                        "params": "a: First value, b: Second value"
-                    },
-                    {
-                        "name": "<",
-                        "syntax": "a < b",
-                        "description": "Less than - returns true if a is less than b",
-                        "example": "§if[$age < 18]\n    §log[Underage]\n§endif",
-                        "params": "a: First value, b: Second value"
-                    },
-                    {
-                        "name": ">",
-                        "syntax": "a > b",
-                        "description": "Greater than - returns true if a is greater than b",
-                        "example": "§if[$score > 80]\n    §log[Great score!]\n§endif",
-                        "params": "a: First value, b: Second value"
-                    },
-                    {
-                        "name": "<=",
-                        "syntax": "a <= b",
-                        "description": "Less than or equal to",
-                        "example": "§if[$temperature <= 30]\n    §log[Temperature is OK]\n§endif",
-                        "params": "a: First value, b: Second value"
-                    },
-                    {
-                        "name": ">=",
-                        "syntax": "a >= b",
-                        "description": "Greater than or equal to",
-                        "example": "§if[$level >= 5]\n    §log[Advanced level reached]\n§endif",
-                        "params": "a: First value, b: Second value"
-                    }
-                ]
-            },
-            "File System": {
-                "File Operations": [
-                    {
-                        "name": "isFileExist",
-                        "syntax": "§isFileExist[path]",
-                        "description": "Returns `true` if the file or directory exists, `false` otherwise.",
-                        "example": "§if[§isFileExist[config.txt] == true]\n    §log[Config file exists]\n§else\n    §log[Config file not found]\n§endif",
-                        "params": "path: File or directory path (string)"
-                    },
-                    {
-                        "name": "createFile",
-                        "syntax": "§createFile[path]",
-                        "description": "Creates an empty file at the specified path. Creates directories if needed.",
-                        "example": "§createFile[data/output.txt]\n§log[File created successfully]",
-                        "params": "path: File path to create (string)"
-                    },
-                    {
-                        "name": "getPath",
-                        "syntax": "§getPath[relativePath]",
-                        "description": "Returns the absolute path for a relative path. Without arguments, returns current directory.",
-                        "example": "§var[currentDir; §getPath[]]\n§var[fullPath; §getPath[data/file.txt]]\n§log[Working in: $currentDir]",
-                        "params": "relativePath: Optional relative path (string)"
-                    },
-                    {
-                        "name": "readFile",
-                        "syntax": "§readFile[path]",
-                        "description": "Reads and returns the entire content of a file as a string.",
-                        "example": "§var[content; §readFile[data.txt]]\n§log[File content: $content]",
-                        "params": "path: File path to read (string)"
-                    },
-                    {
-                        "name": "replace",
-                        "syntax": "§replace[text; search; replace]",
-                        "description": "Replaces all occurrences of `search` with `replace` in the given text.",
-                        "example": "§var[text; Hello World]\n§var[newText; §replace[$text; World; Elios]]\n§log[$newText]  # → Hello Elios",
-                        "params": "text: The text to modify (string), search: Text to find (string), replace: Replacement text (string)"
-                    },
-                    {
-                        "name": "writeFile",
-                        "syntax": "§writeFile[path; content]",
-                        "description": "Writes content to a file, creating it if it doesn't exist.",
-                        "example": "§writeFile[log.txt; Application started]\n§writeFile[data.txt; Line 1;Line 2;Line 3]",
-                        "params": "path: File path (string), content: Content to write (string)"
-                    }
-                ],
-                "JSON Handling": [
-                    {
-                        "name": "jsonRead",
-                        "syntax": "§jsonRead[path]",
-                        "description": "Reads and parses a JSON file, returning the content as a JSON string.",
-                        "example": "§var[config; §jsonRead[config.json]]\n§log[Config: $config]",
-                        "params": "path: JSON file path (string)"
-                    },
-                    {
-                        "name": "jsonWrite",
-                        "syntax": "§jsonWrite[path; jsonString]",
-                        "description": "Writes a JSON string to a file with proper formatting.",
-                        "example": "§jsonWrite[settings.json; {\"theme\": \"dark\", \"language\": \"fr\"}]\n§log[Settings saved]",
-                        "params": "path: File path (string), jsonString: JSON data (string)"
-                    },
-                    {
-                        "name": "jsonGet",
-                        "syntax": "§jsonGet[jsonString; key]",
-                        "description": "Extracts a value from a JSON string. Supports nested keys (e.g., \"user.profile.name\").",
-                        "example": "§var[config; {\"user\": {\"name\": \"John\", \"age\": 25}}]\n§var[userName; §jsonGet[$config; user.name]]\n§log[User: $userName]  # → John",
-                        "params": "jsonString: JSON data (string), key: Property path (string)"
-                    },
-                    {
-                        "name": "jsonSet",
-                        "syntax": "§jsonSet[jsonString; key; value]",
-                        "description": "Sets a value in a JSON string and returns the updated JSON. Supports nested keys.",
-                        "example": "§var[config; {\"theme\": \"dark\"}]\n§var[newConfig; §jsonSet[$config; theme; light]]\n§log[Updated: $newConfig]  # → {\"theme\": \"light\"}",
-                        "params": "jsonString: JSON data (string), key: Property path (string), value: New value (any)"
-                    }
-                ]
-            },
-            "System & Time": {
-                "Time Functions": [
-                    {
-                        "name": "time",
-                        "syntax": "§time[]",
-                        "description": "Returns current timestamp in milliseconds.",
-                        "example": "§var[start; §time[]]\n# ... code runs ...\n§var[duration; §sub[§time[]; $start]]",
-                        "params": "No parameters"
-                    },
-                    {
-                        "name": "date",
-                        "syntax": "§date[format]",
-                        "description": "Returns formatted date string. Formats: YYYY, MM, DD, HH, mm, ss",
-                        "example": "§date[YYYY-MM-DD]  # → 2024-01-15\n§date[HH:mm:ss]    # → 14:30:45\n§date[DD/MM/YYYY]  # → 15/01/2024",
-                        "params": "format: Date format string (string)"
-                    },
-                    {
-                        "name": "sleep",
-                        "syntax": "§sleep[milliseconds]",
-                        "description": "Pauses execution for specified milliseconds.",
-                        "example": "§log[Waiting...]\n§sleep[2000]\n§log[Done!]",
-                        "params": "milliseconds: Duration to sleep (number)"
-                    }
-                ],
-                "System Functions": [
-                    {
-                        "name": "clear",
-                        "syntax": "§clear[]",
-                        "description": "Clears the console screen.",
-                        "example": "§clear[]\n§log[Welcome to my program!]",
-                        "params": "No parameters"
-                    },
-                    {
-                        "name": "exit",
-                        "syntax": "§exit[code]",
-                        "description": "Exits the program with optional exit code (0 = success).",
-                        "example": "§exit[0]  # Success\n§exit[1]  # Error",
-                        "params": "code: Exit code (number)"
-                    }
-                ]
-            }
-        };
+        function showSection(sectionId, event) {
+            event.preventDefault();
 
-        // Génération de la table des matières
-        function generateTOC() {
-            const tocContainer = document.getElementById('functions-toc');
-            let tocHTML = '';
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
 
-            for (const [category, subcategories] of Object.entries(functionsData)) {
-                tocHTML += `
-                    <div class="collapsible">
-                        <button class="collapsible-button" aria-expanded="false">
-                            ${category}
-                            <span class="arrow">▸</span>
-                        </button>
-                        <ul class="submenu">
-                `;
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(l => l.classList.remove('active'));
 
-                for (const [subcategory, functions] of Object.entries(subcategories)) {
-                    tocHTML += `<li><a href="#${subcategory.toLowerCase().replace(/\s+/g, '-')}" class="nav-link">${subcategory}</a></li>`;
-                }
-
-                tocHTML += `
-                        </ul>
-                    </div>
-                `;
-            }
-
-            tocContainer.innerHTML = tocHTML;
-        }
-
-        // Génération des fonctions
-        function generateFunctions() {
-            const container = document.getElementById('functions-container');
-            let functionsHTML = '';
-
-            for (const [category, subcategories] of Object.entries(functionsData)) {
-                for (const [subcategory, functions] of Object.entries(subcategories)) {
-                    const subcategoryId = subcategory.toLowerCase().replace(/\s+/g, '-');
-                    
-                    functionsHTML += `
-                        <h3 id="${subcategoryId}" style="grid-column: 1 / -1; margin-top: 3rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
-                            ${subcategory}
-                        </h3>
-                    `;
-                    
-                    functions.forEach(func => {
-                        functionsHTML += `
-                            <div class="function-card" data-function="${func.name.toLowerCase()}" data-category="${subcategoryId}">
-                                <div class="function-header">
-                                    <div class="function-name" data-params="${func.params}">${func.name}</div>
-                                    <div class="function-category">${subcategory}</div>
-                                </div>
-                                <div class="function-syntax">${func.syntax}</div>
-                                <div class="function-description">${func.description}</div>
-                                <div class="function-example">
-                                    <pre>${func.example}</pre>
-                                    <button class="copy-btn" onclick="copyCode(this)">Copy Example</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-            }
-
-            container.innerHTML = functionsHTML;
-        }
-
-        // Fonction de copie
-        function copyCode(button) {
-            const code = button.previousElementSibling.textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = button.textContent;
-                button.textContent = 'Copied!';
-                setTimeout(() => {
-                    button.textContent = originalText;
-                }, 2000);
-            });
-        }
-
-        // Recherche de fonctions
-        function setupSearch() {
-            const searchInput = document.getElementById('doc-search');
-            const searchResults = document.getElementById('search-results');
-            const noResults = document.getElementById('no-results');
-
-            searchInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
-                searchResults.innerHTML = '';
-                noResults.style.display = 'none';
-
-                if (query.length < 2) {
-                    searchResults.style.display = 'none';
-                    return;
-                }
-
-                const results = [];
-                
-                // Rechercher dans toutes les fonctions
-                for (const [category, subcategories] of Object.entries(functionsData)) {
-                    for (const [subcategory, functions] of Object.entries(subcategories)) {
-                        for (const func of functions) {
-                            if (func.name.toLowerCase().includes(query) || 
-                                func.description.toLowerCase().includes(query) ||
-                                func.syntax.toLowerCase().includes(query)) {
-                                results.push({
-                                    name: func.name,
-                                    category: category,
-                                    subcategory: subcategory,
-                                    syntax: func.syntax
-                                });
-                            }
-                        }
-                    }
-                }
-
-                // Afficher les résultats
-                if (results.length > 0) {
-                    searchResults.style.display = 'block';
-                    results.slice(0, 8).forEach(result => {
-                        const item = document.createElement('div');
-                        item.className = 'search-result-item';
-                        item.innerHTML = `
-                            <strong>${result.name}</strong>
-                            <span class="category">${result.subcategory}</span>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                ${result.syntax}
-                            </div>
-                        `;
-                        item.addEventListener('click', () => {
-                            highlightAndScrollToFunction(result.name);
-                            searchInput.value = '';
-                            searchResults.style.display = 'none';
-                        });
-                        searchResults.appendChild(item);
-                    });
-                } else {
-                    noResults.style.display = 'block';
-                }
-            });
-
-            // Fermer les résultats quand on clique ailleurs
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                    searchResults.style.display = 'none';
-                }
-            });
-
-            // Navigation avec Entrée
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const firstResult = searchResults.querySelector('.search-result-item');
-                    if (firstResult) {
-                        firstResult.click();
-                    }
-                }
-            });
-        }
-
-        // Mettre en évidence et faire défiler vers une fonction
-        function highlightAndScrollToFunction(functionName) {
-            const functionCard = document.querySelector(`[data-function="${functionName.toLowerCase()}"]`);
-            if (functionCard) {
-                // Retirer les surbrillances précédentes
-                document.querySelectorAll('.function-card.search-match').forEach(card => {
-                    card.classList.remove('search-match');
-                });
-
-                // Ajouter la surbrillance
-                functionCard.classList.add('search-match');
-
-                // Faire défiler vers la fonction
-                functionCard.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' 
-                });
-
-                // Retirer la surbrillance après 3 secondes
-                setTimeout(() => {
-                    functionCard.classList.remove('search-match');
-                }, 3000);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+                event.target.classList.add('active');
+                document.querySelector('.main').scrollTop = 0;
             }
         }
 
-        // Navigation smooth scroll
-        document.addEventListener('DOMContentLoaded', () => {
-            generateTOC();
-            generateFunctions();
-            setupSearch();
+        function search() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) return;
 
-            // Collapsible TOC behavior
-            document.querySelectorAll('.collapsible-button').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const opened = btn.classList.toggle('open');
-                    btn.setAttribute('aria-expanded', String(opened));
-                });
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+
+            const main = document.querySelector('.main');
+            let found = false;
+
+            sections.forEach(section => {
+                if (section.textContent.toLowerCase().includes(query)) {
+                    section.classList.add('active');
+                    found = true;
+                }
             });
 
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                        
-                        // Update active state
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // Update active nav link based on scroll position
-            const sections = document.querySelectorAll('.content-section, h3[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            function updateActiveLink() {
-                let current = '';
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    if (window.pageYOffset >= (sectionTop - 150)) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                        
-                        // Ouvrir la catégorie parente
-                        const parentCollapsible = link.closest('.collapsible');
-                        if (parentCollapsible) {
-                            const btn = parentCollapsible.querySelector('.collapsible-button');
-                            if (btn && !btn.classList.contains('open')) {
-                                btn.classList.add('open');
-                                btn.setAttribute('aria-expanded', 'true');
-                            }
-                        }
-                    }
-                });
+            if (!found) {
+                alert('No results found for: ' + query);
             }
 
-            window.addEventListener('scroll', updateActiveLink);
-            window.addEventListener('load', updateActiveLink);
+            main.scrollTop = 0;
+        }
 
-            // Sidebar toggle for small screens
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarToggle = document.getElementById('sidebar-toggle');
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener('click', () => {
-                    sidebar.classList.toggle('open');
-                    // focus first search input when opening
-                    if (sidebar.classList.contains('open')) {
-                        const s = document.getElementById('doc-search');
-                        if (s) s.focus();
-                    }
-                });
-
-                // Close sidebar when clicking a nav link on small screens
-                document.querySelectorAll('.toc a, .nav-links a').forEach(a => {
-                    a.addEventListener('click', () => {
-                        if (window.innerWidth <= 992) sidebar.classList.remove('open');
-                    });
-                });
-
-                // Close on ESC
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                        sidebar.classList.remove('open');
-                    }
-                });
-            }
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') search();
         });
+
+        (function(){
+            const isWrapped = document.querySelector('.code-wrapper');
+            if (isWrapped) return; // already initialized
+
+            const pres = Array.from(document.querySelectorAll('pre'));
+            pres.forEach(pre => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-wrapper';
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'code-toggle';
+                btn.setAttribute('aria-expanded', 'true');
+                btn.title = 'Toggle code';
+
+                // three bars
+                for (let i=0;i<3;i++){
+                    const bar = document.createElement('span');
+                    bar.className = 'bar';
+                    btn.appendChild(bar);
+                }
+                // move pre into wrapper
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(btn);
+                wrapper.appendChild(pre);
+
+                // click toggles collapsed state
+                btn.addEventListener('click', () => {
+                    const isCollapsed = pre.classList.toggle('collapsed');
+                    btn.classList.toggle('open', isCollapsed);
+                    btn.setAttribute('aria-expanded', String(!isCollapsed));
+                });
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 900) {
+                    document.querySelectorAll('pre.collapsed').forEach(p => p.classList.remove('collapsed'));
+                    document.querySelectorAll('.code-toggle.open').forEach(b => b.classList.remove('open'));
+                    // reset nav/sidebar state on wider screens
+                    const sb = document.querySelector('.sidebar');
+                    if (sb) sb.classList.remove('open');
+                    document.querySelectorAll('.nav-toggle.open').forEach(b => b.classList.remove('open'));
+                    document.querySelectorAll('.overlay').forEach(o => o.remove());
+                }
+            });
+        })();
+
+        // Mobile naVigation
+        (function(){
+            const navBtn = document.getElementById('navToggle');
+            if (!navBtn) return;
+            const sidebar = document.querySelector('.sidebar');
+            const main = document.querySelector('.main');
+
+        function closeSidebar(){
+            sidebar.classList.remove('open');
+            navBtn.classList.remove('open');
+            document.querySelectorAll('.overlay').forEach(o=>o.remove());
+        }
+
+        function openSidebar(){
+            sidebar.classList.add('open');
+            navBtn.classList.add('open');
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            overlay.addEventListener('click', closeSidebar);
+            document.body.appendChild(overlay);
+        }            navBtn.addEventListener('click', () => {
+                if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+            });
+        })();
     </script>
 </body>
 </html>
