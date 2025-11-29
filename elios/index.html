@@ -166,7 +166,7 @@ li::marker{content:none}
                     
 
                     <h3>Version</h3>
-                    <p><strong>v1.6.1</strong> - Production Ready</p>
+                    <p><strong>v1.7.1</strong> - Production Ready</p>
                 </div>
 
                 <!-- Quick Start -->
@@ -174,10 +174,10 @@ li::marker{content:none}
                     <h2>Quick Start</h2>
                     
                     <h3>Run a Program</h3>
-                    <pre>node cli.js program.elios</pre>
+                    <pre>elios program.elios</pre>
 
                     <h3>Debug Mode</h3>
-                    <pre>node cli.js program.elios --debug</pre>
+                    <pre>elios program.elios --debug</pre>
 
                     <h3>Hello World</h3>
                     <div class="example">
@@ -438,18 +438,27 @@ li::marker{content:none}
 §endfor</div>
 </div>
 
-
-</div>
-
                     <h3>Break and Continue</h3>
                     <div class="function">
                         <div class="function-name">§break[]</div>
                         <div class="function-desc">Exit loop</div>
+                        <pre>§for[i;0;10]
+    §if[$i == 5]
+        §break[]
+    §endif
+    §log[$i]
+§endfor</pre>
                     </div>
 
                     <div class="function">
                         <div class="function-name">§continue[]</div>
                         <div class="function-desc">Skip iteration</div>
+                        <pre>§for[i;0;10]
+    §if[$i == 5]
+        §continue[]
+    §endif
+    §log[$i]
+§endfor</pre>
                     </div>
                 </div>
 
@@ -593,6 +602,8 @@ li::marker{content:none}
                     <h2>Plugin System</h2>
 
                     <h3>Built-in Plugins</h3>
+                    <a href="http://51.75.25.2:2010" class="badge" style="margin-left:8px;cursor:pointer">All plugin are available here</a>
+                    <br>
                     <p>Plugins are loaded from <code>./addons</code> directory.</p>
                     <ul>
                         <li><strong>example-plugin</strong> - Example functions
@@ -624,7 +635,7 @@ li::marker{content:none}
         </div>
 
         <footer>
-            <p>Elios Language v1.6.1 | <a href="https://github.com/liveweeeb13/elios" target="_blank">GitHub</a> | <a href="https://discord.gg/ukJegYrXWR" target="_blank">Discord</a></p>
+            <p>Elios Language v1.7.1 | <a href="https://github.com/liveweeeb13/elios" target="_blank">GitHub</a> | <a href="https://discord.gg/ukJegYrXWR" target="_blank">Discord</a></p>
         </footer>
     </div>
 
