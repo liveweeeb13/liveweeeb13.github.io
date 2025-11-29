@@ -150,6 +150,7 @@ li::marker{content:none}
                     <li><a href="#" onclick="showSection('text', event)" class="nav-link">Text Functions</a></li>
                     <li><a href="#" onclick="showSection('control', event)" class="nav-link">Control Flow</a></li>
                     <li><a href="#" onclick="showSection('types', event)" class="nav-link">Type Checking</a></li>
+                    <li><a href="#" onclick="showSection('examples', event)" class="nav-link">Advanced Examples</a></li>
                     <li><a href="#" onclick="showSection('files', event)" class="nav-link">File Operations</a></li>
                     <li><a href="#" onclick="showSection('json', event)" class="nav-link">JSON Functions</a></li>
                     <li><a href="#" onclick="showSection('multifile', event)" class="nav-link">Multi-File</a></li>
@@ -180,14 +181,27 @@ li::marker{content:none}
                     <pre>elios program.elios --debug</pre>
 
                     <h3>Hello World</h3>
+                    <p><strong>File: hello.elios</strong></p>
                     <div class="example">
                         <div class="example-code">§log[Hello, World!]</div>
                     </div>
 
+                    <p>Run it:</p>
+                    <pre>elios hello.elios</pre>
+
                     <h3>With Variables</h3>
+                    <p><strong>File: greeting.elios</strong></p>
                     <div class="example">
                         <div class="example-code">§var[name;Alice]
 §log[Hello $name]</div>
+                    </div>
+
+                    <h3>Interactive Program</h3>
+                    <p><strong>File: interactive.elios</strong></p>
+                    <div class="example">
+                        <div class="example-code">§var[name;§input[What is your name?]]
+§var[age;§input[What is your age?]]
+§log[Hello $name, you are $age years old!]</div>
                     </div>
                 </div>
 
@@ -212,6 +226,41 @@ li::marker{content:none}
 §var[x;42]
 §log[$x]</div>
                     </div>
+
+                    <h3>Complete Example Program</h3>
+                    <p><strong>File: calculator.elios</strong></p>
+                    <pre>§log[=== Simple Calculator ===]
+
+# Variables
+§var[num1;10]
+§var[num2;5]
+
+# Math operations
+§log[Addition: §add[$num1;$num2]]
+§log[Subtraction: §sub[$num1;$num2]]
+§log[Multiplication: §mul[$num1;$num2]]
+§log[Division: §div[$num1;$num2]]
+
+# Loops
+§log[Counting from 1 to 5:]
+§for[i;1;5]
+    §log[Number: $i]
+§endfor</pre>
+
+                    <h3>Program with File Operations</h3>
+                    <p><strong>File: file_example.elios</strong></p>
+                    <pre># Create and write a file
+§createFile[data.txt]
+§writeFile[data.txt;Hello from Elios!]
+
+# Read the file
+§var[content;§readFile[data.txt]]
+§log[File content: $content]
+
+# Check if file exists
+§if[§isFileExist[data.txt]]
+    §log[File exists!]
+§endif</pre>
                 </div>
 
                 <!-- I/O Functions -->
@@ -464,6 +513,109 @@ li::marker{content:none}
 
 
 
+                <!-- Advanced Examples -->
+                <div id="examples" class="section">
+                    <h2>Advanced Examples</h2>
+
+                    <h3>Number Guessing Game</h3>
+                    <p><strong>File: guessing_game.elios</strong></p>
+                    <pre>§log[=== Number Guessing Game ===]
+§var[secret;§random[1;10]]
+§var[found;false]
+
+§while[§isBool[$found] == false]
+    §var[guess;§input[Guess a number between 1 and 10: ]]
+    
+    §if[$guess == $secret]
+        §log[You won! The number was $secret]
+        §var[found;true]
+    §endif
+    
+    §if[$guess < $secret]
+        §log[Too low!]
+    §endif
+    
+    §if[$guess > $secret]
+        §log[Too high!]
+    §endif
+§endwhile</pre>
+
+                    <h3>Text Processing</h3>
+                    <p><strong>File: text_processor.elios</strong></p>
+                    <pre>§log[=== Text Processor ===]
+§var[text;Hello World]
+
+§log[Original: $text]
+§log[Uppercase: §upper[$text]]
+§log[Lowercase: §lower[$text]]
+§log[Length: §len[$text]]
+
+# Check if text contains word
+§if[§contains[$text;World]]
+    §log[Text contains 'World']
+§endif
+
+# Replace word
+§var[modified;§replace[$text;World;Elios]]
+§log[Modified: $modified]</pre>
+
+                    <h3>JSON Data Handling</h3>
+                    <p><strong>File: json_example.elios</strong></p>
+                    <pre>§log[=== JSON Example ===]
+
+# Read JSON configuration
+§var[config;§jsonRead[config.json]]
+
+# Get values
+§var[appName;§jsonGet[$config;name]]
+§var[version;§jsonGet[$config;version]]
+
+§log[App: $appName v$version]
+
+# Modify and write back
+§jsonSet[$config;lastUpdate;2025-11-29]
+§jsonWrite[config.json;$config]
+§log[Config updated!]</pre>
+
+                    <h3>Data Validation</h3>
+                    <p><strong>File: validator.elios</strong></p>
+                    <pre>§log[=== Data Validator ===]
+
+§var[age;25]
+§var[price;19.99]
+§var[count;5]
+
+# Check types
+§log[Age is numeric: §isNumeric[$age]]
+§log[Price is float: §isFloat[$price]]
+§log[Count is integer: §isInt[$count]]
+
+# Type of values
+§log[Type of age: §typeOf[$age]]
+§log[Type of text: §typeOf[hello]]</pre>
+
+                    <h3>File Processing Loop</h3>
+                    <p><strong>File: file_processor.elios</strong></p>
+                    <pre>§log[=== Processing Files ===]
+
+# Create multiple files
+§for[i;1;3]
+    §var[filename;file_$i.txt]
+    §createFile[$filename]
+    §writeFile[$filename;This is file number $i]
+    §log[Created $filename]
+§endfor
+
+# Read them back
+§for[i;1;3]
+    §var[filename;file_$i.txt]
+    §var[content;§readFile[$filename]]
+    §log[Content of $filename: $content]
+§endfor</pre>
+                </div>
+
+
+
                 <!-- Type Checking -->
                 <div id="types" class="section">
                     <h2>Type Checking</h2>
@@ -605,16 +757,32 @@ li::marker{content:none}
                     <a href="http://51.75.25.2:2010" class="badge" style="margin-left:8px;cursor:pointer">All plugin are available here</a>
                     <br>
                     <p>Plugins are loaded from <code>./addons</code> directory.</p>
-                    <ul>
-                        <li><strong>example-plugin</strong> - Example functions
-                            <a href="addons/example-plugin-elios-addon.js" download class="badge" style="margin-left:8px;cursor:pointer">⬇ Download</a>
-                        </li>
 
-                        <li><strong>Complete documentation on plugin development</strong>
-                            <a href="addons/README.md" download class="badge" style="margin-left:8px;cursor:pointer">⬇ Download</a>
-                        </li>
-                        
-                    </ul>
+                    <h3>Install Plugins</h3>
+                    <p>You can install plugins using the Elios CLI:</p>
+                    <pre>elios -i colors@latest
+elios -i example-plugin@latest</pre>
+
+                    <h3>Colors Plugin Example</h3>
+                    <p>Install colors plugin first: <code>elios -i colors@latest</code></p>
+                    <pre>§log[§red[Hello World in red]]
+§log[§green[Hello World in green]]
+§log[§blue[Hello World in blue]]
+§log[§yellow[Hello World in yellow]]
+§log[§cyan[Hello World in cyan]]
+§log[§magenta[Hello World in magenta]]
+
+# Background colors
+§log[§bgRed[Text with red background]]
+§log[§bgGreen[Text with green background]]
+
+# Bright colors
+§log[§brightRed[Bright red text]]
+§log[§brightGreen[Bright green text]]
+
+# Combined with variables
+§var[username;Alice]
+§log[Welcome §green[$username]!]</pre>
 
                     <h3>Create a Plugin</h3>
                     <p>File: <code>./addons/my-plugin-elios-addon.js</code></p>
