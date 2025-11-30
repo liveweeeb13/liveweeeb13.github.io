@@ -369,6 +369,12 @@ function createSnowman() {
             snowmanContainer.style.animation = 'snowman-sway 4s ease-in-out infinite';
         }, 500);
     });
+   snowmanContainer.addEventListener('click', (e) => {
+        const rect = snowmanContainer.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        spawnConfetti(cx, cy);
+    });
 
     return snowmanContainer;
 }
@@ -438,6 +444,78 @@ function createSpecialSnowflakes() {
 
     document.body.appendChild(snowflakesContainer);
     return snowflakesContainer;
+}
+
+function spawnConfetti(x, y, count = 40) {
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    container.style.cssText = `position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;`;
+    document.body.appendChild(container);
+
+    if (!document.getElementById('confetti-styles')) {
+        const s = document.createElement('style');
+        s.id = 'confetti-styles';
+        s.innerHTML = `
+            @keyframes confetti-anim {
+                to { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)); opacity: 0; }
+            }
+            .confetti-piece {
+                position: absolute;
+                width: 8px;
+                height: 12px;
+                will-change: transform, opacity;
+                transform-origin: center;
+                border-radius: 2px;
+                opacity: 1;
+            }
+        `;
+        document.head.appendChild(s);
+    }
+
+    const colors = ['#ff2d55', '#ff9500', '#34c759', '#5ac8fa', '#ffcc00', '#af52de'];
+
+    let maxDuration = 0;
+    for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        const w = Math.round(Math.random() * 8) + 6;
+        const h = Math.round(Math.random() * 10) + 6;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = w + 'px';
+        piece.style.height = h + 'px';
+        piece.style.left = (x - w / 2) + 'px';
+        piece.style.top = (y - h / 2) + 'px';
+        piece.style.background = color;
+
+        const angle = Math.random() * Math.PI * 2; 
+        const speed = Math.random() * 500 + 100;
+        const tx = Math.cos(angle) * speed;
+        const ty = Math.sin(angle) * speed;
+
+        const rotDeg = Math.random() * 720 - 360;
+        const duration = Math.random() * 1200 + 800;
+        if (duration > maxDuration) maxDuration = duration;
+
+        piece.style.setProperty('--tx', tx + 'px');
+        piece.style.setProperty('--ty', ty + 'px');
+        piece.style.setProperty('--rot', rotDeg + 'deg');
+        piece.style.animation = `confetti-anim ${duration}ms cubic-bezier(.2,.8,.2,1) forwards`;
+
+        container.appendChild(piece);
+        piece.animate([
+            { transform: `translate(0,0) rotate(0deg)` },
+            { transform: `translate(${tx * 0.4}px, ${ty * 0.4}px) rotate(${rotDeg / 2}deg)` },
+            { transform: `translate(${tx}px, ${ty}px) rotate(${rotDeg}deg)` }
+        ], { duration: duration, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' });
+
+        setTimeout(() => {
+            if (piece && piece.parentNode) piece.parentNode.removeChild(piece);
+        }, duration + 50);
+    }
+
+    setTimeout(() => {
+        if (container && container.parentNode) container.parentNode.removeChild(container);
+    }, Math.max(1200, maxDuration) + 200);
 }
 
 function setupKeyboardControls(snowmanContainer, snowflakesContainer) {
