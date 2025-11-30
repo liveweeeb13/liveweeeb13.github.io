@@ -419,7 +419,13 @@ function createSpecialSnowflakes() {
     const snowflakesContainer = document.createElement('div');
     snowflakesContainer.id = 'special-snowflakes-container';
 
-    for (let i = 0; i < 8; i++) {
+    // Reduce special decorative snowflakes on mobile to avoid clutter/perf issues
+    const isMobile = (typeof window !== 'undefined') && (
+        (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
+        /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/.test(navigator.userAgent)
+    );
+    const specialCount = isMobile ? 4 : 8;
+    for (let i = 0; i < specialCount; i++) {
         const snowflake = document.createElement('div');
         snowflake.className = 'special-snowflake';
         snowflake.innerHTML = '<span class="snowflake-symbol">❄</span>';

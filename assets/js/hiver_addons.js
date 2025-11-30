@@ -16,7 +16,12 @@ function createSnowflakes() {
     `;
     document.body.appendChild(snowContainer);
 
-    const snowflakeCount = 50;
+    // Reduce snowflake count on smaller screens / mobile devices
+    const isMobile = (typeof window !== 'undefined') && (
+        (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
+        /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/.test(navigator.userAgent)
+    );
+    const snowflakeCount = isMobile ? 18 : 50;
 
     // Animation CSS pour la chute
     const style = document.createElement('style');
