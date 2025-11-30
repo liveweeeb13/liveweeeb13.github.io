@@ -1,16 +1,16 @@
 /* ============================================================
-   Root Variables
+   Root Variables - Dark Theme
 ============================================================ */
 :root {
-    --primary-color: #4361ee;
-    --secondary-color: #3f37c9;
-    --accent-color: #4cc9f0;
-    --dark-color: #1a1a2e;
-    --light-color: #f8f9fa;
-    --success-color: #4bb543;
-    --error-color: #ff3333;
+    --primary-color: #90caf9;
+    --secondary-color: #42a5f5;
+    --accent-color: #f48fb1;
+    --dark-color: #121212;
+    --light-color: #1e1e1e;
+    --success-color: #66bb6a;
+    --error-color: #ef5350;
     --border-radius: 8px;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     --transition: all 0.2s ease;
 }
 
@@ -26,8 +26,8 @@
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f5f7fa;
+    color: #e0e0e0;
+    background-color: var(--dark-color);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -57,7 +57,7 @@ body {
 }
 
 .about a {
-    color: #3f37c9;
+    color: #90caf9;
     text-decoration: none;
     opacity: 0.8;
     transition: var(--transition);
@@ -65,14 +65,14 @@ body {
 
 .about a:hover {
     opacity: 1;
-    color: #4361ee;
+    color: #42a5f5;
 }
 
 /* ============================================================
    Header & Navigation
 ============================================================ */
 .main-header {
-    background-color: var(--dark-color);
+    background-color: var(--light-color);
     color: white;
     padding: 1rem 0;
     box-shadow: var(--box-shadow);
@@ -99,7 +99,7 @@ body {
 .logo span,
 .footer-bottom a {
     text-decoration: none;
-    color: var(--accent-color);
+    color: #f48fb1;
 }
 
 .main-nav ul {
@@ -121,7 +121,7 @@ body {
 }
 
 .main-nav a:hover {
-    color: var(--accent-color);
+    color: #f48fb1;
 }
 
 .main-nav a::after {
@@ -131,7 +131,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--accent-color);
+    background-color: #f48fb1;
     transition: var(--transition);
 }
 
@@ -146,7 +146,7 @@ body {
 .hero {
     text-align: center;
     padding: 4rem 0;
-    background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(144, 202, 249, 0.1) 0%, rgba(244, 143, 177, 0.1) 100%);
     border-radius: var(--border-radius);
     margin-bottom: 3rem;
     transition: var(--transition);
@@ -155,14 +155,14 @@ body {
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: var(--dark-color);
+    color: #e0e0e0;
 }
 
 .hero p {
     font-size: 1.2rem;
     max-width: 700px;
     margin: 0 auto 2rem;
-    color: #333;
+    color: #e0e0e0;
     transition: var(--transition);
 }
 
@@ -185,18 +185,19 @@ body {
 }
 
 .project-card {
-    background: white;
+    background: #1e1e1e;
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     text-align: center;
     transition: var(--transition);
     text-decoration: none;
+    border: 1px solid #333;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .project-icon {
@@ -207,7 +208,7 @@ body {
 .project-card h3,
 .project-card p {
     margin-bottom: 1rem;
-    color: var(--dark-color);
+    color: #e0e0e0;
     transition: var(--transition);
 }
 
@@ -215,16 +216,17 @@ body {
    Content Section
 ============================================================ */
 .content-section {
-    background: white;
+    background: #1e1e1e;
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     margin-bottom: 2rem;
     transition: var(--transition);
+    border: 1px solid #333;
 }
 
 .content-section h2 {
-    color: var(--dark-color);
+    color: #e0e0e0;
     margin-bottom: 0.5rem;
     transition: var(--transition);
 }
@@ -251,7 +253,7 @@ body {
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: white;
+    color: #121212;
 }
 
 .btn-primary:hover {
@@ -260,13 +262,13 @@ body {
 }
 
 .btn-secondary {
-    background-color: white;
+    background-color: #1e1e1e;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
 
 .btn-secondary:hover {
-    background-color: #f0f4ff;
+    background-color: #2c2c2c;
     transform: translateY(-2px);
 }
 
@@ -286,7 +288,7 @@ body {
    Footer
 ============================================================ */
 .main-footer {
-    background-color: var(--dark-color);
+    background-color: #1a1a1a;
     color: white;
     padding: 3rem 0 0;
     margin-top: auto;
@@ -300,7 +302,7 @@ body {
 }
 
 .footer-section h3 {
-    color: var(--accent-color);
+    color: #f48fb1;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -327,7 +329,7 @@ body {
 
 .footer-section a:hover {
     opacity: 1;
-    color: var(--accent-color);
+    color: #f48fb1;
 }
 
 .footer-bottom {
@@ -383,7 +385,7 @@ body {
 }
 
 input:checked+.slider {
-    background-color: #4cc9f0;
+    background-color: #42a5f5;
 }
 
 input:checked+.slider:before {
@@ -465,7 +467,7 @@ input:checked+.slider .moon {
         top: 70px;
         left: 0;
         right: 0;
-        background-color: var(--dark-color);
+        background-color: var(--light-color);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -519,7 +521,7 @@ input:checked+.slider .moon {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: var(--dark-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -529,7 +531,7 @@ input:checked+.slider .moon {
 .splash-content {
     font-family: monospace;
     text-align: center;
-    color: var(--dark-color);
+    color: #e0e0e0;
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -576,7 +578,7 @@ input:checked+.slider .moon {
     justify-content: center;
     gap: 1rem;
     position: relative;
-    border: 2px solid #78828d;
+    border: 2px solid #cedced;
     padding: 1rem;
     padding-top: 2rem;
     width: 50%;

@@ -15,17 +15,7 @@ const headerHTML = `
                 <li><a href="/">Accueil</a></li>
                 <li><a href="/news">Nouveautées</a></li>
                 <li><a href="/about">À propos de moi</a></li>
-                <li>
-                <div class='center-wrapper'>
-                    <label class="theme-switch" for="theme-checkbox">
-                        <input type="checkbox" id="theme-checkbox">
-                        <div class="slider round">
-                            <span class="sun" draggable="false">☀️</span>
-                            <span class="moon" draggable="false">🌙</span>
-                        </div>
-                    </label>
-                    </div>
-                </li>
+
             </ul>
         </nav>
     </div>
@@ -83,6 +73,5 @@ document.addEventListener('DOMContentLoaded', () => {
     injectHTML(headerHTML, 'start');
     injectHTML(footerHTML, 'end');
 
-    loadScript('/assets/js/themes.js');
     loadScript('/assets/js/menu.js');
 });
