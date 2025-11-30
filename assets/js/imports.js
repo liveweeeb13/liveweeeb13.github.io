@@ -74,4 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     injectHTML(footerHTML, 'end');
 
     loadScript('/assets/js/menu.js');
+    loadScript('/assets/js/hiver_addons.js');
+    loadScript('/assets/js/noel_decorations.js');
 });
