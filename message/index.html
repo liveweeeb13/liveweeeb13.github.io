@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Personal Message</title>
+  <style>
+    body{margin:0;padding:20px;font-family:Arial,sans-serif;text-align:center}
+    h1{color:#333}
+    code{background:#f0f0f0;padding:2px 4px;border-radius:3px}
+  </style>
+</head>
+<body>
+  <h1 id="display">No message</h1>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const msg = params.get('message');
+    if (msg) {
+      document.getElementById('display').textContent = msg;
+    } else {
+      document.getElementById('display').innerHTML = 'No message<br><small>Add <code>?message=your_text</code> to the URL</small>';
+    }
+  </script>
+</body>
+</html>
