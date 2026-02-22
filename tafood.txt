@@ -1,2 +1,2 @@
-v: 2026.02.22-2
+v: 2026.02.22-3
 l: https://liveweeeb13.github.io/tfal/update
