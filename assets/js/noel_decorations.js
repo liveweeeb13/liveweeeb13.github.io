@@ -429,9 +429,26 @@ function createSpecialSnowflakes() {
         const snowflake = document.createElement('div');
         snowflake.className = 'special-snowflake';
         snowflake.innerHTML = '<span class="snowflake-symbol">❄</span>';
+        const windForce = (Math.random() - 0.5) * 300;
+        const animName = `wind-fall-${i}`;
+        
+        const keyframes = `
+            @keyframes ${animName} {
+                to {
+                    transform: translateY(100vh) translateX(${windForce}px);
+                    opacity: 0;
+                }
+            }
+        `;
+        
+        const styleEl = document.createElement('style');
+        styleEl.innerHTML = keyframes;
+        document.head.appendChild(styleEl);
+        
         snowflake.style.cssText = `
             left: ${Math.random() * 100}%;
             top: ${Math.random() * -100}%;
+            animation: ${animName} 15s linear infinite;
             animation-delay: ${Math.random() * 5}s;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         `;
