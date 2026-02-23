@@ -44,7 +44,7 @@ const footerHTML = `
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 <a href="https://github.com/liveweeeb13">liveweeeb</a>. Tous droits réservés.</p>
+            <p>&copy; 2026 <a href="https://github.com/liveweeeb13">liveweeeb</a>. Tous droits réservés.</p>
         </div>
     </div>
 </footer>
