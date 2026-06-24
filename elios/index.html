@@ -1,328 +1,752 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles.css">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elios Language - Documentation</title>
+    <style class="dg">
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+:root{
+  --bg:#0b0f10;
+  --panel:#0f1415;
+  --muted:#94a3a1;
+  --text:#d6f7e3;
+  --accent:#57f287;
+  --accent-2:#2aa874;
+  --accent-dim:#1b5b3f;
+  --card:#0d1112;
+  --border:rgba(255,255,255,0.04);
+  --glass:rgba(255,255,255,0.03);
+  --code-bg:#091012;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: Inter, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg, #071011 0%, #081217 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:28px;
+}
+
+.container{
+  max-width:1200px;margin:0 auto;background:linear-gradient(180deg,var(--panel),#071111);
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 12px 40px rgba(2,6,8,0.7);
+}
+
+header{
+  padding:34px 32px;background:linear-gradient(90deg, rgba(7,17,14,0.6), rgba(10,24,18,0.6));
+  border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:16px
+}
+header h1{font-size:1.8rem;color:var(--text);font-weight:600}
+
+.search-container{padding:18px 24px;background:linear-gradient(180deg, rgba(2,6,8,0.02), transparent);border-bottom:1px solid var(--border)}
+.search-box{display:flex;gap:10px}
+.search-box input{flex:1;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--card);color:var(--text)}
+.search-box input::placeholder{color:var(--muted)}
+.search-box button{background:linear-gradient(180deg,var(--accent),var(--accent-2));border:none;color:#05110b;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.search-box button:hover{filter:brightness(.96)}
+
+.content{display:flex;min-height:520px}
+.sidebar{width:260px;background:linear-gradient(180deg, rgba(2,6,8,0.03), transparent);border-right:1px solid var(--border);padding:16px;}
+.sidebar ul{list-style:none}
+.sidebar li{margin-bottom:6px}
+.sidebar a{display:block;padding:12px 14px;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:0.95rem}
+.sidebar a:hover{background:linear-gradient(90deg, rgba(87,242,135,0.06), rgba(43,168,116,0.03));color:var(--text)}
+.sidebar a.active{background:linear-gradient(90deg, rgba(87,242,135,0.12), rgba(43,168,116,0.05));color:var(--accent);box-shadow:inset 0 0 0 1px rgba(87,242,135,0.02)}
+
+.main{flex:1;padding:28px;overflow-y:auto;max-height:720px}
+.section{display:none}
+.section.active{display:block}
+
+h2{color:var(--text);font-size:1.4rem;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:8px}
+h3{color:var(--accent);margin-top:16px;margin-bottom:8px}
+
+.function{background:linear-gradient(180deg,var(--card), rgba(2,6,8,0.02));padding:14px;border-radius:10px;border-left:3px solid rgba(87,242,135,0.18);margin:12px 0;color:var(--muted)}
+.function-name{font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;color:var(--accent);font-weight:700;font-variant-ligatures: contextual;}
+.function-desc{margin-top:6px;color:var(--muted)}
+
+code{background:rgba(255,255,255,0.02);padding:3px 6px;border-radius:6px;font-family:'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;color:var(--accent);font-variant-ligatures: contextual;}
+
+pre{background:var(--code-bg);color:#cfeee0;padding:14px;border-radius:10px;overflow:auto;border:1px solid rgba(255,255,255,0.03);box-shadow:inset 0 -6px 30px rgba(17,30,20,0.2);font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace}
+
+.example{background:linear-gradient(180deg, rgba(12,20,15,0.4), rgba(5,9,8,0.2));padding:12px;border-radius:8px;border-left:3px solid rgba(87,242,135,0.09);margin:12px 0}
+.example-code{background:var(--code-bg);padding:10px;border-radius:6px;color:#d6f7e3}
+
+footer{padding:18px;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:0.9rem}
+
+@media (max-width:900px){.sidebar{display:none}.content{flex-direction:column}.main{max-height:none;padding:18px}}
+
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(87,242,135,0.09);color:var(--accent);font-weight:700;font-size:0.8rem}
+
+button:focus,input:focus{outline:none;box-shadow:0 0 0 3px rgba(87,242,135,0.06);border-color:rgba(87,242,135,0.14)}
+
+li::marker{content:none}
+
+.code-wrapper{position:relative}
+.code-toggle{display:none;position:absolute;right:12px;top:10px;width:36px;height:36px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;align-items:center;justify-content:center}
+.code-toggle .bar{display:block;width:18px;height:2px;background:var(--muted);margin:3px 0;transition:transform .25s ease,opacity .18s ease}
+
+@media (max-width:900px){
+  .code-toggle{display:flex}
+  pre{transition:max-height .28s ease, padding .2s ease;max-height:800px}
+  pre.collapsed{max-height:0;padding-top:8px;padding-bottom:0;overflow:hidden}
+  .code-toggle.open .bar:nth-child(1){transform:rotate(90deg) translateX(3px)}
+  .code-toggle.open .bar:nth-child(2){opacity:0}
+  .code-toggle.open .bar:nth-child(3){transform:rotate(90deg) translateX(-3px)}
+  .code-wrapper pre{padding-top:36px}
+}
+
+.nav-toggle{display:none;position:relative;width:40px;height:40px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;align-items:center;justify-content:center;cursor:pointer;margin-left:auto;z-index:1300}
+.nav-toggle{flex-direction:column;transition:transform .28s cubic-bezier(.2,.9,.2,1)}
+.nav-toggle .bar{display:block;width:18px;height:2px;background:var(--muted);margin:3px 0;border-radius:2px;transition:transform .25s ease,opacity .18s ease;opacity:1}
+
+@media (max-width:900px){
+  .nav-toggle{display:flex}
+  .sidebar{display:block;position:fixed;left:0;top:0;bottom:0;width:260px;z-index:1200;transform:translateX(-100%);transition:transform .28s ease;background:var(--panel);box-shadow: 8px 0 30px rgba(0,0,0,0.6);backdrop-filter:none}
+  .sidebar.open{transform:translateX(0)}
+  .overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1100}
+  .nav-toggle.open{transform:rotate(90deg)}
+
+  .sidebar-header{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center}
+  .sidebar-header h2{font-size:1.2rem;color:var(--accent);margin:0;border:none;padding:0}
+}
+
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>🚀 Elios Language</h1>
+            <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" title="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </header>
 
-<div id="lang-bar" class="lang-bar">
-  <i class="ti ti-language" aria-hidden="true" style="font-size:16px;color:var(--color-text-secondary)"></i>
-  <label for="lang-sel">Langue :</label>
-  <select id="lang-sel" class="lang-select">
-    <option value="fr">🇫🇷 Français</option>
-    <option value="en">🇬🇧 English</option>
-    <option value="es">🇪🇸 Español</option>
-    <option value="de">🇩🇪 Deutsch</option>
-    <option value="pt">🇧🇷 Português</option>
-    <option value="ja">🇯🇵 日本語</option>
-  </select>
-  <span id="lang-status" style="font-size:12px;color:var(--color-text-secondary);margin-left:auto"></span>
-</div>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search documentation...">
+                <button onclick="search()">Search</button>
+            </div>
+        </div>
 
-<div class="wrap">
-  <nav class="sidebar" aria-label="Navigation">
-    <div class="sidebar-title" id="nav-label">Navigation</div>
-    <button class="nav-btn active" onclick="show('intro',this)" data-section="intro"><i class="ti ti-home" aria-hidden="true"></i><span data-key="nav_intro">Introduction</span></button>
-    <button class="nav-btn" onclick="show('quick',this)" data-section="quick"><i class="ti ti-bolt" aria-hidden="true"></i><span data-key="nav_quick">Démarrage rapide</span></button>
-    <button class="nav-btn" onclick="show('syntax',this)" data-section="syntax"><i class="ti ti-code" aria-hidden="true"></i><span data-key="nav_syntax">Syntaxe</span></button>
-    <button class="nav-btn" onclick="show('io',this)" data-section="io"><i class="ti ti-terminal" aria-hidden="true"></i><span data-key="nav_io">Entrée / Sortie</span></button>
-    <button class="nav-btn" onclick="show('vars',this)" data-section="vars"><i class="ti ti-variable" aria-hidden="true"></i><span data-key="nav_vars">Variables</span></button>
-    <button class="nav-btn" onclick="show('math',this)" data-section="math"><i class="ti ti-math-function" aria-hidden="true"></i><span data-key="nav_math">Mathématiques</span></button>
-    <button class="nav-btn" onclick="show('text',this)" data-section="text"><i class="ti ti-text-size" aria-hidden="true"></i><span data-key="nav_text">Texte</span></button>
-    <button class="nav-btn" onclick="show('control',this)" data-section="control"><i class="ti ti-git-branch" aria-hidden="true"></i><span data-key="nav_control">Contrôle</span></button>
-    <button class="nav-btn" onclick="show('types',this)" data-section="types"><i class="ti ti-filter" aria-hidden="true"></i><span data-key="nav_types">Types</span></button>
-    <button class="nav-btn" onclick="show('files',this)" data-section="files"><i class="ti ti-file" aria-hidden="true"></i><span data-key="nav_files">Fichiers</span></button>
-    <button class="nav-btn" onclick="show('json',this)" data-section="json"><i class="ti ti-braces" aria-hidden="true"></i><span data-key="nav_json">JSON</span></button>
-    <button class="nav-btn" onclick="show('multi',this)" data-section="multi"><i class="ti ti-files" aria-hidden="true"></i><span data-key="nav_multi">Multi-fichiers</span></button>
+        <div class="content">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>🚀 Elios</h2>
+                </div>
+                <ul>
+                    <li><a href="#" onclick="showSection('intro', event)" class="nav-link active">Introduction</a></li>
+                    <li><a href="#" onclick="showSection('quickstart', event)" class="nav-link">Quick Start</a></li>
+                    <li><a href="#" onclick="showSection('syntax', event)" class="nav-link">Syntax Basics</a></li>
+                    <li><a href="#" onclick="showSection('io', event)" class="nav-link">I/O Functions</a></li>
+                    <li><a href="#" onclick="showSection('variables', event)" class="nav-link">Variables</a></li>
+                    <li><a href="#" onclick="showSection('math', event)" class="nav-link">Math Functions</a></li>
+                    <li><a href="#" onclick="showSection('text', event)" class="nav-link">Text Functions</a></li>
+                    <li><a href="#" onclick="showSection('control', event)" class="nav-link">Control Flow</a></li>
+                    <li><a href="#" onclick="showSection('types', event)" class="nav-link">Type Checking</a></li>
+                    <li><a href="#" onclick="showSection('files', event)" class="nav-link">File Operations</a></li>
+                    <li><a href="#" onclick="showSection('json', event)" class="nav-link">JSON Functions</a></li>
+                    <li><a href="#" onclick="showSection('multifile', event)" class="nav-link">Multi-File</a></li>
+                    <li><a href="#" onclick="showSection('plugins', event)" class="nav-link">Plugins</a></li>
+                </ul>
+            </div>
 
-    <button class="nav-btn" onclick="show('utils',this)" data-section="utils"><i class="ti ti-clock" aria-hidden="true"></i><span data-key="nav_utils">Utilitaires</span></button>
-    <a class="nav-btn" href="http://localhost:2010" target="_blank" style="text-decoration:none;margin-top:12px;border-top:1px solid var(--border);padding-top:14px"><i class="ti ti-plug" aria-hidden="true"></i><span data-key="nav_plugins">Installer des plugins</span></a>
-  </nav>
+            <div class="main">
+                <!-- Introduction -->
+                <div id="intro" class="section active">
+                    <h2>Welcome to Elios Language</h2>
+                    <p>Elios is a lightweight, Node.js-based scripting language designed for simplicity and power. It uses an intuitive syntax with the <code>§func[args]</code> format.</p>
+                    
+                    
 
-  <div class="main" id="main-content">
-    <!-- INTRO -->
-    <div id="sec-intro" class="section active">
-      <p class="sec-title">Elios Language</p>
-      <p class="sec-sub" data-key="intro_desc">Elios est un langage de script simple, compilé en C. L'idée c'est d'écrire du code lisible sans se prendre la tête — tout passe par <code>§fonction[args]</code>, point.</p>
-      <div class="tag-row">
-        <span class="badge badge-success"><i class="ti ti-check" aria-hidden="true"></i>v1.8.0 Production</span>
-        <span class="badge"><i class="ti ti-brand-c" aria-hidden="true"></i>C</span>
-        <span class="badge"><i class="ti ti-world" aria-hidden="true"></i>GitHub</span>
-      </div>
-      <h3 data-key="intro_why">Pourquoi Elios ?</h3>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="intro_f1">Syntaxe uniforme — toutes les fonctions suivent le même schéma</span></div>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="intro_f2">Variables globales partagées entre fichiers</span></div>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="intro_f3">Système de plugins extensible via <code>./addons</code></span></div>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="intro_f4">Mode debug intégré pour diagnostiquer facilement</span></div>
-    </div>
+                    <h3>Version</h3>
+                    <p><strong>v1.7.1</strong> - Production Ready</p>
+                </div>
 
-    <!-- QUICK -->
-    <div id="sec-quick" class="section">
-      <p class="sec-title" data-key="quick_title">Démarrage rapide</p>
-      <p class="sec-sub" data-key="quick_desc">Tu es à deux commandes d'un programme qui tourne.</p>
-      <h3 data-key="quick_run">Exécuter un programme</h3>
-      <pre>elios programme.elios</pre>
-      <h3 data-key="quick_debug">Mode debug</h3>
-      <pre>elios programme.elios --debug</pre>
-      <h3>Hello World</h3>
-      <pre>§log[Bonjour le monde !]</pre>
-      <h3 data-key="quick_var">Avec des variables</h3>
-      <pre>§var[nom;Alice]
-§log[Bonjour $nom !]</pre>
-    </div>
+                <!-- Quick Start -->
+                <div id="quickstart" class="section">
+                    <h2>Quick Start</h2>
+                    
+                    <h3>Run a Program</h3>
+                    <pre>elios program.elios</pre>
 
-    <!-- SYNTAX -->
-    <div id="sec-syntax" class="section">
-      <p class="sec-title" data-key="syntax_title">Syntaxe de base</p>
-      <p class="sec-sub" data-key="syntax_desc">Tout fonctionne pareil — une fois que t'as compris le principe, tu sais tout écrire.</p>
-      <pre>§fonction[arg1;arg2;arg3]</pre>
-      <h3 data-key="syntax_rules">Règles clés</h3>
-      <div class="key-row"><i class="ti ti-point" aria-hidden="true"></i><span data-key="syn_r1">Toutes les fonctions commencent par <code>§</code></span></div>
-      <div class="key-row"><i class="ti ti-point" aria-hidden="true"></i><span data-key="syn_r2">Les arguments sont entre <code>[...]</code></span></div>
-      <div class="key-row"><i class="ti ti-point" aria-hidden="true"></i><span data-key="syn_r3">Plusieurs arguments séparés par <code>;</code></span></div>
-      <div class="key-row"><i class="ti ti-point" aria-hidden="true"></i><span data-key="syn_r4">Variables référencées avec <code>$NOM_VAR</code></span></div>
-      <div class="key-row"><i class="ti ti-point" aria-hidden="true"></i><span data-key="syn_r5">Commentaires commencent par <code>#</code></span></div>
-      <h3>Exemple</h3>
-      <pre># Ceci est un commentaire
+                    <h3>Debug Mode</h3>
+                    <pre>elios program.elios --debug</pre>
+
+                    <h3>Hello World</h3>
+                    <div class="example">
+                        <div class="example-code">§log[Hello, World!]</div>
+                    </div>
+
+                    <h3>With Variables</h3>
+                    <div class="example">
+                        <div class="example-code">§var[name;Alice]
+§log[Hello $name]</div>
+                    </div>
+                </div>
+
+                <!-- Syntax Basics -->
+                <div id="syntax" class="section">
+                    <h2>Syntax Basics</h2>
+                    <p>Elios uses a consistent syntax for all operations:</p>
+                    <pre>§function[argument1;argument2;argument3]</pre>
+
+                    <h3>Key Points</h3>
+                    <ul>
+                        <li>All functions start with <code>§</code> (section sign)</li>
+                        <li>Arguments are enclosed in <code>[...]</code></li>
+                        <li>Multiple arguments separated by <code>;</code> (semicolon)</li>
+                        <li>Variables referenced with <code>$VAR_NAME</code></li>
+                        <li>Comments start with <code>#</code></li>
+                    </ul>
+
+                    <h3>Examples</h3>
+                    <div class="example">
+                        <div class="example-code"># Comment
 §var[x;42]
-§log[$x]</pre>
-    </div>
+§log[$x]</div>
+                    </div>
+                </div>
 
-    <!-- IO -->
-    <div id="sec-io" class="section">
-      <p class="sec-title" data-key="io_title">Entrée / Sortie</p>
-      <p class="sec-sub" data-key="io_desc">Fonctions pour afficher du texte et lire la saisie utilisateur.</p>
-      <div class="fn-card">
-        <div class="fn-sig">§log[texte]</div>
-        <div class="fn-desc" data-key="io_log">Affiche du texte dans la console.</div>
-        <pre>§log[Bonjour le monde !]</pre>
-      </div>
-      <div class="fn-card">
-        <div class="fn-sig">§input[invite]</div>
-        <div class="fn-desc" data-key="io_input">Lit la saisie de l'utilisateur.</div>
-        <pre>§var[nom;§input[Quel est votre nom ?]]
-§log[$nom]</pre>
-      </div>
-      <div class="fn-card">
-        <div class="fn-sig">§clear[]</div>
-        <div class="fn-desc" data-key="io_clear">Efface l'écran de la console.</div>
-        <pre>§clear[]</pre>
-      </div>
-    </div>
+                <!-- I/O Functions -->
+                <div id="io" class="section">
+                    <h2>Input/Output Functions</h2>
 
-    <!-- VARS -->
-    <div id="sec-vars" class="section">
-      <p class="sec-title" data-key="vars_title">Variables</p>
-      <p class="sec-sub" data-key="vars_desc">Une variable définie quelque part est accessible partout — même dans un fichier chargé avec <code>§require</code>. Pas de portée compliquée.</p>
-      <div class="fn-card">
-        <div class="fn-sig">§var[nom;valeur]</div>
-        <div class="fn-desc" data-key="vars_def">Définit ou met à jour une variable.</div>
-        <pre>§var[age;25]
-§var[nom;Alice]
+                    <div class="function">
+                        <div class="function-name">§log[text]</div>
+                        <div class="function-desc">Print text to console</div>
+                        <pre>§log[Hello World]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§input[prompt]</div>
+                        <div class="function-desc">Read from user input</div>
+                        <pre>§var[name;§input[What is your name?]]
+§log[$name]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§clear[]</div>
+                        <div class="function-desc">Clear console screen</div>
+                        <pre>§clear[]</pre>
+                    </div>
+                </div>
+
+                <!-- Variables -->
+                <div id="variables" class="section">
+                    <h2>Variables</h2>
+
+                    <h3>Define Variables</h3>
+                    <div class="function">
+                        <div class="function-name">§var[name;value]</div>
+                        <div class="function-desc">Define or update a variable</div>
+                        <pre>§var[age;25]
+§var[name;Alice]
 §var[pi;3.14159]</pre>
-      </div>
-      <h3 data-key="vars_use">Utiliser les variables</h3>
-      <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px" data-key="vars_ref">Référencez une variable avec <code>$NOM_VARIABLE</code> :</p>
-      <pre>§var[salut;Bonjour]
-§log[$salut le monde !]</pre>
-    </div>
+                    </div>
 
-    <!-- MATH -->
-    <div id="sec-math" class="section">
-      <p class="sec-title" data-key="math_title">Fonctions mathématiques</p>
-      <p class="sec-sub" data-key="math_desc">Opérations arithmétiques et utilitaires numériques.</p>
-      <div class="grid2">
-        <div class="fn-card"><div class="fn-sig">§add[a;b]</div><div class="fn-desc" data-key="m_add">Addition</div><pre>§log[§add[5;3]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§sub[a;b]</div><div class="fn-desc" data-key="m_sub">Soustraction</div><pre>§log[§sub[10;4]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§mul[a;b]</div><div class="fn-desc" data-key="m_mul">Multiplication</div><pre>§log[§mul[6;7]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§div[a;b]</div><div class="fn-desc" data-key="m_div">Division</div><pre>§log[§div[20;4]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§mod[a;b]</div><div class="fn-desc" data-key="m_mod">Modulo (reste)</div><pre>§log[§mod[17;5]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§pow[base;exp]</div><div class="fn-desc" data-key="m_pow">Puissance</div><pre>§log[§pow[2;8]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§sqrt[n]</div><div class="fn-desc" data-key="m_sqrt">Racine carrée</div><pre>§log[§sqrt[16]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§floor[n]</div><div class="fn-desc" data-key="m_floor">Arrondi inférieur</div><pre>§log[§floor[3.7]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§ceil[n]</div><div class="fn-desc" data-key="m_ceil">Arrondi supérieur</div><pre>§log[§ceil[3.2]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§round[n]</div><div class="fn-desc" data-key="m_round">Arrondi au plus proche</div><pre>§log[§round[3.5]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§abs[n]</div><div class="fn-desc" data-key="m_abs">Valeur absolue</div><pre>§log[§abs[-5]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§min[a;b;...]</div><div class="fn-desc" data-key="m_min">Valeur minimale</div><pre>§log[§min[5;2;8;1]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§max[a;b;...]</div><div class="fn-desc" data-key="m_max">Valeur maximale</div><pre>§log[§max[5;2;8;1]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§random[min;max]</div><div class="fn-desc" data-key="m_rand">Entier aléatoire</div><pre>§log[§random[1;10]]</pre></div>
-      </div>
-    </div>
+                    <h3>Use Variables</h3>
+                    <p>Reference variables with <code>$VARIABLE_NAME</code>:</p>
+                    <pre>§var[greeting;Hello]
+§log[$greeting World]</pre>
 
-    <!-- TEXT -->
-    <div id="sec-text" class="section">
-      <p class="sec-title" data-key="text_title">Fonctions texte</p>
-      <p class="sec-sub" data-key="text_desc">Manipulation et analyse de chaînes de caractères.</p>
-      <div class="grid2">
-        <div class="fn-card"><div class="fn-sig">§len[texte]</div><div class="fn-desc" data-key="t_len">Longueur de la chaîne</div><pre>§log[§len[hello]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§upper[texte]</div><div class="fn-desc" data-key="t_upper">Majuscules</div><pre>§log[§upper[hello]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§lower[texte]</div><div class="fn-desc" data-key="t_lower">Minuscules</div><pre>§log[§lower[HELLO]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§trim[texte]</div><div class="fn-desc" data-key="t_trim">Supprime les espaces</div><pre>§log[§trim[  hello  ]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§contains[texte;rech]</div><div class="fn-desc" data-key="t_contains">Vérifie une sous-chaîne</div><pre>§log[§contains[hello;ell]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§replace[texte;rech;repl]</div><div class="fn-desc" data-key="t_replace">Remplace du texte</div><pre>§log[§replace[hello;ll;xx]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§indexOf[texte;rech]</div><div class="fn-desc" data-key="t_index">Trouve la position</div><pre>§log[§indexOf[hello;ll]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§equalsIgnoreCase[a;b]</div><div class="fn-desc" data-key="t_eic">Compare sans distinction de casse</div><pre>§log[§equalsIgnoreCase[Hello;hello]]</pre></div>
-      </div>
-    </div>
+                    <h3>Variable Scope</h3>
+                    <p>All variables are global and available across the entire program, including files loaded with <code>§require</code>.</p>
+                </div>
 
-    <!-- CONTROL -->
-    <div id="sec-control" class="section">
-      <p class="sec-title" data-key="ctrl_title">Contrôle du flux</p>
-      <p class="sec-sub" data-key="ctrl_desc">Conditions, boucles et instructions de saut.</p>
-      <h3 data-key="ctrl_if">Conditionnelle</h3>
-      <pre>§if[condition]
-    §...code...
-§elseif[condition]
-    §...code...
-§else
-    §...code...
+                <!-- Math Functions -->
+                <div id="math" class="section">
+                    <h2>Math Functions</h2>
+
+                    <div class="function">
+                        <div class="function-name">§add[a;b]</div>
+                        <div class="function-desc">Addition</div>
+                        <pre>§log[§add[5;3]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§sub[a;b]</div>
+                        <div class="function-desc">Subtraction</div>
+                        <pre>§log[§sub[10;4]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§mul[a;b]</div>
+                        <div class="function-desc">Multiplication</div>
+                        <pre>§log[§mul[6;7]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§div[a;b]</div>
+                        <div class="function-desc">Division</div>
+                        <pre>§log[§div[20;4]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§mod[a;b]</div>
+                        <div class="function-desc">Modulo (remainder)</div>
+                        <pre>§log[§mod[17;5]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§pow[base;exponent]</div>
+                        <div class="function-desc">Power</div>
+                        <pre>§log[§pow[2;8]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§sqrt[n]</div>
+                        <div class="function-desc">Square root</div>
+                        <pre>§log[§sqrt[16]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§floor[n]</div>
+                        <div class="function-desc">Round down</div>
+                        <pre>§log[§floor[3.7]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§ceil[n]</div>
+                        <div class="function-desc">Round up</div>
+                        <pre>§log[§ceil[3.2]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§round[n]</div>
+                        <div class="function-desc">Round to nearest</div>
+                        <pre>§log[§round[3.5]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§abs[n]</div>
+                        <div class="function-desc">Absolute value</div>
+                        <pre>§log[§abs[-5]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§min[a;b;...]</div>
+                        <div class="function-desc">Minimum value</div>
+                        <pre>§log[§min[5;2;8;1]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§max[a;b;...]</div>
+                        <div class="function-desc">Maximum value</div>
+                        <pre>§log[§max[5;2;8;1]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§random[min;max]</div>
+                        <div class="function-desc">Random integer</div>
+                        <pre>§log[§random[1;10]]</pre>
+                    </div>
+                </div>
+
+                <!-- Text Functions -->
+                <div id="text" class="section">
+                    <h2>Text Functions</h2>
+
+                    <div class="function">
+                        <div class="function-name">§len[text]</div>
+                        <div class="function-desc">String length</div>
+                        <pre>§log[§len[hello]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§upper[text]</div>
+                        <div class="function-desc">Uppercase</div>
+                        <pre>§log[§upper[hello]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§lower[text]</div>
+                        <div class="function-desc">Lowercase</div>
+                        <pre>§log[§lower[HELLO]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§trim[text]</div>
+                        <div class="function-desc">Remove whitespace</div>
+                        <pre>§log[§trim[  hello  ]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§contains[text;search]</div>
+                        <div class="function-desc">Check substring</div>
+                        <pre>§log[§contains[hello;ell]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§replace[text;search;replace]</div>
+                        <div class="function-desc">Replace text</div>
+                        <pre>§log[§replace[hello;ll;xx]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§indexOf[text;search]</div>
+                        <div class="function-desc">Find position</div>
+                        <pre>§log[§indexOf[hello;ll]]</pre>
+                    </div>
+                </div>
+
+                <!-- Control Flow -->
+                <div id="control" class="section">
+                    <h2>Control Flow</h2>
+
+                    <h3>Conditionals</h3>
+                    <pre>§if[condition]
+    § ...code...
 §endif</pre>
-      <div class="fn-card">
-        <div class="example-label" data-key="ex_label">Exemple</div>
-        <pre>§var[age;25]
+
+                    <div class="example">
+                        <div class="example-code">§var[age;25]
 §if[$age >= 18]
-    §log[Adulte]
-§elseif[$age >= 13]
-    §log[Ado]
-§else
-    §log[Enfant]
-§endif</pre>
-      </div>
-      <h3 data-key="ctrl_while">Boucle while</h3>
-      <pre>§while[condition]
-    §...code...
+    §log[You are an adult]
+§endif</div>
+                    </div>
+
+                    <h3>Loops</h3>
+                    <pre>§while[condition]
+    § ...code...
 §endwhile</pre>
-      <div class="fn-card">
-        <div class="example-label" data-key="ex_label">Exemple</div>
-        <pre>§var[compte;0]
-§while[$compte < 5]
-    §log[$compte]
-    §var[compte;§add[$compte;1]]
-§endwhile</pre>
-      </div>
-      <h3 data-key="ctrl_for">Boucle for</h3>
-      <pre>§for[variable;debut;fin]
-    §...code...
+
+                    <div class="example">
+                        <div class="example-code">§var[count;0]
+§while[$count < 5]
+    §log[$count]
+    §var[count;§add[$count;1]]
+§endwhile</div>
+                    </div>
+
+
+
+                    <h3>For Loops</h3>
+<pre>§for[variable;start;end]
+    § ...code...
 §endfor</pre>
-      <div class="fn-card">
-        <div class="example-label" data-key="ex_label">Exemple</div>
-        <pre>§for[i;0;5]
-    §log[Itération $i]
-§endfor</pre>
-      </div>
-      <h3 data-key="ctrl_elseif">If / Elseif / Else</h3>
-      <pre>§if[condition]
-    §...code...
-§elseif[condition]
-    §...code...
-§else
-    §...code...
-§endif</pre>
-      <h3 data-key="ctrl_jump">Sauts</h3>
-      <div class="grid2">
-        <div class="fn-card"><div class="fn-sig">§break[]</div><div class="fn-desc" data-key="ctrl_break">Quitter la boucle</div></div>
-        <div class="fn-card"><div class="fn-sig">§continue[]</div><div class="fn-desc" data-key="ctrl_cont">Passer à l'itération suivante</div></div>
-        <div class="fn-card"><div class="fn-sig">§exit[code]</div><div class="fn-desc" data-key="ctrl_exit">Quitter le programme avec un code de sortie</div><pre>§exit[0]</pre></div>
-      </div>
-    </div>
 
-    <!-- TYPES -->
-    <div id="sec-types" class="section">
-      <p class="sec-title" data-key="types_title">Vérification de types</p>
-      <p class="sec-sub" data-key="types_desc">Fonctions pour inspecter et valider le type d'une valeur.</p>
-      <div class="grid2">
-        <div class="fn-card"><div class="fn-sig">§isNumeric[v]</div><div class="fn-desc" data-key="ty_num">Numérique ?</div><pre>§log[§isNumeric[42]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isNaN[v]</div><div class="fn-desc" data-key="ty_nan">Pas un nombre ?</div><pre>§log[§isNaN[hello]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isEven[v]</div><div class="fn-desc" data-key="ty_even">Pair ?</div><pre>§log[§isEven[4]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isOdd[v]</div><div class="fn-desc" data-key="ty_odd">Impair ?</div><pre>§log[§isOdd[3]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isText[v]</div><div class="fn-desc" data-key="ty_text">Texte ?</div><pre>§log[§isText[hello]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isBool[v]</div><div class="fn-desc" data-key="ty_bool">Booléen ?</div><pre>§log[§isBool[true]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isInt[v]</div><div class="fn-desc" data-key="ty_int">Entier ?</div><pre>§log[§isInt[42]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isFloat[v]</div><div class="fn-desc" data-key="ty_float">Décimal ?</div><pre>§log[§isFloat[3.14]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§isJson[v]</div><div class="fn-desc" data-key="ty_json">JSON ?</div><pre>§log[§isJson[{"a":"b"}]]</pre></div>
-        <div class="fn-card"><div class="fn-sig">§typeOf[v]</div><div class="fn-desc" data-key="ty_typeof">Obtenir le type</div><pre>§log[§typeOf[42]]</pre></div>
-      </div>
-    </div>
-
-    <!-- FILES -->
-    <div id="sec-files" class="section">
-      <p class="sec-title" data-key="files_title">Opérations sur fichiers</p>
-      <p class="sec-sub" data-key="files_desc">Lire, écrire et gérer des fichiers depuis Elios.</p>
-      <div class="fn-card"><div class="fn-sig">§getPath[relatif]</div><div class="fn-desc" data-key="f_path">Résout un chemin relatif au répertoire courant.</div><pre>§var[p;§getPath[data/fichier.txt]]
-§log[$p]</pre></div>
-      <div class="fn-card"><div class="fn-sig">§readFile[chemin]</div><div class="fn-desc" data-key="f_read">Lit un fichier.</div><pre>§var[contenu;§readFile[fichier.txt]]</pre></div>
-      <div class="fn-card"><div class="fn-sig">§writeFile[chemin;contenu]</div><div class="fn-desc" data-key="f_write">Écrit dans un fichier.</div><pre>§writeFile[sortie.txt;Bonjour]</pre></div>
-      <div class="fn-card"><div class="fn-sig">§isFileExist[chemin]</div><div class="fn-desc" data-key="f_exist">Vérifie l'existence du fichier.</div><pre>§log[§isFileExist[fichier.txt]]</pre></div>
-      <div class="fn-card"><div class="fn-sig">§createFile[chemin]</div><div class="fn-desc" data-key="f_create">Crée un nouveau fichier.</div><pre>§createFile[nouveau.txt]</pre></div>
-    </div>
-
-    <!-- JSON -->
-    <div id="sec-json" class="section">
-      <p class="sec-title" data-key="json_title">Fonctions JSON</p>
-      <p class="sec-sub" data-key="json_desc">Lecture et manipulation de données JSON.</p>
-      <div class="fn-card"><div class="fn-sig">§jsonRead[chemin]</div><div class="fn-desc" data-key="j_read">Lit un fichier JSON.</div><pre>§var[data;§jsonRead[config.json]]</pre></div>
-      <div class="fn-card"><div class="fn-sig">§jsonWrite[chemin;json]</div><div class="fn-desc" data-key="j_write">Écrit un fichier JSON.</div></div>
-      <div class="fn-card"><div class="fn-sig">§jsonGet[json;chemin]</div><div class="fn-desc" data-key="j_get">Lit une valeur JSON.</div><pre>§var[nom;§jsonGet[$data;name]]</pre></div>
-      <div class="fn-card"><div class="fn-sig">§jsonSet[json;chemin;val]</div><div class="fn-desc" data-key="j_set">Modifie une valeur JSON.</div></div>
-    </div>
-
-    <!-- MULTI -->
-    <div id="sec-multi" class="section">
-      <p class="sec-title" data-key="multi_title">Multi-fichiers</p>
-      <p class="sec-sub" data-key="multi_desc">Tu peux répartir ton code sur plusieurs fichiers <code>.elios</code> et les assembler avec <code>§require</code>.</p>
-      <div class="fn-card"><div class="fn-sig">§require[chemin]</div><div class="fn-desc" data-key="mul_req">Inclut un fichier <code>.elios</code>.</div><pre>§require[config.elios]
-§require[lib/helpers.elios]</pre></div>
-      <h3 data-key="mul_feat">Fonctionnalités</h3>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="mul_f1">Chargement avant exécution</span></div>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="mul_f2">Variables partagées entre fichiers</span></div>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="mul_f3">Imbrication des <code>require</code></span></div>
-      <div class="key-row"><i class="ti ti-check" aria-hidden="true"></i><span data-key="mul_f4">Détection des dépendances circulaires</span></div>
-      <h3 data-key="mul_ex">Exemple</h3>
-      <div class="example-label">config.elios</div>
-      <pre>§var[APP_NAME;MonApp]
-§var[VERSION;1.8.0]</pre>
-      <div class="example-label" style="margin-top:10px">main.elios</div>
-      <pre>§require[config.elios]
-§log[Lancement de $APP_NAME v$VERSION]</pre>
-    </div>
-
-    <!-- UTILS -->
-    <div id="sec-utils" class="section">
-      <p class="sec-title" data-key="utils_title">Utilitaires</p>
-      <p class="sec-sub" data-key="utils_desc">Fonctions de temps, de pause et de contrôle du programme.</p>
-      <div class="fn-card">
-        <div class="fn-sig">§time[]</div>
-        <div class="fn-desc" data-key="utils_time">Retourne le timestamp Unix en millisecondes.</div>
-        <pre>§var[ts;§time[]]
-§log[$ts]</pre>
-      </div>
-      <div class="fn-card">
-        <div class="fn-sig">§date[format]</div>
-        <div class="fn-desc" data-key="utils_date">Retourne la date/heure selon le format. Tokens : <code>YYYY</code> <code>MM</code> <code>DD</code> <code>HH</code> <code>mm</code> <code>ss</code></div>
-        <pre>§log[§date[YYYY-MM-DD]]
-§log[§date[HH:mm:ss]]</pre>
-      </div>
-      <div class="fn-card">
-        <div class="fn-sig">§sleep[ms]</div>
-        <div class="fn-desc" data-key="utils_sleep">Pause l'exécution pendant <code>ms</code> millisecondes.</div>
-        <pre>§sleep[1000]
-§log[1 seconde écoulée]</pre>
-      </div>
-      <div class="fn-card">
-        <div class="fn-sig">§exit[code]</div>
-        <div class="fn-desc" data-key="utils_exit">Quitte le programme avec le code de sortie indiqué.</div>
-        <pre>§exit[0]</pre>
-      </div>
-    </div>
-
-  </div>
+<div class="example">
+    <div class="example-code">§for[i;0;5]
+    §log[Iteration $i]
+§endfor</div>
 </div>
 
-<script src="./script.js"></script>
+
+</div>
+
+                    <h3>Break and Continue</h3>
+                    <div class="function">
+                        <div class="function-name">§break[]</div>
+                        <div class="function-desc">Exit loop</div>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§continue[]</div>
+                        <div class="function-desc">Skip iteration</div>
+                    </div>
+                </div>
 
 
+
+                <!-- Type Checking -->
+                <div id="types" class="section">
+                    <h2>Type Checking</h2>
+
+                    <div class="function">
+                        <div class="function-name">§isNumeric[value]</div>
+                        <div class="function-desc">Check if numeric</div>
+                        <pre>§log[§isNumeric[42]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isText[value]</div>
+                        <div class="function-desc">Check if text</div>
+                        <pre>§log[§isText[hello]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isBool[value]</div>
+                        <div class="function-desc">Check if boolean</div>
+                        <pre>§log[§isBool[true]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isInt[value]</div>
+                        <div class="function-desc">Check if integer</div>
+                        <pre>§log[§isInt[42]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isFloat[value]</div>
+                        <div class="function-desc">Check if float</div>
+                        <pre>§log[§isFloat[3.14]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isJson[value]</div>
+                        <div class="function-desc">Check if JSON</div>
+                        <pre>§log[§isJson[{"a":"b"}]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§typeOf[value]</div>
+                        <div class="function-desc">Get type</div>
+                        <pre>§log[§typeOf[42]]</pre>
+                    </div>
+                </div>
+
+                <!-- File Operations -->
+                <div id="files" class="section">
+                    <h2>File Operations</h2>
+
+                    <div class="function">
+                        <div class="function-name">§readFile[path]</div>
+                        <div class="function-desc">Read file</div>
+                        <pre>§var[content;§readFile[file.txt]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§writeFile[path;content]</div>
+                        <div class="function-desc">Write file</div>
+                        <pre>§writeFile[output.txt;Hello]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§isFileExist[path]</div>
+                        <div class="function-desc">Check file exists</div>
+                        <pre>§log[§isFileExist[file.txt]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§createFile[path]</div>
+                        <div class="function-desc">Create file</div>
+                        <pre>§createFile[new.txt]</pre>
+                    </div>
+                </div>
+
+                <!-- JSON Functions -->
+                <div id="json" class="section">
+                    <h2>JSON Functions</h2>
+
+                    <div class="function">
+                        <div class="function-name">§jsonRead[path]</div>
+                        <div class="function-desc">Read JSON file</div>
+                        <pre>§var[data;§jsonRead[config.json]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§jsonWrite[path;json]</div>
+                        <div class="function-desc">Write JSON file</div>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§jsonGet[json;path]</div>
+                        <div class="function-desc">Get JSON value</div>
+                        <pre>§var[name;§jsonGet[$data;name]]</pre>
+                    </div>
+
+                    <div class="function">
+                        <div class="function-name">§jsonSet[json;path;value]</div>
+                        <div class="function-desc">Set JSON value</div>
+                    </div>
+                </div>
+
+                <!-- Multi-File -->
+                <div id="multifile" class="section">
+                    <h2>Multi-File Support</h2>
+
+                    <div class="function">
+                        <div class="function-name">§require[path]</div>
+                        <div class="function-desc">Include .elios file</div>
+                        <pre>§require[config.elios]
+§require[lib/helpers.elios]</pre>
+                    </div>
+
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Load files before execution</li>
+                        <li>Share variables across files</li>
+                        <li>Support nested requires</li>
+                        <li>Detect circular dependencies</li>
+                    </ul>
+
+                    <h3>Example</h3>
+                    <div class="example">
+                        <strong>config.elios:</strong>
+                        <div class="example-code">§var[APP_NAME;MyApp]
+§var[VERSION;1.0.0]</div>
+                        <strong>main.elios:</strong>
+                        <div class="example-code">§require[config.elios]
+§log[Running $APP_NAME v$VERSION]</div>
+                    </div>
+                </div>
+
+                <!-- Plugins -->
+                <div id="plugins" class="section">
+                    <h2>Plugin System</h2>
+
+                    <h3>Built-in Plugins</h3>
+                    <a href="http://51.75.25.2:2010" class="badge" style="margin-left:8px;cursor:pointer">All plugin are available here</a>
+                    <br>
+                    <p>Plugins are loaded from <code>./addons</code> directory.</p>
+                    <ul>
+                        <li><strong>example-plugin</strong> - Example functions
+                            <a href="addons/example-plugin-elios-addon.js" download class="badge" style="margin-left:8px;cursor:pointer">⬇ Download</a>
+                        </li>
+
+                        <li><strong>Complete documentation on plugin development</strong>
+                            <a href="addons/README.md" download class="badge" style="margin-left:8px;cursor:pointer">⬇ Download</a>
+                        </li>
+                        
+                    </ul>
+
+                    <h3>Create a Plugin</h3>
+                    <p>File: <code>./addons/my-plugin-elios-addon.js</code></p>
+                    <pre>module.exports = {
+    name: 'my-plugin',
+    version: '1.0.0',
+    functions: {
+        myFunc(args) {
+            return args.toUpperCase();
+        }
+    }
+};</pre>
+
+                    <p>Usage:</p>
+                    <pre>§log[§myFunc[hello]]</pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Elios Language v1.7.1 | <a href="https://github.com/liveweeeb13/elios" target="_blank">GitHub</a> | <a href="https://discord.gg/ukJegYrXWR" target="_blank">Discord</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(sectionId, event) {
+            event.preventDefault();
+
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(l => l.classList.remove('active'));
+
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+                event.target.classList.add('active');
+                document.querySelector('.main').scrollTop = 0;
+            }
+        }
+
+        function search() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) return;
+
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+
+            const main = document.querySelector('.main');
+            let found = false;
+
+            sections.forEach(section => {
+                if (section.textContent.toLowerCase().includes(query)) {
+                    section.classList.add('active');
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                alert('No results found for: ' + query);
+            }
+
+            main.scrollTop = 0;
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') search();
+        });
+
+        (function(){
+            const isWrapped = document.querySelector('.code-wrapper');
+            if (isWrapped) return; // already initialized
+
+            const pres = Array.from(document.querySelectorAll('pre'));
+            pres.forEach(pre => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-wrapper';
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'code-toggle';
+                btn.setAttribute('aria-expanded', 'true');
+                btn.title = 'Toggle code';
+
+                // three bars
+                for (let i=0;i<3;i++){
+                    const bar = document.createElement('span');
+                    bar.className = 'bar';
+                    btn.appendChild(bar);
+                }
+                // move pre into wrapper
+                pre.parentNode.insertBefore(wrapper, pre);
+               // wrapper.appendChild(btn);
+                wrapper.appendChild(pre);
+
+                // click toggles collapsed state
+                btn.addEventListener('click', () => {
+                    const isCollapsed = pre.classList.toggle('collapsed');
+                    btn.classList.toggle('open', isCollapsed);
+                    btn.setAttribute('aria-expanded', String(!isCollapsed));
+                });
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 900) {
+                    document.querySelectorAll('pre.collapsed').forEach(p => p.classList.remove('collapsed'));
+                    document.querySelectorAll('.code-toggle.open').forEach(b => b.classList.remove('open'));
+                    // reset nav/sidebar state on wider screens
+                    const sb = document.querySelector('.sidebar');
+                    if (sb) sb.classList.remove('open');
+                    document.querySelectorAll('.nav-toggle.open').forEach(b => b.classList.remove('open'));
+                    document.querySelectorAll('.overlay').forEach(o => o.remove());
+                }
+            });
+        })();
+
+        // Mobile naVigation
+        (function(){
+            const navBtn = document.getElementById('navToggle');
+            if (!navBtn) return;
+            const sidebar = document.querySelector('.sidebar');
+            const main = document.querySelector('.main');
+
+        function closeSidebar(){
+            sidebar.classList.remove('open');
+            navBtn.classList.remove('open');
+            document.querySelectorAll('.overlay').forEach(o=>o.remove());
+        }
+
+        function openSidebar(){
+            sidebar.classList.add('open');
+            navBtn.classList.add('open');
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            overlay.addEventListener('click', closeSidebar);
+            document.body.appendChild(overlay);
+        }            navBtn.addEventListener('click', () => {
+                if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+            });
+        })();
+    </script>
 </body>
 </html>
