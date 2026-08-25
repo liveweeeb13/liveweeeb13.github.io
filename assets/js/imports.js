@@ -44,11 +44,11 @@ const footerHTML = `
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 <a href="https://github.com/liveweeeb13">liveweeeb</a>. Tous droits réservés.</p>
+            <p>&copy; {annee} <a href="https://github.com/liveweeeb13">liveweeeb</a>. Tous droits réservés.</p>
         </div>
     </div>
 </footer>
-`;
+`.replace("{annee}", new Date().getFullYear());
 
 function injectHTML(html, position = 'end') {
     const wrapper = document.createElement('div');
