@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liveweeeb - Nouveautées</title>
+    <title>Liveweeeb - Nouveautés</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/img/avatar_circle.png">
@@ -53,35 +53,115 @@
     
 
     <!-- MAIN -->
-    <main class="container">
-        <br>
-        <section class="hero">
-            <h1>Nouveautées du site</h1>
+    <main class="container news-page">
+        <section class="news-hero">
+            <h1>Nouveautés du site</h1>
+
         </section>
-        <section id="news-list" class="news-section">
+        <section id="news-list" class="news-section" aria-live="polite" aria-label="Liste des nouveautés">
             
         </section>
-        <br>
     </main>
 
 
 
     <style>
+        .news-page {
+            max-width: 920px;
+            padding-top: 3.5rem;
+            padding-bottom: 5rem;
+        }
+
+        .news-hero {
+            margin-bottom: 2.5rem;
+            padding: clamp(2rem, 5vw, 3.5rem);
+            border: 1px solid rgba(144, 202, 249, 0.3);
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(144, 202, 249, 0.16), rgba(244, 143, 177, 0.12));
+            text-align: center;
+        }
+
+        .news-kicker {
+            margin-bottom: 0.75rem;
+            color: #f48fb1;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .news-hero h1 {
+            margin-bottom: 0.75rem;
+            color: #f5f7fa;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+        }
+
+        .news-hero p:last-child {
+            color: #d8e1ea;
+            font-size: 1.05rem;
+        }
+
         .news-section {
-            margin-top: 2em;
+            display: grid;
+            gap: 1rem;
         }
 
         .commit {
-            margin-bottom: 1.5em;
+            position: relative;
+            margin: 0;
+            padding: 1.35rem 1.5rem 1.5rem;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background: #1e1e1e;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+            transition: border-color 0.2s ease, transform 0.2s ease;
         }
 
-        .commit p {
-            margin: 0.3em 0;
+        .commit:hover {
+            border-color: #90caf9;
+            transform: translateY(-3px);
+        }
+
+        .commit p:first-child {
+            margin: 0 0 0.65rem;
+            color: #90caf9;
+            font-size: 0.85rem;
+        }
+
+        .commit p:nth-child(2) {
+            margin: 0 0 1rem;
+            color: #e8edf2;
+            font-size: 1.05rem;
+            line-height: 1.5;
         }
 
         .commit a {
-            font-size: 0.9em;
-            color: #4361ee;
+            color: #f48fb1;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .commit a:hover {
+            color: #90caf9;
+        }
+
+        .news-section hr {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .news-page {
+                padding-top: 2rem;
+            }
+
+            .news-hero {
+                margin-bottom: 1.75rem;
+            }
+
+            .commit {
+                padding: 1.15rem;
+            }
         }
     </style>
 </body>

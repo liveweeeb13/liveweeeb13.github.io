@@ -14,7 +14,6 @@ async function fetchNews() {
     try {
         const response = await fetch('https://api.github.com/repos/liveweeeb13/liveweeeb13.github.io/commits');
         const commits = await response.json();
-        https://github.com/liveweeeb13/liveweeeb13.github.io/blob/main/assets/js/news.js
         if (!Array.isArray(commits)) {
             container.innerHTML = `
                 <p>Une erreur est survenue. Ce n'est pas normal 😕.
@@ -25,7 +24,7 @@ async function fetchNews() {
 
         const html = commits.slice(0, 10).map(commit => `
             <div class="commit">
-                <p><strong>${commit.commit?.author?.name || 'N/A'}</strong> – 
+                <p><strong>${commit.commit?.author?.name || 'N/A'}</strong> :
                 ${new Date(commit.commit?.author?.date).toLocaleString('fr-FR')}</p>
                 <p>${commit.commit?.message || 'N/A'}</p>
                 <a href="${commit.html_url}" target="_blank">Voir le commit →</a>
