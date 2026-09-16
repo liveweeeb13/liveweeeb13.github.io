@@ -15,6 +15,189 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/dark.css">
     <link rel="stylesheet" href="../assets/css/font.css">
+    <style>
+        .about-page {
+            max-width: 1040px;
+            padding-top: 4rem;
+            padding-bottom: 5rem;
+        }
+
+         .about-hero {
+            margin-bottom: 2.5rem;
+            padding: clamp(2rem, 5vw, 3.5rem);
+            border: 1px solid rgba(144, 202, 249, 0.3);
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(144, 202, 249, 0.16), rgba(244, 143, 177, 0.12));
+            text-align: center;
+        }
+
+        .about-kicker {
+            margin-bottom: 0.75rem;
+            color: #f48fb1;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .about-hero h1 {
+            margin-bottom: 0.75rem;
+            color: #f5f7fa;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+        }
+
+
+        .about-lead {
+            max-width: 620px;
+            color: #d8e1ea;
+            font-size: 1.15rem;
+        }
+
+        .about-avatar {
+            width: min(100%, 220px);
+            margin: auto;
+            border: 6px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .about-section {
+            margin-top: 3.5rem;
+        }
+
+        .about-section h2 {
+            margin-bottom: 1.25rem;
+            color: #f5f7fa;
+            font-size: 1.7rem;
+        }
+
+        .about-copy {
+            max-width: 760px;
+            color: #c8d2dc;
+            font-size: 1.05rem;
+        }
+
+        .about-copy a {
+            color: #90caf9;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease;
+        }
+
+        .about-copy a:hover,
+        .about-copy a:focus-visible {
+            color: #f48fb1;
+        }
+
+        .about-facts,
+        .about-skills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .about-fact,
+        .about-skill {
+            padding: 1.35rem;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background: #1e1e1e;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+        }
+
+        .about-fact strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: #90caf9;
+            font-size: 1.1rem;
+        }
+
+        .about-fact span {
+            color: #c8d2dc;
+            font-size: 0.95rem;
+        }
+
+        .about-skills {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .about-stack {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .about-environment {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .about-environment .about-skill {
+            min-height: 92px;
+        }
+
+        .about-skill-icon {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            place-items: center;
+            color: #90caf9;
+            font-size: 1.55rem;
+        }
+
+        .about-skill {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            color: #e8edf2;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .about-skill:hover {
+            border-color: #90caf9;
+            transform: translateY(-4px);
+        }
+
+        .about-skill img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .about-skill small {
+            display: block;
+            margin-top: 0.15rem;
+            color: #98a7b5;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 760px) {
+            .about-page {
+                padding-top: 2rem;
+            }
+
+            .about-hero {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .about-avatar {
+                grid-row: 1;
+                width: 150px;
+            }
+
+            .about-facts,
+            .about-skills,
+            .about-environment {
+                grid-template-columns: 1fr;
+            }
+
+            .about-skill {
+                justify-content: center;
+            }
+        }
+    </style>
 
     <!-- Meta Essentiels -->
     <meta name="description" content="Site portfolio de liveweeeb.">
@@ -48,91 +231,60 @@
 <body>
     <!-- SCRIPT -->
     <script src="../assets/css/OTHER.LIST"></script>
-    <script src="../assets/js/splash.js"></script>
     <script src="../assets/js/imports.js"></script>
     <script src="../assets/js/splash.js"></script>
 
     <!-- MAIN -->
-    <main class="container">
-        <br>
-        <div class="center">
-            <div class="about">
-                <h1>A propos de moi</h1>
-                <br>
-                <p>
-                    Je suis un développeur fullstack. J'aime créer des applications et des
-                    sites web intuitifs, modernes et performants.<br><br>
-                    Je travaille principalement avec
-                    <span style="color: #357433;">Node.js</span> et en
-                    <span style="color: #E34F26;">HTML</span>, <span style="color: #1572B6;">CSS</span>,
-                    <span style="color: #b8a516;">JavaScript</span>. Je débute aussi
-                    <span style="color: #F15B29;">SQLite</span> pour la gestion de bases de données. <br><br>
-                </p><br>
+    <main class="container about-page">
+       
+        <section class="about-hero">
+            <h1>A propos de moi</h1>
 
-                <h2 style="text-align: center;">Compétences</h2>
+        </section>
 
-                <div class="center-wrapper">
-                    <div class="skills">
-                        <i class="bx bxl-html5" data-tooltip="HTML">
-                            <img src="../assets/img/html.png" width="40px" alt="HTML">
-                        </i>
-                        <i class="bx bxl-css3" data-tooltip="CSS">
-                            <img src="../assets/img/css.png" width="40px" alt="CSS">
-                        </i>
-                        <i class="bx bxl-javascript" data-tooltip="JavaScript">
-                            <img src="../assets/img/js.png" width="40px" alt="JavaScript">
-                        </i>
-                        <i class="bx bxl-nodejs" data-tooltip="Node.js">
-                            <img src="../assets/img/nodejs.png" width="40px" alt="Node.js">
-                        </i>
-                        <i class="bx bxl-sqlite" data-tooltip="SQLite">
-                            <img src="../assets/img/sqlite.png" width="40px" alt="SQLite">
-                        </i>
-                    </div>
-                </div>
-                <br>
+
+        <section class="about-section" aria-labelledby="journey-title">
+            <h2 id="journey-title">À propos de moi</h2>
+            <p class="about-copy">Je suis lycéen, avec la spécialité Numérique et Sciences Informatiques. Je développe des bot discord et crée des sites. Tu peux retrouver mes projets sur la <a href="/">page d'accueil</a>.</p>
+        </section>
+
+    <!--    <section class="about-section" aria-label="">
+            <div class="about-facts">
+                <div class="about-fact"><strong>...</strong><span>2</span></div>
+                <div class="about-fact"><strong>...</strong><span>2</span></div>
+                <div class="about-fact"><strong>...</strong><span>2</span></div>
             </div>
-        </div>
+        </section>-->
+
+        <section class="about-section" aria-labelledby="skills-title">
+            <h2 id="skills-title">Technologies principales</h2>
+            <div class="about-skills about-stack">
+                <div class="about-skill"><img src="../assets/img/nodejs.png" alt=""><span>Node.js<small>Backend</small></span></div>
+                <div class="about-skill"><img src="../assets/img/html.png" alt=""><span>HTML<small>Structure</small></span></div>
+                <div class="about-skill"><img src="../assets/img/css.png" alt=""><span>CSS<small>Interface</small></span></div>
+                <div class="about-skill"><img src="../assets/img/js.png" alt=""><span>JavaScript<small>Interactions</small></span></div>
+                <div class="about-skill"><img src="../assets/img/npm.png" alt=""><span>npm<small>Packages</small></span></div>
+            </div>
+        </section>
+
+        <section class="about-section" aria-labelledby="database-title">
+            <h2 id="database-title">Base de données</h2>
+            <div class="about-environment">
+                <div class="about-skill"><img src="../assets/img/sqlite.png" alt=""><span>SQLite3<small>Base de données</small></span></div>
+            </div>
+        </section>
+
+        <section class="about-section" aria-labelledby="environment-title">
+            <h2 id="environment-title">Environnement</h2>
+            <div class="about-environment">
+                <div class="about-skill"><img src="../assets/img/windows.png" alt=""><span>Windows 11<small>Ordinateur personnel</small></span></div>
+                <div class="about-skill"><img src="../assets/img/debian.png" alt=""><span>Debian<small>Serveurs</small></span></div>
+                <div class="about-skill"><img src="../assets/img/opera.webp" alt=""><span>Opera<small>Navigateur</small></span></div>
+                <div class="about-skill"><img src="../assets/img/vscode.png" alt=""><span>Visual Studio Code<small>Éditeur</small></span></div>
+                <div class="about-skill"><img src="../assets/img/android.webp" alt=""><span>Android<small>Téléphone</small></span></div>
+            </div>
+        </section>
     </main>
-
-    <script>
-const skillElements = document.querySelectorAll(".skills i");
-
-skillElements.forEach((skillElement) => {
-    let tooltip;
-
-    skillElement.addEventListener("mouseenter", () => {
-        const languageName = skillElement.getAttribute("data-tooltip");
-        tooltip = document.createElement("div");
-        tooltip.classList.add("tooltip");
-        tooltip.innerText = languageName;
-        document.body.appendChild(tooltip);
-        tooltip.style.left = "-9999px";
-        tooltip.style.top = "-9999px";
-
-        requestAnimationFrame(() => {
-            const rect = skillElement.getBoundingClientRect();
-            const tooltipRect = tooltip.getBoundingClientRect();
-
-            tooltip.style.left = `${rect.left + rect.width / 2 - tooltipRect.width / 2}px`;
-            tooltip.style.top = `${rect.top - tooltipRect.height - 10 + window.scrollY}px`;
-
-            tooltip.classList.add("show");
-        });
-    });
-
-    skillElement.addEventListener("mouseleave", () => {
-        if (tooltip) {
-            tooltip.classList.remove("show");
-            setTimeout(() => {
-                tooltip.remove();
-                tooltip = null;
-            }, 300);
-        }
-    });
-});
-
-    </script>
 
 
 
